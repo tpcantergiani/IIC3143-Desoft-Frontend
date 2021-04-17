@@ -17,8 +17,8 @@ const TabsDemo = lazy(() => import('../pages/TabsDemo'))
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
 
 const routes = [
-  <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
-  <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
+  <UnauthorizedRoute path="/signin" redirectTo="/home" exact component={SignIn} />,
+  <UnauthorizedRoute path="/signup" redirectTo="/home" exact component={SignUp} />,
   <UnauthorizedRoute
     path="/password_reset"
     redirectTo="/"
