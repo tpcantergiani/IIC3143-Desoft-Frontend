@@ -20,10 +20,12 @@
     "react-intl": "5.x",
     "react-ios-pwa-prompt": "1.x",
     "react-markdown": "5.x",
+    "react-redux": "^7.2.3",
     "react-router-dom": "5.x",
     "react-scripts": "4.0.3",
     "react-virtualized-auto-sizer": "1.x",
-    "react-window": "1.x"
+    "react-window": "1.x",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
