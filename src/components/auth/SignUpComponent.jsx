@@ -9,8 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { useMenu } from 'material-ui-shell/lib/providers/Menu';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -65,18 +63,6 @@ const SignUpComponent = () => {
   const { toggleThis } = useMenu();
   const { setAuth } = useAuth();
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    authenticate({
-      displayName: 'User',
-      email: username,
-    });
-  }
-
-  const handleChange = (event) => {
-    setUserType(event.target.value);
-  };
-
   const authenticate = (user) => {
     setAuth({ isAuthenticated: true, ...user });
     toggleThis('isAuthMenuOpen', false);
@@ -90,6 +76,18 @@ const SignUpComponent = () => {
     } else {
       history.push(_route);
     }
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    authenticate({
+      displayName: 'User',
+      email: username,
+    });
+  }
+
+  const handleChange = (event) => {
+    setUserType(event.target.value);
   };
 
   return (

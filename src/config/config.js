@@ -1,8 +1,8 @@
-import { lazy } from 'react'
-import locales from './locales'
-import routes from './routes'
-import themes from './themes'
-import parseLanguages from 'base-shell/lib/utils/locale'
+import { lazy } from 'react';
+import parseLanguages from 'base-shell/lib/utils/locale';
+import locales from './locales';
+import routes from './routes';
+import themes from './themes';
 
 const config = {
   auth: {
@@ -13,8 +13,7 @@ const config = {
     locales,
     defaultLocale: parseLanguages(['en', 'de', 'ru'], 'en'),
     onError: (e) => {
-      //console.warn(e)
-      return
+      console.warn(e);
     },
   },
   menu: {
@@ -24,12 +23,12 @@ const config = {
     themes,
     defaultThemeID: 'default',
     defaultIsDarkMode: false,
-    defaultIsRTL: false, //change this to true for default Right to Left Language support
+    defaultIsRTL: false, // change this to true for default Right to Left Language support
   },
   pages: {
     LandingPage: lazy(() => import('../pages/LandingPage/LandingPage')),
     PageNotFound: lazy(() => import('../pages/PageNotFound/PageNotFound')),
   },
-}
+};
 
-export default config
+export default config;

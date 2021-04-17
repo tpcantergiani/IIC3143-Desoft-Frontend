@@ -1,4 +1,4 @@
-import { defineMessages } from 'react-intl'
+import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   app_name: 'React Most Wanted',
@@ -23,25 +23,25 @@ const messages = defineMessages({
   menu: 'Меню',
   menu_mini_mode: 'Мини меню',
   offline: 'Офлайн',
-  demos:'Демонстрации',
-  dialog_demo:'Демонстрация диалога',
-  dialog_title:'Заголовок диалога',
-  dialog_action:'Да, удалить',
-  dialog_message:`Диалоговое сообщение. Вы можете поместить сюда сколько угодно текста. 
+  demos: 'Демонстрации',
+  dialog_demo: 'Демонстрация диалога',
+  dialog_title: 'Заголовок диалога',
+  dialog_action: 'Да, удалить',
+  dialog_message: `Диалоговое сообщение. Вы можете поместить сюда сколько угодно текста. 
   Задайте вопрос или покажите предупреждение перед удалением чего-либо. 
   Вы также можете задать для текста действия значение что-то вроде «ДА, Удалить», и запустить это действие, передав опору «handleAction». 
   Он получает обратный вызов handleClose, с которым вы можете закрыть диалог, когда ваше действие будет выполнено.`,
-  toast_demo:'Демонстрация тост',
-  filter_demo:'Демонстрация фильтра',
-  list_page_demo:'Демонстрация страницы списка с {count} строками',
-  forgot_password:'Забыли пароль',
-  password_reset:'Сброс пароля',
-  password_confirm:'Подтвердить пароль',
-  registration:'Регистрация',
+  toast_demo: 'Демонстрация тост',
+  filter_demo: 'Демонстрация фильтра',
+  list_page_demo: 'Демонстрация страницы списка с {count} строками',
+  forgot_password: 'Забыли пароль',
+  password_reset: 'Сброс пароля',
+  password_confirm: 'Подтвердить пароль',
+  registration: 'Регистрация',
   my_account: 'Мой аккаунт',
   delete_account_dialog_title: 'Удалить Ваш аккаунт?',
   delete_account_dialog_message: 'Ваш аккаунт будет удален и вы потеряете все ваши данные!',
-  delete_account_dialog_action:'Удалить аккаунт'
-})
+  delete_account_dialog_action: 'Удалить аккаунт',
+});
 
-export default messages
+export default messages;

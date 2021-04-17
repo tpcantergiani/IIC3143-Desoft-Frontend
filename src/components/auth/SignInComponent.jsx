@@ -1,15 +1,13 @@
-import Button from '@material-ui/core/Button'
-import Page from 'material-ui-shell/lib/containers/Page'
-import Paper from '@material-ui/core/Paper'
-import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
-import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { useAuth } from 'base-shell/lib/providers/Auth'
-import { useHistory } from 'react-router-dom'
-import { useIntl } from 'react-intl'
-import { useMenu } from 'material-ui-shell/lib/providers/Menu'
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import React, { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { Link, useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { useAuth } from 'base-shell/lib/providers/Auth';
+import { useIntl } from 'react-intl';
+import { useMenu } from 'material-ui-shell/lib/providers/Menu';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
-      3
+      3,
     )}px`,
   },
   avatar: {
@@ -46,42 +44,41 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: `100%`,
+    height: '100%',
   },
-}))
+}));
 
 const SignInComponent = () => {
-  const classes = useStyles()
-  const intl = useIntl()
-  const history = useHistory()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const { toggleThis } = useMenu()
-  const { setAuth } = useAuth()
+  const classes = useStyles();
+  const intl = useIntl();
+  const history = useHistory();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { toggleThis } = useMenu();
+  const { setAuth } = useAuth();
+
+  const authenticate = (user) => {
+    setAuth({ isAuthenticated: true, ...user });
+    toggleThis('isAuthMenuOpen', false);
+
+    const _location = history.location;
+    let _route = '/home';
+
+    if (_location.state && _location.state.from) {
+      _route = _location.state.from.pathname;
+      history.push(_route);
+    } else {
+      history.push(_route);
+    }
+  };
 
   function handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     authenticate({
       displayName: 'User',
       email: username,
-    })
+    });
   }
-
-  const authenticate = (user) => {
-    setAuth({ isAuthenticated: true, ...user })
-    toggleThis('isAuthMenuOpen', false)
-
-    let _location = history.location
-    let _route = '/home'
-
-    if (_location.state && _location.state.from) {
-      _route = _location.state.from.pathname
-      history.push(_route)
-    } else {
-      history.push(_route)
-    }
-  }
-
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
@@ -135,7 +132,8 @@ const SignInComponent = () => {
           }}
         >
           <Link to="/password_reset">
-            {intl.formatMessage({ id: 'forgot_password' })}?
+            {intl.formatMessage({ id: 'forgot_password' })}
+            ?
           </Link>
           <Link to="/signup">
             {intl.formatMessage({ id: 'registration' })}
@@ -143,7 +141,7 @@ const SignInComponent = () => {
         </div>
       </div>
     </Paper>
-  )
-}
+  );
+};
 
-export default SignInComponent
+export default SignInComponent;
