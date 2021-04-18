@@ -27,7 +27,8 @@
     "react-scripts": "4.0.3",
     "react-virtualized-auto-sizer": "1.x",
     "react-window": "1.x",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
