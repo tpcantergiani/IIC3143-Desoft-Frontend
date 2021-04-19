@@ -9,6 +9,7 @@ Ramas:
 - feat/nombre-feature
 - fix/nombre-fix
 - style/nombre-diseño
+- ref/nombre-refactor
 
 Commits y usar gitmoji:
 - feat: descripción del commit
