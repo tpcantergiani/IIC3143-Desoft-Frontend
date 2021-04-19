@@ -14,3 +14,8 @@ Commits y usar gitmoji:
 - feat: descripción del commit
 - fix: descripción del fix
 - style: descripción del style
+- ref: descripción del refactor
+
+Importante: 
+- Commits descriptivos y en ingles.
+- Hacer Pull Request descriptivas y que otra personas la corriga y apruebe.
