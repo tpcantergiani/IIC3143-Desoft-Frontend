@@ -20,6 +20,8 @@ import {
   ViewList,
   Web,
 } from '@material-ui/icons';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../store/slices/userSlice';
 
 import allLocales from './locales';
 import allThemes from './themes';
@@ -60,6 +62,8 @@ const getMenuItems = (props) => {
 
   const isAuthorised = auth.isAuthenticated;
 
+  const dispatch = useDispatch();
+
   const themeItems = allThemes.map((t) => ({
     value: undefined,
     visible: true,
@@ -85,6 +89,9 @@ const getMenuItems = (props) => {
         onClick: isAuthorised
           ? () => {
             setAuth({ isAuthenticated: false });
+            dispatch(
+              logoutUser(),
+            );
           }
           : () => {},
         visible: true,

@@ -1,13 +1,15 @@
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import React, { useState, useEffect } from 'react';
+import { TextField, Typography, CircularProgress } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from 'base-shell/lib/providers/Auth';
 import { useIntl } from 'react-intl';
 import { useMenu } from 'material-ui-shell/lib/providers/Menu';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserThunk, setErrorMsg, setLoading } from '../../store/slices/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '100%',
   },
+  error: {
+    color: 'red',
+  },
 }));
 
 const SignInComponent = () => {
@@ -56,6 +61,10 @@ const SignInComponent = () => {
   const [password, setPassword] = useState('');
   const { toggleThis } = useMenu();
   const { setAuth } = useAuth();
+  const dispatch = useDispatch();
+  const {
+    error, current, token, loading,
+  } = useSelector((state) => state.user);
 
   const authenticate = (user) => {
     setAuth({ isAuthenticated: true, ...user });
@@ -63,6 +72,14 @@ const SignInComponent = () => {
 
     const _location = history.location;
     let _route = '/home';
+
+    // if (user.type === 'admin') {
+    //   _route = '/admin-home';
+    // } else if (user.type === 'guard') {
+    //   _route = '/guard-home';
+    // } else {
+    //   _route = '/home';
+    // }
 
     if (_location.state && _location.state.from) {
       _route = _location.state.from.pathname;
@@ -72,13 +89,33 @@ const SignInComponent = () => {
     }
   };
 
-  function handleSubmit(event) {
+  useEffect(() => {
+    dispatch(setLoading(false));
+    if (token && token?.length > 0) {
+      authenticate({ current });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token && token?.length > 0) {
+      authenticate({ current });
+    }
+  }, [token]);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    authenticate({
-      displayName: 'User',
-      email: username,
-    });
-  }
+    if (username && password) {
+      await dispatch(
+        fetchUserThunk({
+          username: username.toLowerCase(),
+          password,
+        }),
+      );
+    } else {
+      dispatch(setErrorMsg('Debes rellenar todos los campos'));
+    }
+  };
+
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
@@ -112,6 +149,9 @@ const SignInComponent = () => {
             id="password"
             autoComplete="current-password"
           />
+          <Typography component="h5" className={classes.error}>
+            {error}
+          </Typography>
           <Button
             type="submit"
             fullWidth
@@ -119,7 +159,7 @@ const SignInComponent = () => {
             color="primary"
             className={classes.submit}
           >
-            {intl.formatMessage({ id: 'sign_in' })}
+            {loading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'sign_in' })}
           </Button>
         </form>
 

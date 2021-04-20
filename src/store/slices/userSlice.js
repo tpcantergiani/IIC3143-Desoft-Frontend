@@ -7,6 +7,8 @@ import { login, register } from '../../api/user';
 const initialState = {
   current: null,
   error: '',
+  token: '',
+  loading: false,
 };
 
 const fetchUser = createAsyncThunk(
@@ -31,26 +33,35 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state, _action) => {
       state.current = null;
+      state.token = '';
     },
     setErrorMsg: (state, action) => {
+      state.error = action.payload;
+    },
+    setLoading: (state, action) => {
       state.error = action.payload;
     },
   },
   extraReducers: {
     [fetchUser.fulfilled]: (state, action) => {
-      state.current = action.payload;
+      state.token = action.payload.access_token;
       state.error = '';
+      state.loading = false;
     },
     [fetchUser.rejected]: (state, _action) => {
       state.error = 'Correo y/o contraseña inválida';
+      state.loading = false;
+    },
+    [fetchUser.pending]: (state, _action) => {
+      state.loading = true;
+      state.error = '';
     },
     [createUser.fulfilled]: (_state, action) => {
-      console.log(action.payload);
     },
   },
 });
 
-export const { logoutUser, setErrorMsg } = userSlice.actions;
+export const { logoutUser, setErrorMsg, setLoading } = userSlice.actions;
 export const fetchUserThunk = fetchUser;
 export const createUserThunk = createUser;
 export const userReducer = userSlice.reducer;

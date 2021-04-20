@@ -9,7 +9,7 @@ const defaultOptions = {
 };
 
 //  Hay que cambiar este por una variable de entorno
-axios.defaults.baseURL = 'http://localhost:4000/';
+axios.defaults.baseURL = 'http://localhost:5000/';
 
 axios.interceptors.request.use(
   async (config) => {
