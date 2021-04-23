@@ -1,6 +1,6 @@
-import red from '@material-ui/core/colors/red'
-import pink from '@material-ui/core/colors/pink'
-import green from '@material-ui/core/colors/green'
+import red from '@material-ui/core/colors/red';
+import pink from '@material-ui/core/colors/pink';
+import green from '@material-ui/core/colors/green';
 
 const themes = [
   {
@@ -28,6 +28,6 @@ const themes = [
       },
     },
   },
-]
+];
 
-export default themes
+export default themes;

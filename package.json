@@ -6,6 +6,8 @@
     "@formatjs/intl-relativetimeformat": "7.x",
     "@material-ui/core": "4.x",
     "@material-ui/icons": "4.x",
+    "@reduxjs/toolkit": "^1.5.1",
+    "axios": "^0.21.1",
     "base-shell": "1.x",
     "github-markdown-css": "4.x",
     "intl": "1.x",
@@ -20,10 +22,13 @@
     "react-intl": "5.x",
     "react-ios-pwa-prompt": "1.x",
     "react-markdown": "5.x",
+    "react-redux": "^7.2.3",
     "react-router-dom": "5.x",
     "react-scripts": "4.0.3",
     "react-virtualized-auto-sizer": "1.x",
-    "react-window": "1.x"
+    "react-window": "1.x",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,5 +53,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }
