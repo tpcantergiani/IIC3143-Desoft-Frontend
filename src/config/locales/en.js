@@ -18,19 +18,19 @@ const messages = defineMessages({
   green: 'Green',
   language: 'Language',
   en: 'English',
-  es: 'Español',
+  es: 'Spanish',
   menu: 'Menu',
   menu_mini_mode: 'Mini menu',
   offline: 'Offline',
   demos: 'Demos',
-  dialog_demo: 'Crear Usuarios',
+  dialog_demo: 'Create user',
   dialog_title: 'Dialog title',
   dialog_action: 'YES, Delete',
-  dialog_message: `Dialog message. You can put as much text as you want here. 
-  Ask a question or show a warning before deleting something. 
-  You can also set the action text to something like "YES, Delete" and run that action by passing a "handleAction" prop. 
+  dialog_message: `Dialog message. You can put as much text as you want here.
+  Ask a question or show a warning before deleting something.
+  You can also set the action text to something like "YES, Delete" and run that action by passing a "handleAction" prop.
   This receives a "handleClose" callback with which you can close the dialog when your action is done.`,
-  toast_demo: 'Crear Viviendas',
+  toast_demo: 'Create home',
   filter_demo: 'Demo filter',
   list_page_demo: 'List Page demo with {count} rows',
   forgot_password: 'Forgot password',
@@ -42,6 +42,17 @@ const messages = defineMessages({
   delete_account_dialog_message:
     'Your account will be deleted and you will lose all your data!',
   delete_account_dialog_action: 'Delete account',
+  cruds: 'Register',
+  addUser: 'User created',
+  addHome: 'Home created',
+  dashboard: 'Dashboard',
+  history: 'Entry History',
+  resident: 'Resident',
+  guard: 'Guard',
+  admin: 'Administrator',
+  save: 'Save',
+  user_type: 'User type',
+  homeN: 'Home number',
 });
 
 export default messages;

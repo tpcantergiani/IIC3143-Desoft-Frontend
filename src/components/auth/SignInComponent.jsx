@@ -150,6 +150,7 @@ const SignInComponent = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={loading}
           >
             {loading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'sign_in' })}
           </Button>

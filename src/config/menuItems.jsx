@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   AccountBox as AccountBoxIcon,
-  ChatBubble,
-  ChromeReaderMode,
-  Dashboard as DashboardIcon,
   ExitToApp as ExitToAppIcon,
-  FilterList,
-  FormatTextdirectionRToL as RTLIcon,
-  FormatTextdirectionLToR as LTRIcon,
   GetApp,
   InfoOutlined,
   Language as LanguageIcon,
   Lock as LockIcon,
-  MenuOpen as MenuOpenIcon,
-  QuestionAnswer,
   SettingsApplications as SettingsIcon,
   Style as StyleIcon,
-  Tab,
-  ViewList,
   Web,
   GroupAdd,
   HomeWork,
+  Home,
+  Assessment,
+  History,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -40,13 +33,10 @@ const getMenuItems = (props) => {
   } = props;
 
   const {
-    toggleThis,
-    isDesktop,
     isAuthMenuOpen,
-    isMiniSwitchVisibility,
   } = menuContext;
   const {
-    themeID, setThemeID, isRTL, toggleThisTheme,
+    themeID, setThemeID,
   } = themeContext;
 
   const { auth, setAuth } = authData;
@@ -111,7 +101,7 @@ const getMenuItems = (props) => {
         value: '/home',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <DashboardIcon />,
+        leftIcon: <Home />,
       },
       {
         primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
@@ -140,12 +130,123 @@ const getMenuItems = (props) => {
         ],
       },
       {
+        value: '/home',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'dashboard' }),
+        leftIcon: <Assessment />,
+      },
+      {
+        value: '/filter_demo',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'history' }),
+        leftIcon: <History />,
+      },
+      { divider: true },
+      {
         value: '/about',
         visible: true,
         primaryText: intl.formatMessage({ id: 'about' }),
         leftIcon: <InfoOutlined />,
       },
+      {
+        primaryText: intl.formatMessage({ id: 'settings' }),
+        primaryTogglesNestedList: true,
+        leftIcon: <SettingsIcon />,
+        nestedItems: [
+          {
+            primaryText: intl.formatMessage({ id: 'theme' }),
+            secondaryText: intl.formatMessage({ id: themeID }),
+            primaryTogglesNestedList: true,
+            leftIcon: <StyleIcon />,
+            nestedItems: themeItems,
+          },
+          {
+            primaryText: intl.formatMessage({ id: 'language' }),
+            secondaryText: intl.formatMessage({ id: locale }),
+            primaryTogglesNestedList: true,
+            leftIcon: <LanguageIcon />,
+            nestedItems: localeItems,
+          },
+        ],
+      },
+      {
+        value: '/signin',
+        onClick: isAuthorised
+          ? () => {
+            setAuth({ isAuthenticated: false });
+            dispatch(
+              logoutUser(),
+            );
+          }
+          : () => {},
+        visible: isAuthorised,
+        primaryText: isAuthorised
+          ? intl.formatMessage({ id: 'sign_out' })
+          : intl.formatMessage({ id: 'sign_in' }),
+        leftIcon: isAuthorised ? <ExitToAppIcon /> : <LockIcon />,
+      },
+      {
+        value: null,
+        visible: isAppInstallable && !isAppInstalled,
+        onClick: () => {
+          deferredPrompt.prompt();
+        },
+        primaryText: intl.formatMessage({
+          id: 'install',
+          defaultMessage: 'Install',
+        }),
+        leftIcon: <GetApp />,
+      },
+    ];
+  }
+
+  if (auth.current.type === ('Guard')) {
+    return [
+      {
+        value: '/home',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'home' }),
+        leftIcon: <Home />,
+      },
+      {
+        primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
+        visible: isAuthorised && auth.current.type === ('Guard'),
+        primaryTogglesNestedList: true,
+        leftIcon: <Web />,
+        nestedItems: [
+          {
+            value: '/signup',
+            visible: isAuthorised && auth.current.type === ('Guard'),
+            primaryText: intl.formatMessage({
+              id: 'dialog_demo',
+              defaultMessage: 'Dialog',
+            }),
+            leftIcon: <GroupAdd />,
+          },
+          {
+            value: '/toast_demo',
+            visible: isAuthorised && auth.current.type === ('Guard'),
+            primaryText: intl.formatMessage({
+              id: 'toast_demo',
+              defaultMessage: 'Toast',
+            }),
+            leftIcon: <HomeWork />,
+          },
+        ],
+      },
+      {
+        value: '/home',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'history' }),
+        leftIcon: <History />,
+      },
       { divider: true },
+      {
+        value: '/about',
+        visible: true,
+        primaryText: intl.formatMessage({ id: 'about' }),
+        leftIcon: <InfoOutlined />,
+      },
       {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,

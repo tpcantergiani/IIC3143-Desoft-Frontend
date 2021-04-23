@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAuth } from 'base-shell/lib/providers/Auth';
-import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { useMenu } from 'material-ui-shell/lib/providers/Menu';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { useSnackbar } from 'notistack';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUserThunk, setErrorMsg, setLoading } from '../../store/slices/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,25 +54,43 @@ const useStyles = makeStyles((theme) => ({
 const SignUpComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const history = useHistory();
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const { toggleThis } = useMenu();
+  const [userHome, setUserHome] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
 
-  const authenticate = (user) => {
-    console.log(user);
+  const clearFields = () => {
+    setUsername('');
+    setUserEmail('');
+    setUserType('');
   };
 
-  function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    authenticate({
-      displayName: 'User',
-      email: username,
-    });
-  }
+    const r = await dispatch(
+      createUserThunk({
+        name: username,
+        email: userEmail,
+        home: '45',
+        type: userType,
+      }),
+    );
+
+    if (r.payload?.data) {
+      clearFields();
+      enqueueSnackbar('Usuario agregado correctamente', {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      });
+    } else {
+      dispatch(setErrorMsg('Debes rellenar todos los campos'));
+    }
+  };
 
   const handleChange = (event) => {
     setUserType(event.target.value);
@@ -82,9 +100,9 @@ const SignUpComponent = () => {
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
-          {intl.formatMessage({ id: 'sign_up', defaultMessage: 'Sign up' })}
+          {intl.formatMessage({ id: 'registration' })}
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             value={username}
             onInput={(e) => setUsername(e.target.value)}
@@ -116,6 +134,21 @@ const SignUpComponent = () => {
             name="email"
             autoComplete="email"
           />
+          <TextField
+            value={userHome}
+            type="number"
+            onInput={(e) => setUserHome(e.target.value)}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="home"
+            label={intl.formatMessage({
+              id: 'homeN',
+            })}
+            name="home"
+            autoComplete="home"
+          />
           <FormControl
             variant="outlined"
             fullWidth
@@ -123,7 +156,7 @@ const SignUpComponent = () => {
             required
             className={classes.formControl}
           >
-            <InputLabel htmlFor="outlined-age-native-simple">Tipo de usuario</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
             <Select
               native
               value={userType}
@@ -134,43 +167,27 @@ const SignUpComponent = () => {
                 id: 'outlined-age-native-simple',
               }}
             >
-              <option value={1}>Propietario</option>
-              <option value={2}>Guardia</option>
-              <option value={3}>Administrador</option>
+              <option value="Resident">
+                {intl.formatMessage({
+                  id: 'resident',
+                })}
+
+              </option>
+              <option value="Guard">
+                {intl.formatMessage({
+                  id: 'guard',
+                })}
+
+              </option>
+              <option value="Admin">
+                {intl.formatMessage({
+                  id: 'admin',
+                })}
+
+              </option>
             </Select>
           </FormControl>
-          <TextField
-            value={password}
-            onInput={(e) => setPassword(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label={intl.formatMessage({
-              id: 'password',
-              defaultMessage: 'Password',
-            })}
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <TextField
-            value={confirmPassword}
-            onInput={(e) => setConfirmPassword(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password_confirm"
-            label={intl.formatMessage({
-              id: 'password_confirm',
-              defaultMessage: 'Confirm Password',
-            })}
-            type="password"
-            id="password_confirm"
-            autoComplete="current-password"
-          />
+
           <Button
             type="submit"
             fullWidth
@@ -178,7 +195,7 @@ const SignUpComponent = () => {
             color="primary"
             className={classes.submit}
           >
-            {intl.formatMessage({ id: 'sign_up', defaultMessage: 'Sign up' })}
+            {intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
           </Button>
         </form>
       </div>

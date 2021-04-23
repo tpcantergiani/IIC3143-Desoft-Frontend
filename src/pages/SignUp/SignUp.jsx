@@ -13,7 +13,7 @@ const SignUp = () => {
   return (
     <Page
       pageTitle={intl.formatMessage({
-        id: 'sign_up',
+        id: 'registration',
         defaultMessage: ' Sign up',
       })}
       onBackClick={() => {
