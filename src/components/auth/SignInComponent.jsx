@@ -73,14 +73,6 @@ const SignInComponent = () => {
     const _location = history.location;
     let _route = '/home';
 
-    // if (user.type === 'admin') {
-    //   _route = '/admin-home';
-    // } else if (user.type === 'guard') {
-    //   _route = '/guard-home';
-    // } else {
-    //   _route = '/home';
-    // }
-
     if (_location.state && _location.state.from) {
       _route = _location.state.from.pathname;
       history.push(_route);

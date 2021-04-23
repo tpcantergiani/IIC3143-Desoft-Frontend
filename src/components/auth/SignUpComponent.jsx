@@ -61,21 +61,9 @@ const SignUpComponent = () => {
   const [userType, setUserType] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { toggleThis } = useMenu();
-  const { setAuth } = useAuth();
 
   const authenticate = (user) => {
-    setAuth({ isAuthenticated: true, ...user });
-    toggleThis('isAuthMenuOpen', false);
-
-    const _location = history.location;
-    let _route = '/home';
-
-    if (_location.state && _location.state.from) {
-      _route = _location.state.from.pathname;
-      history.push(_route);
-    } else {
-      history.push(_route);
-    }
+    console.log(user);
   };
 
   function handleSubmit(event) {

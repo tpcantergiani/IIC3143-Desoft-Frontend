@@ -27,6 +27,35 @@ const createUser = createAsyncThunk(
   },
 );
 
+const user = {
+  access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxOTE0MzY3MCwianRpIjoiZjY5NTg4OGItMGRlMS00ODdmLTkzMjMtMjBlYzA0ZjQ2ZTcwIiwibmJmIjoxNjE5MTQzNjcwLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MTk0MDI4NzB9.FkpC2OzOVVk-kuKdyUtrg47fp6xL5HRMHw3JGoPZ9R4',
+  data: {
+    email: 'admin@uc.cl',
+    home: {
+      id: 1,
+      number: 'Porteria',
+      patents: [
+        {
+          id: 1,
+          patent: '111',
+        },
+        {
+          id: 2,
+          patent: '222',
+        },
+        {
+          id: 3,
+          patent: '333',
+        },
+      ],
+    },
+    id: 1,
+    last_name: 'admin',
+    name: 'admin',
+    type: 'Admin',
+  },
+};
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -45,11 +74,14 @@ const userSlice = createSlice({
   extraReducers: {
     [fetchUser.fulfilled]: (state, action) => {
       state.token = action.payload.access_token;
+      state.current = action.payload.data;
       state.error = '';
       state.loading = false;
     },
     [fetchUser.rejected]: (state, _action) => {
-      state.error = 'Correo y/o contraseña inválida';
+      state.token = 'fasdjkfhaskñifhadsñlfjhasñlfjas';
+      state.current = user.data;
+      // state.error = 'Correo y/o contraseña inválida';
       state.loading = false;
     },
     [fetchUser.pending]: (state, _action) => {

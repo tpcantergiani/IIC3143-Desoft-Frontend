@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AccountBox as AccountBoxIcon,
   ChatBubble,
@@ -19,6 +19,8 @@ import {
   Tab,
   ViewList,
   Web,
+  GroupAdd,
+  HomeWork,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -102,65 +104,85 @@ const getMenuItems = (props) => {
       },
     ];
   }
+
+  if (auth.current.type === ('Admin')) {
+    return [
+      {
+        value: '/home',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'home' }),
+        leftIcon: <DashboardIcon />,
+      },
+      {
+        primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
+        visible: isAuthorised && (auth.current.type === 'Admin'),
+        primaryTogglesNestedList: true,
+        leftIcon: <Web />,
+        nestedItems: [
+          {
+            value: '/signup',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'dialog_demo',
+              defaultMessage: 'Dialog',
+            }),
+            leftIcon: <GroupAdd />,
+          },
+          {
+            value: '/toast_demo',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'toast_demo',
+              defaultMessage: 'Toast',
+            }),
+            leftIcon: <HomeWork />,
+          },
+        ],
+      },
+      {
+        value: '/about',
+        visible: true,
+        primaryText: intl.formatMessage({ id: 'about' }),
+        leftIcon: <InfoOutlined />,
+      },
+      { divider: true },
+      {
+        primaryText: intl.formatMessage({ id: 'settings' }),
+        primaryTogglesNestedList: true,
+        leftIcon: <SettingsIcon />,
+        nestedItems: [
+          {
+            primaryText: intl.formatMessage({ id: 'theme' }),
+            secondaryText: intl.formatMessage({ id: themeID }),
+            primaryTogglesNestedList: true,
+            leftIcon: <StyleIcon />,
+            nestedItems: themeItems,
+          },
+          {
+            primaryText: intl.formatMessage({ id: 'language' }),
+            secondaryText: intl.formatMessage({ id: locale }),
+            primaryTogglesNestedList: true,
+            leftIcon: <LanguageIcon />,
+            nestedItems: localeItems,
+          },
+        ],
+      },
+      {
+        value: null,
+        visible: isAppInstallable && !isAppInstalled,
+        onClick: () => {
+          deferredPrompt.prompt();
+        },
+        primaryText: intl.formatMessage({
+          id: 'install',
+          defaultMessage: 'Install',
+        }),
+        leftIcon: <GetApp />,
+      },
+    ];
+  }
+
   return [
-    {
-      value: '/home',
-      visible: isAuthorised,
-      primaryText: intl.formatMessage({ id: 'home' }),
-      leftIcon: <DashboardIcon />,
-    },
-    {
-      primaryText: intl.formatMessage({ id: 'demos', defaultMessage: 'Demos' }),
-      primaryTogglesNestedList: true,
-      leftIcon: <Web />,
-      nestedItems: [
-        {
-          value: '/dialog_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'dialog_demo',
-            defaultMessage: 'Dialog',
-          }),
-          leftIcon: <ChatBubble />,
-        },
-        {
-          value: '/toast_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'toast_demo',
-            defaultMessage: 'Toast',
-          }),
-          leftIcon: <QuestionAnswer />,
-        },
-        {
-          value: '/filter_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'filter_demo',
-            defaultMessage: 'Filter',
-          }),
-          leftIcon: <FilterList />,
-        },
-        {
-          value: '/list_page_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'list_page_demo_menu',
-            defaultMessage: 'List Page',
-          }),
-          leftIcon: <ViewList />,
-        },
-        {
-          value: '/tabs_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'tabs_demo',
-            defaultMessage: 'Tabs Page',
-          }),
-          leftIcon: <Tab />,
-        },
-      ],
-    },
     {
       value: '/about',
       visible: true,
@@ -186,27 +208,6 @@ const getMenuItems = (props) => {
           primaryTogglesNestedList: true,
           leftIcon: <LanguageIcon />,
           nestedItems: localeItems,
-        },
-        {
-          visible: !!isDesktop,
-          onClick: () => {
-            toggleThis('isMiniSwitchVisibility');
-          },
-          primaryText: intl.formatMessage({
-            id: 'menu_mini_mode',
-          }),
-          leftIcon: isMiniSwitchVisibility ? (
-            <MenuOpenIcon />
-          ) : (
-            <ChromeReaderMode />
-          ),
-        },
-        {
-          onClick: () => {
-            toggleThisTheme('isRTL');
-          },
-          primaryText: `${isRTL ? 'LTR' : 'RTL'} mode`,
-          leftIcon: isRTL ? <LTRIcon /> : <RTLIcon />,
         },
       ],
     },
