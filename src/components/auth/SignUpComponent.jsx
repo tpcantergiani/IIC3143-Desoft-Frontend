@@ -104,7 +104,7 @@ const SignUpComponent = () => {
         data: {
           name: username,
           email: userEmail,
-          home: '45',
+          home: userHome,
           type: userType,
         },
       }),
