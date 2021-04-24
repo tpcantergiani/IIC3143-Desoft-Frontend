@@ -280,17 +280,51 @@ const getMenuItems = (props) => {
         }),
         leftIcon: <GetApp />,
       },
+      {
+        value: '/signin',
+        onClick: isAuthorised
+          ? () => {
+            setAuth({ isAuthenticated: false });
+            dispatch(
+              logoutUser(),
+            );
+          }
+          : () => {},
+        visible: isAuthorised,
+        primaryText: isAuthorised
+          ? intl.formatMessage({ id: 'sign_out' })
+          : intl.formatMessage({ id: 'sign_in' }),
+        leftIcon: isAuthorised ? <ExitToAppIcon /> : <LockIcon />,
+      },
+      {
+        value: null,
+        visible: isAppInstallable && !isAppInstalled,
+        onClick: () => {
+          deferredPrompt.prompt();
+        },
+        primaryText: intl.formatMessage({
+          id: 'install',
+          defaultMessage: 'Install',
+        }),
+        leftIcon: <GetApp />,
+      },
     ];
   }
 
   return [
+    {
+      value: '/home',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'home' }),
+      leftIcon: <Home />,
+    },
+    { divider: true },
     {
       value: '/about',
       visible: true,
       primaryText: intl.formatMessage({ id: 'about' }),
       leftIcon: <InfoOutlined />,
     },
-    { divider: true },
     {
       primaryText: intl.formatMessage({ id: 'settings' }),
       primaryTogglesNestedList: true,
@@ -311,6 +345,34 @@ const getMenuItems = (props) => {
           nestedItems: localeItems,
         },
       ],
+    },
+    {
+      value: null,
+      visible: isAppInstallable && !isAppInstalled,
+      onClick: () => {
+        deferredPrompt.prompt();
+      },
+      primaryText: intl.formatMessage({
+        id: 'install',
+        defaultMessage: 'Install',
+      }),
+      leftIcon: <GetApp />,
+    },
+    {
+      value: '/signin',
+      onClick: isAuthorised
+        ? () => {
+          setAuth({ isAuthenticated: false });
+          dispatch(
+            logoutUser(),
+          );
+        }
+        : () => {},
+      visible: isAuthorised,
+      primaryText: isAuthorised
+        ? intl.formatMessage({ id: 'sign_out' })
+        : intl.formatMessage({ id: 'sign_in' }),
+      leftIcon: isAuthorised ? <ExitToAppIcon /> : <LockIcon />,
     },
     {
       value: null,

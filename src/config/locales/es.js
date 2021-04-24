@@ -53,6 +53,8 @@ const messages = defineMessages({
   save: 'Guardar',
   user_type: 'Tipo de usuario',
   homeN: 'Número de casa',
+  userExists: 'El usuario que ingresaste ya existe',
+  wrongData: 'Revisa los datos ingresados',
 
 });
 
