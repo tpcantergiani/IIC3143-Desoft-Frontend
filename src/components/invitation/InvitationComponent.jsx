@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
+import DatesComponent from '../dates/DatesComponent';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -179,6 +180,7 @@ const InvitationInformation = () => {
             name="plate"
             autoComplete="plate"
           />
+          <DatesComponent />
           {createError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
