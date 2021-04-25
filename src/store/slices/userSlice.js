@@ -3,12 +3,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { login, register } from '../../api/user';
+import { parseError } from '../../utils/functions';
 
 const initialState = {
   current: null,
   error: '',
   token: '',
   loading: false,
+  createError: false,
+  createLoading: false,
+  createErrorMsj: '',
 };
 
 const fetchUser = createAsyncThunk(
@@ -27,35 +31,6 @@ const createUser = createAsyncThunk(
   },
 );
 
-const user = {
-  access_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxOTE0MzY3MCwianRpIjoiZjY5NTg4OGItMGRlMS00ODdmLTkzMjMtMjBlYzA0ZjQ2ZTcwIiwibmJmIjoxNjE5MTQzNjcwLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MTk0MDI4NzB9.FkpC2OzOVVk-kuKdyUtrg47fp6xL5HRMHw3JGoPZ9R4',
-  data: {
-    email: 'admin@uc.cl',
-    home: {
-      id: 1,
-      number: 'Porteria',
-      patents: [
-        {
-          id: 1,
-          patent: '111',
-        },
-        {
-          id: 2,
-          patent: '222',
-        },
-        {
-          id: 3,
-          patent: '333',
-        },
-      ],
-    },
-    id: 1,
-    last_name: 'admin',
-    name: 'admin',
-    type: 'Admin',
-  },
-};
-
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -70,6 +45,15 @@ const userSlice = createSlice({
     setLoading: (state, action) => {
       state.error = action.payload;
     },
+    setCreateError: (state, action) => {
+      state.createError = action.payload;
+    },
+    setCreateLoading: (state, action) => {
+      state.createLoading = action.payload;
+    },
+    setCreateErrorMsj: (state, action) => {
+      state.createErrorMsj = action.payload;
+    },
   },
   extraReducers: {
     [fetchUser.fulfilled]: (state, action) => {
@@ -78,22 +62,38 @@ const userSlice = createSlice({
       state.error = '';
       state.loading = false;
     },
-    [fetchUser.rejected]: (state, _action) => {
-      state.token = 'fasdjkfhaskñifhadsñlfjhasñlfjas';
-      state.current = user.data;
-      // state.error = 'Correo y/o contraseña inválida';
+    [fetchUser.rejected]: (state, action) => {
+      state.error = 'Correo y/o contraseña inválida';
       state.loading = false;
     },
-    [fetchUser.pending]: (state, _action) => {
+    [fetchUser.pending]: (state, action) => {
       state.loading = true;
       state.error = '';
     },
-    [createUser.fulfilled]: (_state, action) => {
+
+    [createUser.fulfilled]: (state, _action) => {
+      state.createLoading = false;
+      state.createErrorMsj = '';
+    },
+    [createUser.pending]: (state, _action) => {
+      state.createLoading = true;
+      state.createErrorMsj = 'NoError';
+    },
+    [createUser.rejected]: (state, action) => {
+      if (parseError(action.error?.message) === '406') {
+        state.createErrorMsj = 'wrongData';
+      } else if (parseError(action.error?.message) === '409') {
+        state.createErrorMsj = 'userExists';
+      }
+      state.createLoading = false;
+      state.createError = true;
     },
   },
 });
 
-export const { logoutUser, setErrorMsg, setLoading } = userSlice.actions;
+export const {
+  logoutUser, setErrorMsg, setLoading, setCreateLoading, setCreateError, setCreateErrorMsj,
+} = userSlice.actions;
 export const fetchUserThunk = fetchUser;
 export const createUserThunk = createUser;
 export const userReducer = userSlice.reducer;
