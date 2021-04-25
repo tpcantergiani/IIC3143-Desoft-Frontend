@@ -87,7 +87,7 @@ const getMenuItems = (props) => {
     ];
   }
 
-  if (auth.current.type === ('Admin')) {
+  if (auth.current?.type === ('Admin')) {
     return [
       {
         value: '/home',
@@ -192,7 +192,7 @@ const getMenuItems = (props) => {
     ];
   }
 
-  if (auth.current.type === ('Guard')) {
+  if (auth.current?.type === ('Guard')) {
     return [
       {
         value: '/home',
