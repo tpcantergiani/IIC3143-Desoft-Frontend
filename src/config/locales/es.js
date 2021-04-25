@@ -56,6 +56,7 @@ const messages = defineMessages({
   userExists: 'El usuario que ingresaste ya existe',
   wrongData: 'Revisa los datos ingresados',
   password_set: 'Crea una contraseña',
+  invitation_info: 'Crear Información',
 
 });
 

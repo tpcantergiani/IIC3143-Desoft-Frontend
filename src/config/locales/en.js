@@ -56,6 +56,7 @@ const messages = defineMessages({
   userExists: 'User already exists',
   wrongData: 'Wrong data. Please, check again',
   password_set: 'Create a password',
+  invitation_info: 'Create Invitation',
 });
 
 export default messages;
