@@ -9,6 +9,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "base-shell": "1.x",
+    "firebase": "^8.4.2",
     "github-markdown-css": "4.x",
     "intl": "1.x",
     "intl-locales-supported": "1.x",

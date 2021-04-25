@@ -104,6 +104,12 @@ const getMenuItems = (props) => {
         leftIcon: <Home />,
       },
       {
+        value: '/new_entry_guard',
+        visible: isAuthorised,
+        primaryText: 'Entrada',
+        leftIcon: <Home />,
+      },
+      {
         primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
         visible: isAuthorised && (auth.current.type === 'Admin'),
         primaryTogglesNestedList: true,
@@ -206,6 +212,12 @@ const getMenuItems = (props) => {
         value: '/home',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'home' }),
+        leftIcon: <Home />,
+      },
+      {
+        value: '/new_entry_guard',
+        visible: isAuthorised,
+        primaryText: 'Entrada',
         leftIcon: <Home />,
       },
       {

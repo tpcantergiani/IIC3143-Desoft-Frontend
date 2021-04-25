@@ -52,7 +52,7 @@ const user = {
     id: 1,
     last_name: 'admin',
     name: 'admin',
-    type: 'Admin',
+    type: 'Guard',
   },
 };
 
