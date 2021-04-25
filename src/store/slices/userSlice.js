@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { login, register } from '../../api/user';
-import parseError from '../../utils/functions';
+import { parseError } from '../../utils/functions';
 
 const initialState = {
   current: null,
@@ -51,6 +51,9 @@ const userSlice = createSlice({
     setCreateLoading: (state, action) => {
       state.createLoading = action.payload;
     },
+    setCreateErrorMsj: (state, action) => {
+      state.createErrorMsj = action.payload;
+    },
   },
   extraReducers: {
     [fetchUser.fulfilled]: (state, action) => {
@@ -89,7 +92,7 @@ const userSlice = createSlice({
 });
 
 export const {
-  logoutUser, setErrorMsg, setLoading, setCreateLoading, setCreateError,
+  logoutUser, setErrorMsg, setLoading, setCreateLoading, setCreateError, setCreateErrorMsj,
 } = userSlice.actions;
 export const fetchUserThunk = fetchUser;
 export const createUserThunk = createUser;

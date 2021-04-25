@@ -15,9 +15,11 @@ const FilterDemo = lazy(() => import('../pages/FilterDemo'));
 const ListPageDemo = lazy(() => import('../pages/ListPageDemo'));
 const TabsDemo = lazy(() => import('../pages/TabsDemo'));
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'));
+const CreatePassword = lazy(() => import('../pages/PasswordCreate/PasswordCreate'));
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/home" exact component={SignIn} />,
+  <UnauthorizedRoute path="/create-password" redirectTo="/signin" exact component={CreatePassword} />,
   <UnauthorizedRoute
     path="/password_reset"
     redirectTo="/"

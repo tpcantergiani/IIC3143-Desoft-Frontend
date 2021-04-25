@@ -55,6 +55,7 @@ const messages = defineMessages({
   homeN: 'Home number',
   userExists: 'User already exists',
   wrongData: 'Wrong data. Please, check again',
+  password_set: 'Create a password',
 });
 
 export default messages;

@@ -13,8 +13,10 @@ import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  createUserThunk, setErrorMsg, setCreateLoading, setCreateError,
+  createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
+
+import { validateEmail } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -86,40 +88,50 @@ const SignUpComponent = () => {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(setCreateError(false));
+    dispatch(setCreateLoading(false));
+  }, []);
+
   const clearFields = () => {
     setUsername('');
     setUserEmail('');
     setUserType('Resident');
   };
 
-  useEffect(() => {
-    dispatch(setCreateError(false));
-    dispatch(setCreateLoading(false));
-  }, []);
+  const validate = () => {
+    if (validateEmail(userEmail) && username.length > 0 && userHome.length > 0) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const r = await dispatch(
-      createUserThunk({
-        data: {
-          name: username,
-          email: userEmail,
-          home: userHome,
-          type: userType,
-        },
-      }),
-    );
-    if (r.payload?.data) {
-      clearFields();
-      enqueueSnackbar('Usuario agregado correctamente', {
-        variant: 'success',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        },
-      });
+    if (validate) {
+      const r = await dispatch(
+        createUserThunk({
+          data: {
+            name: username,
+            email: userEmail,
+            home: userHome,
+            type: userType,
+          },
+        }),
+      );
+
+      if (r.payload?.data) {
+        clearFields();
+        enqueueSnackbar('Usuario agregado correctamente', {
+          variant: 'success',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+        });
+      }
     } else {
-      dispatch(setErrorMsg('Debes rellenar todos los campos'));
+      dispatch(setCreateErrorMsj('wrongData'));
     }
   };
 
@@ -155,6 +167,7 @@ const SignUpComponent = () => {
             onInput={(e) => setUserEmail(e.target.value)}
             variant="outlined"
             margin="normal"
+            validators={['required']}
             required
             fullWidth
             id="email"

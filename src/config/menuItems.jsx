@@ -69,14 +69,6 @@ const getMenuItems = (props) => {
   if (isAuthMenuOpen || !isAuthorised) {
     return [
       {
-        value: '/my_account',
-        primaryText: intl.formatMessage({
-          id: 'my_account',
-          defaultMessage: 'My Account',
-        }),
-        leftIcon: <AccountBoxIcon />,
-      },
-      {
         value: '/signin',
         onClick: isAuthorised
           ? () => {

@@ -34,7 +34,7 @@ const messages = defineMessages({
   filter_demo: 'Demo filter',
   list_page_demo: 'List Page demo with {count} rows',
   forgot_password: 'Olvidé mi contraseña',
-  password_reset: 'Volver a crear contraseña',
+  password_reset: 'Crear contraseña',
   password_confirm: 'Confirmar Contraseña',
   registration: 'Registro',
   my_account: 'Mi Perfil',
@@ -55,6 +55,7 @@ const messages = defineMessages({
   homeN: 'Número de casa',
   userExists: 'El usuario que ingresaste ya existe',
   wrongData: 'Revisa los datos ingresados',
+  password_set: 'Crea una contraseña',
 
 });
 
