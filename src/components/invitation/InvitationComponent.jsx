@@ -63,8 +63,10 @@ const useStyles = makeStyles((theme) => ({
 const InvitationInformation = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const [username, setUsername] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userRut, setUserRut] = useState('');
+  const [userPlate, setUserPlate] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -92,42 +94,21 @@ const InvitationInformation = () => {
   }, []);
 
   const clearFields = () => {
-    setUsername('');
-    setUserEmail('');
+    setName('');
+    setLastName('');
+    setUserRut('');
+    setUserPlate('');
   };
 
   const validate = () => {
-    if (validateEmail(userEmail) && username.length) {
+    if (validateEmail(userRut) && name.length && lastName) {
       return true;
     }
     return false;
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (validate) {
-      const r = await dispatch(
-        createUserThunk({
-          data: {
-            name: username,
-            email: userEmail,
-          },
-        }),
-      );
-
-      if (r.payload?.data) {
-        clearFields();
-        enqueueSnackbar('Usuario invitado correctamente', {
-          variant: 'success',
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
-          },
-        });
-      }
-    } else {
-      dispatch(setCreateErrorMsj('wrongData'));
-    }
+    console.log('handle submit');
   };
 
   return (
@@ -138,36 +119,65 @@ const InvitationInformation = () => {
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
-            value={username}
-            onInput={(e) => setUsername(e.target.value)}
+            value={name}
+            onInput={(e) => setName(e.target.value)}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="name"
             label={intl.formatMessage({
-              id: 'username',
-              defaultMessage: 'Username',
+              id: 'name',
+              defaultMessage: 'Name',
             })}
-            name="username"
-            autoComplete="username"
+            name="name"
+            autoComplete="name"
             autoFocus
           />
           <TextField
-            value={userEmail}
-            onInput={(e) => setUserEmail(e.target.value)}
+            value={lastName}
+            onInput={(e) => setLastName(e.target.value)}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label={intl.formatMessage({
+              id: 'last_name',
+              defaultMessage: 'name',
+            })}
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            value={userRut}
+            onInput={(e) => setUserRut(e.target.value)}
             variant="outlined"
             margin="normal"
             validators={['required']}
             required
             fullWidth
-            id="email"
+            id="rut"
+            label="Rut"
+            name="rut"
+            autoComplete="rut"
+          />
+          <TextField
+            value={userPlate}
+            onInput={(e) => setUserPlate(e.target.value)}
+            variant="outlined"
+            margin="normal"
+            validators={['required']}
+            required
+            fullWidth
+            id="plate"
             label={intl.formatMessage({
-              id: 'email',
-              defaultMessage: 'E-Mail',
+              id: 'plate',
+              defaultMessage: 'License Plate',
             })}
-            name="email"
-            autoComplete="email"
+            name="plate"
+            autoComplete="plate"
           />
           {createError && (
             <Typography component="h5" className={classes.error}>
