@@ -14,6 +14,7 @@ import {
   Home,
   Assessment,
   History,
+  Email,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -94,6 +95,12 @@ const getMenuItems = (props) => {
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'home' }),
         leftIcon: <Home />,
+      },
+      {
+        value: '/invitation',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'invitation_info' }),
+        leftIcon: <Email />,
       },
       {
         primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
