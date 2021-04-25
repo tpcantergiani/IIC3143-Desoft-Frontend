@@ -59,6 +59,7 @@ const messages = defineMessages({
   invitation_info: 'Crear Información',
   last_name: 'Apellido',
   plate: 'Patente',
+  invitation_date: 'Fecha Invitación',
 });
 
 export default messages;
