@@ -57,6 +57,8 @@ const messages = defineMessages({
   wrongData: 'Wrong data. Please, check again',
   password_set: 'Create a password',
   invitation_info: 'Create Invitation',
+  last_name: 'Last Name',
+  plate: 'License Plate',
 });
 
 export default messages;
