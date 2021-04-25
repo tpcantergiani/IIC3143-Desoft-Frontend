@@ -65,8 +65,6 @@ const InvitationInformation = () => {
   const intl = useIntl();
   const [username, setUsername] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [userType, setUserType] = useState('Resident');
-  const [userHome, setUserHome] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -96,11 +94,10 @@ const InvitationInformation = () => {
   const clearFields = () => {
     setUsername('');
     setUserEmail('');
-    setUserType('Resident');
   };
 
   const validate = () => {
-    if (validateEmail(userEmail) && username.length > 0 && userHome.length > 0) {
+    if (validateEmail(userEmail) && username.length) {
       return true;
     }
     return false;
@@ -114,15 +111,13 @@ const InvitationInformation = () => {
           data: {
             name: username,
             email: userEmail,
-            home: userHome,
-            type: userType,
           },
         }),
       );
 
       if (r.payload?.data) {
         clearFields();
-        enqueueSnackbar('Usuario agregado correctamente', {
+        enqueueSnackbar('Usuario invitado correctamente', {
           variant: 'success',
           anchorOrigin: {
             vertical: 'top',
@@ -135,15 +130,11 @@ const InvitationInformation = () => {
     }
   };
 
-  const handleChange = (event) => {
-    setUserType(event.target.value);
-  };
-
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
-          {intl.formatMessage({ id: 'registration' })}
+          {intl.formatMessage({ id: 'invitation_info' })}
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
@@ -178,60 +169,6 @@ const InvitationInformation = () => {
             name="email"
             autoComplete="email"
           />
-          <TextField
-            value={userHome}
-            type="number"
-            onInput={(e) => setUserHome(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="home"
-            label={intl.formatMessage({
-              id: 'homeN',
-            })}
-            name="home"
-            autoComplete="home"
-          />
-          <FormControl
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            required
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
-            <Select
-              native
-              value={userType}
-              onChange={handleChange}
-              label="Tipo de usuario "
-              inputProps={{
-                name: 'age',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value="Resident">
-                {intl.formatMessage({
-                  id: 'resident',
-                })}
-
-              </option>
-              <option value="Guard">
-                {intl.formatMessage({
-                  id: 'guard',
-                })}
-
-              </option>
-              <option value="Admin">
-                {intl.formatMessage({
-                  id: 'admin',
-                })}
-
-              </option>
-            </Select>
-          </FormControl>
-
           {createError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
