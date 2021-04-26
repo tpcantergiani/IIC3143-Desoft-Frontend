@@ -70,7 +70,7 @@ const InvitationComponent = () => {
   const [lastName, setLastName] = useState('');
   const [userRut, setUserRut] = useState('');
   const [userPlate, setUserPlate] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [invTimeStart, SetInvTimeStart] = useState('00:00');
   const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
   const { enqueueSnackbar } = useSnackbar();
