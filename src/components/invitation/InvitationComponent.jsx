@@ -19,7 +19,6 @@ import {
 } from '../../store/slices/userSlice';
 import DatesComponent from '../dates/DatesComponent';
 import TimeComponent from '../dates/TimeComponent';
-
 import { validateEmail } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
