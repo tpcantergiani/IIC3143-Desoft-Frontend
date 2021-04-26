@@ -53,6 +53,7 @@ const messages = defineMessages({
   save: 'Guardar',
   user_type: 'Tipo de usuario',
   homeN: 'Número de casa',
+  rut: 'Rut',
 
 });
 

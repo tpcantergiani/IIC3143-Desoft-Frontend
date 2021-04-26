@@ -15,6 +15,7 @@
     "intl-locales-supported": "1.x",
     "jss-rtl": "0.x",
     "material-ui-shell": "1.x",
+    "moment": "^2.29.1",
     "notistack": "1.x",
     "react": "17.x",
     "react-custom-scrollbars": "4.x",

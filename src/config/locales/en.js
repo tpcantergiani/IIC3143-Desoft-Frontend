@@ -53,6 +53,7 @@ const messages = defineMessages({
   save: 'Save',
   user_type: 'User type',
   homeN: 'Home number',
+  rut: 'Rut',
 });
 
 export default messages;

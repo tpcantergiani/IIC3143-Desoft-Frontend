@@ -1,30 +1,20 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+/* eslint-disable max-len */
+import {
+  Button, Paper, TextField, Input,
+} from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { useSnackbar } from 'notistack';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import { createUserThunk, setErrorMsg, setLoading } from '../../store/slices/userSlice';
+import moment from 'moment';
+import firebaseConfig from '../../firebase/firebase';
+import RegisterVisitComponent from './RegisterVisitComponent';
+import dateToStr from '../../utils/datetime';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyCV7g-Z7SLoJHfZe2_wA-bi-Jn0wAuurdI',
-  authDomain: 'reguard-desoft.firebaseapp.com',
-  projectId: 'reguard-desoft',
-  storageBucket: 'reguard-desoft.appspot.com',
-  messagingSenderId: '1026451438412',
-  appId: '1:1026451438412:web:a01bb50ab7611010436de9',
-  measurementId: 'G-LFRM84R26W',
-};
-
-firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
+console.log(dateToStr('1'));
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,177 +55,102 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+firebase.initializeApp(firebaseConfig);
+
 const NewEntryGuardComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const [username, setUsername] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userType, setUserType] = useState('');
-  const [userHome, setUserHome] = useState('');
-  const [pictureURL, setPictureURL] = useState('');
+  const storage = firebase.storage();
+  const [rut, setRut] = useState('');
+  const [fileUploaded, setFileUploaded] = useState(false);
+  const [registeredVisit, setRegisteredVisit] = useState(true);
+  const [isFulfilled, setIsFulfilled] = useState(true);
+  const [uploadValue, setUploadValue] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
-  const clearFields = () => {
-    setUsername('');
-    setUserEmail('');
-    setUserType('');
-    setPictureURL('');
+  useEffect(() => {
+    if (fileUploaded && rut.length > 0) {
+      setIsFulfilled(false);
+    } else setIsFulfilled(true);
+  }, [fileUploaded, rut]);
+
+  const handleFileChange = (event) => {
+    const inputFile = event.target.files[0];
+
+    if (inputFile?.name?.length > 0) {
+      const name = `images/picture_${dateToStr(inputFile.name)}`;
+      const storageRef = storage.ref(name);
+      const task = storageRef.put(inputFile);
+      task.on('state_changed', (snapshot) => {
+        const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUploadValue(percentage);
+      }, (error) => {
+        console.error(error.message);
+      });
+      setFileUploaded(true);
+    } else {
+      setFileUploaded(false);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const r = await dispatch(
-      createUserThunk({
-        name: username,
-        email: userEmail,
-        home: '45',
-        type: userType,
-      }),
-    );
 
-    if (r.payload?.data) {
-      clearFields();
-      enqueueSnackbar('Usuario agregado correctamente', {
-        variant: 'success',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        },
-      });
-    } else {
-      dispatch(setErrorMsg('Debes rellenar todos los campos'));
-    }
-  };
-
-  const handleChange = (event) => {
-    setUserType(event.target.value);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const storageRef = firebase.storage().ref(`pictures/${file.name}`);
-    const task = storageRef.put(file);
-    SetPictureURL(`pictures/${file.name}`);
-    // task.on('state_changed', (snapshot) => {
-    //   const percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //   this.setState({
-    //     uploadValue: percentage,
-    //   });
-    // }, (error) => {
-    //   console.error(error.message);
-    // }, () => {
-    //   // Upload complete
-    //   this.setState({
-    //     picture: task.snapshot.getdownloadURL,
-    //   });
+    setRegisteredVisit(false);
+    // enqueueSnackbar('', {
+    //   variant: 'success',
+    //   anchorOrigin: {
+    //     vertical: 'top',
+    //     horizontal: 'center',
+    //   },
     // });
   };
 
   return (
     <Paper className={classes.paper} elevation={6}>
-      <div className={classes.container}>
-        <Typography component="h1" variant="h5">
-          {intl.formatMessage({ id: 'registration' })}
-        </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <input type="file" onChange={handleFileChange} />
-          <TextField
-            value={username}
-            onInput={(e) => setUsername(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label={intl.formatMessage({
-              id: 'username',
-              defaultMessage: 'Username',
-            })}
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            value={userEmail}
-            onInput={(e) => setUserEmail(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label={intl.formatMessage({
-              id: 'email',
-              defaultMessage: 'E-Mail',
-            })}
-            name="email"
-            autoComplete="email"
-          />
-          <TextField
-            value={userHome}
-            type="number"
-            onInput={(e) => setUserHome(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="home"
-            label={intl.formatMessage({
-              id: 'homeN',
-            })}
-            name="home"
-            autoComplete="home"
-          />
-          <FormControl
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            required
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
-            <Select
-              native
-              value={userType}
-              onChange={handleChange}
-              label="Tipo de usuario "
-              inputProps={{
-                name: 'age',
-                id: 'outlined-age-native-simple',
+      {registeredVisit
+        ? (
+          <div className={classes.container}>
+            <Typography component="h1" variant="h5">
+              {intl.formatMessage({ id: 'registration' })}
+            </Typography>
+            <TextField
+              value={rut}
+              onInput={(e) => {
+                setRut(e.target.value);
               }}
-            >
-              <option value="Resident">
-                {intl.formatMessage({
-                  id: 'resident',
-                })}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="rut"
+              label={intl.formatMessage({
+                id: 'rut',
+                defaultMessage: 'Rut',
+              })}
+              name="rut"
+              autoComplete="rut"
+              autoFocus
+              helperText="12.345.678-k"
+            />
+            <form className={classes.form} onSubmit={handleSubmit}>
 
-              </option>
-              <option value="Guard">
-                {intl.formatMessage({
-                  id: 'guard',
-                })}
-
-              </option>
-              <option value="Admin">
-                {intl.formatMessage({
-                  id: 'admin',
-                })}
-
-              </option>
-            </Select>
-          </FormControl>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
-          </Button>
-        </form>
-      </div>
+              <Input type="file" variant="outlined" onChange={handleFileChange} />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={isFulfilled}
+              >
+                {intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
+              </Button>
+            </form>
+          </div>
+        )
+        : <RegisterVisitComponent />}
     </Paper>
   );
 };
