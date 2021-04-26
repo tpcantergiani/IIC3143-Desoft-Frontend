@@ -71,8 +71,9 @@ const InvitationComponent = () => {
   const [lastName, setLastName] = useState('');
   const [userRut, setUserRut] = useState('');
   const [userPlate, setUserPlate] = useState('');
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
+  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [invTimeStart, SetInvTimeStart] = useState('00:00');
+  const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -98,9 +99,16 @@ const InvitationComponent = () => {
     dispatch(setCreateError(false));
     dispatch(setCreateLoading(false));
   }, []);
+
   useEffect(() => {
-    console.log('Cambio de hora', selectedDate);
+    console.log('Cambio de día', selectedDate);
   }, [selectedDate]);
+  useEffect(() => {
+    console.log('Cambio de hora inicial', invTimeStart);
+  }, [invTimeStart]);
+  useEffect(() => {
+    console.log('Cambio de hora final', invTimeEnd);
+  }, [invTimeEnd]);
 
   const clearFields = () => {
     setName('');
@@ -189,8 +197,8 @@ const InvitationComponent = () => {
             autoComplete="plate"
           />
           <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-          <TimeComponent strTime="start_time" defaultTime="00:00" />
-          <TimeComponent strTime="end_time" defaultTime="23:59" />
+          <TimeComponent strTime="start_time" defaultTime="00:00" setInvTime={SetInvTimeStart} />
+          <TimeComponent strTime="end_time" defaultTime="23:59" setInvTime={SetInvTimeEnd} />
           {createError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
