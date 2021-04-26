@@ -60,6 +60,8 @@ const messages = defineMessages({
   last_name: 'Apellido',
   plate: 'Patente',
   invitation_date: 'Fecha Invitación',
+  start_time: 'Hora Inicio',
+  end_time: 'Hora Fin',
 });
 
 export default messages;

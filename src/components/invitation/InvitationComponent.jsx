@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Grid from '@material-ui/core/Grid';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +17,7 @@ import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
 import DatesComponent from '../dates/DatesComponent';
+import TimeComponent from '../dates/TimeComponent';
 
 import { validateEmail } from '../../utils/functions';
 
@@ -61,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InvitationInformation = () => {
+const InvitationComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
   const [name, setName] = useState('');
@@ -181,6 +183,8 @@ const InvitationInformation = () => {
             autoComplete="plate"
           />
           <DatesComponent />
+          <TimeComponent prueba="start_time" defaultTime="00:00" />
+          <TimeComponent prueba="end_time" defaultTime="23:59" />
           {createError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
@@ -203,4 +207,4 @@ const InvitationInformation = () => {
   );
 };
 
-export default InvitationInformation;
+export default InvitationComponent;
