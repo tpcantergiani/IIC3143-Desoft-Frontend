@@ -62,6 +62,7 @@ const messages = defineMessages({
   invitation_date: 'Invitation Date',
   start_time: 'Start Time',
   end_time: 'End Time',
+  date_str: 'Invitation Date',
 });
 
 export default messages;

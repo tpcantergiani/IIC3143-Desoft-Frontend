@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Label } from '@material-ui/icons';
 import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
@@ -70,6 +71,8 @@ const InvitationComponent = () => {
   const [lastName, setLastName] = useState('');
   const [userRut, setUserRut] = useState('');
   const [userPlate, setUserPlate] = useState('');
+  const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -95,6 +98,9 @@ const InvitationComponent = () => {
     dispatch(setCreateError(false));
     dispatch(setCreateLoading(false));
   }, []);
+  useEffect(() => {
+    console.log('Cambio de hora', selectedDate);
+  }, [selectedDate]);
 
   const clearFields = () => {
     setName('');
@@ -182,15 +188,14 @@ const InvitationComponent = () => {
             name="plate"
             autoComplete="plate"
           />
-          <DatesComponent />
-          <TimeComponent prueba="start_time" defaultTime="00:00" />
-          <TimeComponent prueba="end_time" defaultTime="23:59" />
+          <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+          <TimeComponent strTime="start_time" defaultTime="00:00" />
+          <TimeComponent strTime="end_time" defaultTime="23:59" />
           {createError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
             </Typography>
           )}
-
           <Button
             type="submit"
             fullWidth

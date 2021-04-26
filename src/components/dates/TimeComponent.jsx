@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TimeComponent = ({ prueba, defaultTime }) => {
+const TimeComponent = ({ strTime, defaultTime }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -25,7 +25,7 @@ const TimeComponent = ({ prueba, defaultTime }) => {
       <TextField
         id="time"
         label={intl.formatMessage({
-          id: prueba,
+          id: strTime,
           defaultMessage: 'Time',
         })}
         type="time"
