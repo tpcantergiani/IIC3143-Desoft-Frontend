@@ -15,11 +15,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Label } from '@material-ui/icons';
 import {
-  createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
-} from '../../store/slices/userSlice';
+  sendInvitationThunk, setInvitationError, setInvitationLoading, setInvitationErrorMsj,
+} from '../../store/slices/featuresSlice';
 import DatesComponent from '../dates/DatesComponent';
 import TimeComponent from '../dates/TimeComponent';
-import { validateEmail } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -77,10 +76,16 @@ const InvitationComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const {
-    current, createError, createErrorMsj, createLoading,
-  } = useSelector((state) => state.user);
+    invitationErrorMsj, invitationError, invitationLoading,
+  } = useSelector((state) => state.features);
+
+  const { current } = useSelector((state) => state.user);
 
   useEffect(() => {
+    dispatch(setInvitationError(false));
+    dispatch(setInvitationErrorMsj(''));
+    dispatch(setInvitationLoading(''));
+
     if (current.type !== 'Admin') {
       const _location = history.location;
       let _route = '/notfound';
@@ -95,9 +100,8 @@ const InvitationComponent = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setCreateError(false));
-    dispatch(setCreateLoading(false));
-  }, []);
+    console.log('Cambio de día', selectedDate);
+  }, [selectedDate]);
 
   const clearFields = () => {
     setName('');
@@ -107,14 +111,27 @@ const InvitationComponent = () => {
   };
 
   const validate = () => {
-    if (validateEmail(userRut) && name.length && lastName) {
+    if (userRut.length > 0 && name.length > 0 && lastName.length > 0) {
       return true;
     }
     return false;
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     console.log('handle submit');
+    // TODO descomentar esto para enviar al back
+    // await dispatch(
+    //   sendInvitationThunk({
+    //     name,
+    //     lastname: lastName,
+    //     rut: userRut,
+    //     plate: userPlate,
+    //     date: selectedDate,
+    //     start_time: invTimeStart,
+    //     end_time: invTimeEnd,
+    //   }),
+    // );
   };
 
   return (
@@ -187,20 +204,20 @@ const InvitationComponent = () => {
           <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
           <TimeComponent strTime="start_time" defaultTime="00:00" setInvTime={SetInvTimeStart} />
           <TimeComponent strTime="end_time" defaultTime="23:59" setInvTime={SetInvTimeEnd} />
-          {createError && (
+          {/* {invitationError && (
             <Typography component="h5" className={classes.error}>
-              {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
+              {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}
             </Typography>
-          )}
+          )} */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={createLoading}
+            disabled={invitationLoading}
           >
-            {createLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
+            {invitationLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
           </Button>
         </form>
       </div>
