@@ -175,7 +175,6 @@ const InvitationComponent = () => {
             variant="outlined"
             margin="normal"
             validators={['required']}
-            required
             fullWidth
             id="plate"
             label={intl.formatMessage({
