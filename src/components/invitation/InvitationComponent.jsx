@@ -99,16 +99,6 @@ const InvitationComponent = () => {
     dispatch(setCreateLoading(false));
   }, []);
 
-  useEffect(() => {
-    console.log('Cambio de día', selectedDate);
-  }, [selectedDate]);
-  useEffect(() => {
-    console.log('Cambio de hora inicial', invTimeStart);
-  }, [invTimeStart]);
-  useEffect(() => {
-    console.log('Cambio de hora final', invTimeEnd);
-  }, [invTimeEnd]);
-
   const clearFields = () => {
     setName('');
     setLastName('');
