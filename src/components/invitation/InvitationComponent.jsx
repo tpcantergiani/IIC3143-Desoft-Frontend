@@ -127,6 +127,7 @@ const InvitationComponent = () => {
       }),
     );
     if (validate) {
+      console.log('Es valido y lo mando al back');
       const r = await dispatch(
         sendInvitationThunk({
           name,
@@ -150,7 +151,7 @@ const InvitationComponent = () => {
         });
       }
     } else {
-      dispatch(setCreateErrorMsj('wrongData'));
+      dispatch(setInvitationErrorMsj('wrongData'));
     }
   };
 
