@@ -57,6 +57,7 @@ const messages = defineMessages({
   wrongData: 'Wrong data. Please, check again',
   password_set: 'Create a password',
   invitation_info: 'Create Invitation',
+  name: 'Name',
   last_name: 'Last Name',
   plate: 'License Plate',
   invitation_date: 'Invitation Date',
