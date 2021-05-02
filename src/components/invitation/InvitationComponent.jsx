@@ -6,14 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Label } from '@material-ui/icons';
 import {
   sendInvitationThunk, setInvitationError, setInvitationLoading, setInvitationErrorMsj,
 } from '../../store/slices/featuresSlice';
@@ -132,6 +127,32 @@ const InvitationComponent = () => {
     //     end_time: invTimeEnd,
     //   }),
     // );
+    // if (validate) {
+    //   const r = await dispatch(
+    //   sendInvitationThunk({
+    //     name,
+    //     lastname: lastName,
+    //     rut: userRut,
+    //     plate: userPlate,
+    //     date: selectedDate,
+    //     start_time: invTimeStart,
+    //     end_time: invTimeEnd,
+    //   }),
+    // );
+
+    //   if (r.payload?.data) {
+    //     clearFields();
+    //     enqueueSnackbar('Invitacion agregada correctamente', {
+    //       variant: 'success',
+    //       anchorOrigin: {
+    //         vertical: 'top',
+    //         horizontal: 'center',
+    //       },
+    //     });
+    //   }
+    // } else {
+    //   dispatch(setCreateErrorMsj('wrongData'));
+    // }
   };
 
   return (
