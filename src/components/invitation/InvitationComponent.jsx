@@ -115,44 +115,43 @@ const InvitationComponent = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('handle submit');
-    // TODO descomentar esto para enviar al back
-    // await dispatch(
-    //   sendInvitationThunk({
-    //     name,
-    //     lastname: lastName,
-    //     rut: userRut,
-    //     plate: userPlate,
-    //     date: selectedDate,
-    //     start_time: invTimeStart,
-    //     end_time: invTimeEnd,
-    //   }),
-    // );
-    // if (validate) {
-    //   const r = await dispatch(
-    //   sendInvitationThunk({
-    //     name,
-    //     lastname: lastName,
-    //     rut: userRut,
-    //     plate: userPlate,
-    //     date: selectedDate,
-    //     start_time: invTimeStart,
-    //     end_time: invTimeEnd,
-    //   }),
-    // );
+    await dispatch(
+      sendInvitationThunk({
+        name,
+        lastname: lastName,
+        rut: userRut,
+        plate: userPlate,
+        date: selectedDate,
+        start_time: invTimeStart,
+        end_time: invTimeEnd,
+      }),
+    );
+    if (validate) {
+      const r = await dispatch(
+        sendInvitationThunk({
+          name,
+          lastname: lastName,
+          rut: userRut,
+          plate: userPlate,
+          date: selectedDate,
+          start_time: invTimeStart,
+          end_time: invTimeEnd,
+        }),
+      );
 
-    //   if (r.payload?.data) {
-    //     clearFields();
-    //     enqueueSnackbar('Invitacion agregada correctamente', {
-    //       variant: 'success',
-    //       anchorOrigin: {
-    //         vertical: 'top',
-    //         horizontal: 'center',
-    //       },
-    //     });
-    //   }
-    // } else {
-    //   dispatch(setCreateErrorMsj('wrongData'));
-    // }
+      if (r.payload?.data) {
+        clearFields();
+        enqueueSnackbar('Invitacion agregada correctamente', {
+          variant: 'success',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+        });
+      }
+    } else {
+      dispatch(setCreateErrorMsj('wrongData'));
+    }
   };
 
   return (
