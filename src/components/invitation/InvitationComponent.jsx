@@ -94,10 +94,6 @@ const InvitationComponent = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log('Cambio de día', selectedDate);
-  }, [selectedDate]);
-
   const clearFields = () => {
     setName('');
     setLastName('');
@@ -114,20 +110,7 @@ const InvitationComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('handle submit');
-    await dispatch(
-      sendInvitationThunk({
-        name,
-        lastname: lastName,
-        rut: userRut,
-        plate: userPlate,
-        date: selectedDate,
-        start_time: invTimeStart,
-        end_time: invTimeEnd,
-      }),
-    );
     if (validate) {
-      console.log('Es valido y lo mando al back');
       const r = await dispatch(
         sendInvitationThunk({
           name,
@@ -139,8 +122,7 @@ const InvitationComponent = () => {
           end_time: invTimeEnd,
         }),
       );
-
-      if (r.payload?.data) {
+      if (r.payload?.msg) {
         clearFields();
         enqueueSnackbar('Invitacion agregada correctamente', {
           variant: 'success',
