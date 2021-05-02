@@ -103,6 +103,8 @@ const InvitationComponent = () => {
     setLastName('');
     setUserRut('');
     setUserPlate('');
+    SetInvTimeStart('00:00');
+    SetInvTimeEnd('23:59');
   };
 
   const validate = () => {
@@ -114,18 +116,6 @@ const InvitationComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('handle submit');
-    await dispatch(
-      sendInvitationThunk({
-        name,
-        lastname: lastName,
-        rut: userRut,
-        plate: userPlate,
-        date: selectedDate,
-        start_time: invTimeStart,
-        end_time: invTimeEnd,
-      }),
-    );
     if (validate) {
       console.log('Es valido y lo mando al back');
       const r = await dispatch(
@@ -139,8 +129,9 @@ const InvitationComponent = () => {
           end_time: invTimeEnd,
         }),
       );
-
-      if (r.payload?.data) {
+      console.log(r.payload?.msg);
+      if (r.payload?.msg) {
+        console.log('holi');
         clearFields();
         enqueueSnackbar('Invitacion agregada correctamente', {
           variant: 'success',
@@ -156,93 +147,91 @@ const InvitationComponent = () => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={6}>
-      <div className={classes.container}>
-        <Typography component="h1" variant="h5">
-          {intl.formatMessage({ id: 'invitation_info' })}
-        </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
-          <TextField
-            value={name}
-            onInput={(e) => setName(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label={intl.formatMessage({
-              id: 'name',
-              defaultMessage: 'Name',
-            })}
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
-          <TextField
-            value={lastName}
-            onInput={(e) => setLastName(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label={intl.formatMessage({
-              id: 'last_name',
-              defaultMessage: 'name',
-            })}
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
-          <TextField
-            value={userRut}
-            onInput={(e) => setUserRut(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            validators={['required']}
-            required
-            fullWidth
-            id="rut"
-            label="Rut"
-            name="rut"
-            autoComplete="rut"
-          />
-          <TextField
-            value={userPlate}
-            onInput={(e) => setUserPlate(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            validators={['required']}
-            fullWidth
-            id="plate"
-            label={intl.formatMessage({
-              id: 'plate',
-              defaultMessage: 'License Plate',
-            })}
-            name="plate"
-            autoComplete="plate"
-          />
-          <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-          <TimeComponent strTime="start_time" defaultTime="00:00" setInvTime={SetInvTimeStart} />
-          <TimeComponent strTime="end_time" defaultTime="23:59" setInvTime={SetInvTimeEnd} />
-          {/* {invitationError && (
+    <div className={classes.container}>
+      <Typography component="h1" variant="h5">
+        {intl.formatMessage({ id: 'invitation_info' })}
+      </Typography>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <TextField
+          value={name}
+          onInput={(e) => setName(e.target.value)}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="name"
+          label={intl.formatMessage({
+            id: 'name',
+            defaultMessage: 'Name',
+          })}
+          name="name"
+          autoComplete="name"
+          autoFocus
+        />
+        <TextField
+          value={lastName}
+          onInput={(e) => setLastName(e.target.value)}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="lastName"
+          label={intl.formatMessage({
+            id: 'last_name',
+            defaultMessage: 'name',
+          })}
+          name="name"
+          autoComplete="name"
+          autoFocus
+        />
+        <TextField
+          value={userRut}
+          onInput={(e) => setUserRut(e.target.value)}
+          variant="outlined"
+          margin="normal"
+          validators={['required']}
+          required
+          fullWidth
+          id="rut"
+          label="Rut"
+          name="rut"
+          autoComplete="rut"
+        />
+        <TextField
+          value={userPlate}
+          onInput={(e) => setUserPlate(e.target.value)}
+          variant="outlined"
+          margin="normal"
+          validators={['required']}
+          fullWidth
+          id="plate"
+          label={intl.formatMessage({
+            id: 'plate',
+            defaultMessage: 'License Plate',
+          })}
+          name="plate"
+          autoComplete="plate"
+        />
+        <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <TimeComponent fullWidth strTime="start_time" defaultTime={invTimeStart} setInvTime={SetInvTimeStart} />
+        <TimeComponent strTime="end_time" defaultTime={invTimeEnd} setInvTime={SetInvTimeEnd} />
+        {/* {invitationError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}
             </Typography>
           )} */}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={invitationLoading}
-          >
-            {invitationLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
-          </Button>
-        </form>
-      </div>
-    </Paper>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          disabled={invitationLoading}
+        >
+          {invitationLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
+        </Button>
+      </form>
+    </div>
   );
 };
 

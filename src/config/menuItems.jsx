@@ -101,6 +101,8 @@ const getMenuItems = (props) => {
         visible: isAuthorised,
         primaryText: 'Entrada',
         leftIcon: <Home />,
+      },
+      {
         value: '/invitation',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'invitation_info' }),

@@ -9,10 +9,9 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux';
 import firebase from 'firebase';
-import moment from 'moment';
 import firebaseConfig from '../../firebase/firebase';
-import RegisterVisitComponent from './RegisterVisitComponent';
 import dateToStr from '../../utils/datetime';
+import InvitationComponent from '../invitation/InvitationComponent';
 
 console.log(dateToStr('1'));
 
@@ -150,7 +149,7 @@ const NewEntryGuardComponent = () => {
             </form>
           </div>
         )
-        : <RegisterVisitComponent />}
+        : <InvitationComponent />}
     </Paper>
   );
 };
