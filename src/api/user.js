@@ -5,5 +5,5 @@ export async function login(payload) {
 }
 
 export async function register(payload) {
-  return http.post('/signUp', payload);
+  return http.post('/register-user', payload);
 }

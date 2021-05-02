@@ -99,7 +99,7 @@ const SignInComponent = () => {
     if (username && password) {
       await dispatch(
         fetchUserThunk({
-          username: username.toLowerCase(),
+          email: username.toLowerCase(),
           password,
         }),
       );

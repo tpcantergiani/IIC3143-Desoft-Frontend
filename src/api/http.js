@@ -9,13 +9,13 @@ const defaultOptions = {
 };
 
 //  Hay que cambiar este por una variable de entorno
-axios.defaults.baseURL = 'http://localhost:5000/';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use(
   async (config) => {
     const persistRoot = await localStorage.getItem('persist:root');
-    const { current } = JSON.parse(JSON.parse(persistRoot).user);
-    if (current) config.headers.Authorization = current.token;
+    const { token } = JSON.parse(JSON.parse(persistRoot).user);
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => Promise.reject(error),

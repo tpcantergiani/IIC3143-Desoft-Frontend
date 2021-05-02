@@ -34,7 +34,7 @@ const messages = defineMessages({
   filter_demo: 'Demo filter',
   list_page_demo: 'List Page demo with {count} rows',
   forgot_password: 'Olvidé mi contraseña',
-  password_reset: 'Volver a crear contraseña',
+  password_reset: 'Crear contraseña',
   password_confirm: 'Confirmar Contraseña',
   registration: 'Registro',
   my_account: 'Mi Perfil',
@@ -55,6 +55,16 @@ const messages = defineMessages({
   homeN: 'Número de casa',
   rut: 'Rut',
 
+  userExists: 'El usuario que ingresaste ya existe',
+  wrongData: 'Revisa los datos ingresados',
+  password_set: 'Crea una contraseña',
+  invitation_info: 'Crear Información',
+  last_name: 'Apellido',
+  plate: 'Patente',
+  invitation_date: 'Fecha Invitación',
+  start_time: 'Hora Inicio',
+  end_time: 'Hora Fin',
+  date_str: 'Día Invitación',
 });
 
 export default messages;

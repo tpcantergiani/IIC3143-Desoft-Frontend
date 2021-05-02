@@ -6,17 +6,14 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
-} from '../../store/slices/userSlice';
-
-import { validateEmail } from '../../utils/functions';
+  sendInvitationThunk, setInvitationError, setInvitationLoading, setInvitationErrorMsj,
+} from '../../store/slices/featuresSlice';
+import DatesComponent from '../dates/DatesComponent';
+import TimeComponent from '../dates/TimeComponent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,21 +57,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpComponent = () => {
+const InvitationComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const [username, setUsername] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userType, setUserType] = useState('Resident');
-  const [userHome, setUserHome] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userRut, setUserRut] = useState('');
+  const [userPlate, setUserPlate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [invTimeStart, SetInvTimeStart] = useState('00:00');
+  const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
   const {
-    current, createError, createErrorMsj, createLoading,
-  } = useSelector((state) => state.user);
+    invitationErrorMsj, invitationError, invitationLoading,
+  } = useSelector((state) => state.features);
+
+  const { current } = useSelector((state) => state.user);
 
   useEffect(() => {
+    dispatch(setInvitationError(false));
+    dispatch(setInvitationErrorMsj(''));
+    dispatch(setInvitationLoading(''));
+
     if (current.type !== 'Admin') {
       const _location = history.location;
       let _route = '/notfound';
@@ -89,18 +95,18 @@ const SignUpComponent = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setCreateError(false));
-    dispatch(setCreateLoading(false));
-  }, []);
+    console.log('Cambio de día', selectedDate);
+  }, [selectedDate]);
 
   const clearFields = () => {
-    setUsername('');
-    setUserEmail('');
-    setUserType('Resident');
+    setName('');
+    setLastName('');
+    setUserRut('');
+    setUserPlate('');
   };
 
   const validate = () => {
-    if (validateEmail(userEmail) && username.length > 0 && userHome.length > 0) {
+    if (userRut.length > 0 && name.length > 0 && lastName.length > 0) {
       return true;
     }
     return false;
@@ -108,21 +114,35 @@ const SignUpComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('handle submit');
+    await dispatch(
+      sendInvitationThunk({
+        name,
+        lastname: lastName,
+        rut: userRut,
+        plate: userPlate,
+        date: selectedDate,
+        start_time: invTimeStart,
+        end_time: invTimeEnd,
+      }),
+    );
     if (validate) {
+      console.log('Es valido y lo mando al back');
       const r = await dispatch(
-        createUserThunk({
-          data: {
-            name: username,
-            email: userEmail,
-            home: userHome,
-            type: userType,
-          },
+        sendInvitationThunk({
+          name,
+          lastname: lastName,
+          rut: userRut,
+          plate: userPlate,
+          date: selectedDate,
+          start_time: invTimeStart,
+          end_time: invTimeEnd,
         }),
       );
 
       if (r.payload?.data) {
         clearFields();
-        enqueueSnackbar('Usuario agregado correctamente', {
+        enqueueSnackbar('Invitacion agregada correctamente', {
           variant: 'success',
           anchorOrigin: {
             vertical: 'top',
@@ -131,122 +151,94 @@ const SignUpComponent = () => {
         });
       }
     } else {
-      dispatch(setCreateErrorMsj('wrongData'));
+      dispatch(setInvitationErrorMsj('wrongData'));
     }
-  };
-
-  const handleChange = (event) => {
-    setUserType(event.target.value);
   };
 
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
-          {intl.formatMessage({ id: 'registration' })}
+          {intl.formatMessage({ id: 'invitation_info' })}
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
-            value={username}
-            onInput={(e) => setUsername(e.target.value)}
+            value={name}
+            onInput={(e) => setName(e.target.value)}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="name"
             label={intl.formatMessage({
-              id: 'username',
-              defaultMessage: 'Username',
+              id: 'name',
+              defaultMessage: 'Name',
             })}
-            name="username"
-            autoComplete="username"
+            name="name"
+            autoComplete="name"
             autoFocus
           />
           <TextField
-            value={userEmail}
-            onInput={(e) => setUserEmail(e.target.value)}
+            value={lastName}
+            onInput={(e) => setLastName(e.target.value)}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label={intl.formatMessage({
+              id: 'last_name',
+              defaultMessage: 'name',
+            })}
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+          <TextField
+            value={userRut}
+            onInput={(e) => setUserRut(e.target.value)}
             variant="outlined"
             margin="normal"
             validators={['required']}
             required
             fullWidth
-            id="email"
-            label={intl.formatMessage({
-              id: 'email',
-              defaultMessage: 'E-Mail',
-            })}
-            name="email"
-            autoComplete="email"
+            id="rut"
+            label="Rut"
+            name="rut"
+            autoComplete="rut"
           />
           <TextField
-            value={userHome}
-            type="number"
-            onInput={(e) => setUserHome(e.target.value)}
+            value={userPlate}
+            onInput={(e) => setUserPlate(e.target.value)}
             variant="outlined"
             margin="normal"
-            required
+            validators={['required']}
             fullWidth
-            id="home"
+            id="plate"
             label={intl.formatMessage({
-              id: 'homeN',
+              id: 'plate',
+              defaultMessage: 'License Plate',
             })}
-            name="home"
-            autoComplete="home"
+            name="plate"
+            autoComplete="plate"
           />
-          <FormControl
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            required
-            className={classes.formControl}
-          >
-            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
-            <Select
-              native
-              value={userType}
-              onChange={handleChange}
-              label="Tipo de usuario "
-              inputProps={{
-                name: 'age',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value="Resident">
-                {intl.formatMessage({
-                  id: 'resident',
-                })}
-
-              </option>
-              <option value="Guard">
-                {intl.formatMessage({
-                  id: 'guard',
-                })}
-
-              </option>
-              <option value="Admin">
-                {intl.formatMessage({
-                  id: 'admin',
-                })}
-
-              </option>
-            </Select>
-          </FormControl>
-
-          {createError && (
+          <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+          <TimeComponent strTime="start_time" defaultTime="00:00" setInvTime={SetInvTimeStart} />
+          <TimeComponent strTime="end_time" defaultTime="23:59" setInvTime={SetInvTimeEnd} />
+          {/* {invitationError && (
             <Typography component="h5" className={classes.error}>
-              {intl.formatMessage({ id: createErrorMsj, defaultMessage: ' ' })}
+              {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}
             </Typography>
-          )}
-
+          )} */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={createLoading}
+            disabled={invitationLoading}
           >
-            {createLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
+            {invitationLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
           </Button>
         </form>
       </div>
@@ -254,4 +246,4 @@ const SignUpComponent = () => {
   );
 };
 
-export default SignUpComponent;
+export default InvitationComponent;
