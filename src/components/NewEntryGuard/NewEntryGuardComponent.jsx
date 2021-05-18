@@ -12,8 +12,9 @@ import firebase from 'firebase';
 import firebaseConfig from '../../firebase/firebase';
 import dateToStr from '../../utils/datetime';
 import InvitationComponent from '../invitation/InvitationComponent';
-
-console.log(dateToStr('1'));
+import {
+  verifyPlateThunk,
+} from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,6 +66,7 @@ const NewEntryGuardComponent = () => {
   const [registeredVisit, setRegisteredVisit] = useState(true);
   const [isFulfilled, setIsFulfilled] = useState(true);
   const [uploadValue, setUploadValue] = useState('');
+  const [fileUrl, setFileUrl] = useState('');
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
@@ -88,6 +90,7 @@ const NewEntryGuardComponent = () => {
         console.error(error.message);
       });
       setFileUploaded(true);
+      setFileUrl(name);
     } else {
       setFileUploaded(false);
     }
@@ -95,15 +98,21 @@ const NewEntryGuardComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    setRegisteredVisit(false);
-    // enqueueSnackbar('', {
-    //   variant: 'success',
-    //   anchorOrigin: {
-    //     vertical: 'top',
-    //     horizontal: 'center',
-    //   },
-    // });
+    const response = await dispatch(verifyPlateThunk({
+      rut,
+      plate_string: fileUrl,
+    }));
+    if (response.payload.isValid) {
+      enqueueSnackbar('', {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center',
+        },
+      });
+    } else {
+      setRegisteredVisit(false);
+    }
   };
 
   return (

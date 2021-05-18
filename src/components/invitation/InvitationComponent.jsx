@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { useState, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -212,9 +212,12 @@ const InvitationComponent = () => {
           name="plate"
           autoComplete="plate"
         />
-        <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-        <TimeComponent fullWidth strTime="start_time" defaultTime={invTimeStart} setInvTime={SetInvTimeStart} />
-        <TimeComponent strTime="end_time" defaultTime={invTimeEnd} setInvTime={SetInvTimeEnd} />
+        <Grid container justify="space-around">
+
+          <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+          <TimeComponent fullWidth strTime="start_time" defaultTime={invTimeStart} setInvTime={SetInvTimeStart} />
+          <TimeComponent strTime="end_time" defaultTime={invTimeEnd} setInvTime={SetInvTimeEnd} />
+        </Grid>
         {/* {invitationError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}
