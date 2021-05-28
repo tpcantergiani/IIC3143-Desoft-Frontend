@@ -1,20 +1,18 @@
 /* eslint-disable max-len */
-import {
-  Button, Paper, TextField, Input,
-} from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  Button, Paper, TextField, Input, Typography, CircularProgress, makeStyles,
+} from '@material-ui/core';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import firebase from 'firebase';
 import firebaseConfig from '../../firebase/firebase';
 import dateToStr from '../../utils/datetime';
 import InvitationComponent from '../invitation/InvitationComponent';
-import {
-  verifyPlateThunk,
-} from '../../store/slices/featuresSlice';
+import { verifyPlateThunk } from '../../store/slices/featuresSlice';
+import { validateRut } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '100%',
   },
+  error: {
+    color: 'red',
+  },
 }));
 
 firebase.initializeApp(firebaseConfig);
@@ -63,15 +64,19 @@ const NewEntryGuardComponent = () => {
   const storage = firebase.storage();
   const [rut, setRut] = useState('');
   const [fileUploaded, setFileUploaded] = useState(false);
-  const [registeredVisit, setRegisteredVisit] = useState(true);
+  const [registeredVisit, setRegisteredVisit] = useState(false);
   const [isFulfilled, setIsFulfilled] = useState(true);
   const [uploadValue, setUploadValue] = useState('');
   const [fileUrl, setFileUrl] = useState('');
   const { enqueueSnackbar } = useSnackbar();
+  const [rutError, setRutError] = useState(false);
   const dispatch = useDispatch();
+  const {
+    visitLoading, isPlateValid,
+  } = useSelector((state) => state.features);
 
   useEffect(() => {
-    if (fileUploaded && rut.length > 0) {
+    if (rut.length > 0) {
       setIsFulfilled(false);
     } else setIsFulfilled(true);
   }, [fileUploaded, rut]);
@@ -98,26 +103,32 @@ const NewEntryGuardComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await dispatch(verifyPlateThunk({
-      rut,
-      plate_string: fileUrl,
-    }));
-    if (response.payload.isValid) {
-      enqueueSnackbar('', {
-        variant: 'success',
-        anchorOrigin: {
-          vertical: 'top',
-          horizontal: 'center',
-        },
-      });
+    if (validateRut(rut)) {
+      setRutError(false);
+      const response = await dispatch(verifyPlateThunk({
+        rut,
+        plate_string: fileUrl,
+      }));
+
+      if (response?.payload?.isValid) {
+        enqueueSnackbar('Usuario registrado correctamente', {
+          variant: 'success',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          },
+        });
+      } else {
+        setRegisteredVisit(true);
+      }
     } else {
-      setRegisteredVisit(false);
+      setRutError(true);
     }
   };
 
   return (
     <Paper className={classes.paper} elevation={6}>
-      {registeredVisit
+      {!registeredVisit
         ? (
           <div className={classes.container}>
             <Typography component="h1" variant="h5">
@@ -145,6 +156,11 @@ const NewEntryGuardComponent = () => {
             <form className={classes.form} onSubmit={handleSubmit}>
 
               <Input type="file" variant="outlined" onChange={handleFileChange} />
+
+              <Typography component="h5" className={classes.error}>
+                {rutError && intl.formatMessage({ id: 'rutError', defaultMessage: 'Revise que el rut es correcto' })}
+              </Typography>
+
               <Button
                 type="submit"
                 fullWidth
@@ -153,12 +169,12 @@ const NewEntryGuardComponent = () => {
                 className={classes.submit}
                 disabled={isFulfilled}
               >
-                {intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
+                {visitLoading ? <CircularProgress color="white" /> : intl.formatMessage({ id: 'save', defaultMessage: 'Sign up' })}
               </Button>
             </form>
           </div>
         )
-        : <InvitationComponent />}
+        : <InvitationComponent rut={rut} isInvitation />}
     </Paper>
   );
 };

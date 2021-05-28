@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { useState, useEffect } from 'react';
@@ -57,13 +58,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InvitationComponent = () => {
+const InvitationComponent = ({
+  auxName = '', auxLastName = '', rut = '', plate = '', isInvitation = false,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userRut, setUserRut] = useState('');
-  const [userPlate, setUserPlate] = useState('');
+  const [name, setName] = useState(auxName ?? '');
+  const [lastName, setLastName] = useState(auxLastName ?? '');
+  const [userRut, setUserRut] = useState(rut ?? '');
+  const [userPlate, setUserPlate] = useState(plate ?? '');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [invTimeStart, SetInvTimeStart] = useState('00:00');
   const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
@@ -93,6 +96,10 @@ const InvitationComponent = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    setName(auxName);
+  }, [auxName]);
 
   useEffect(() => {
     console.log('Cambio de día', selectedDate);
@@ -127,6 +134,7 @@ const InvitationComponent = () => {
           date: selectedDate,
           start_time: invTimeStart,
           end_time: invTimeEnd,
+          isInvitation,
         }),
       );
       console.log(r.payload?.msg);

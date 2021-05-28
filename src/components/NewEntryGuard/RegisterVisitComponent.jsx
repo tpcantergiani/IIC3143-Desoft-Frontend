@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import React, { useState } from 'react';

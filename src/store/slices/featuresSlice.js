@@ -10,6 +10,9 @@ const initialState = {
   invitationError: false,
   invitationLoading: false,
   visitStatus: '',
+  plate: '',
+  visitLoading: false,
+  isPlateValid: false,
 };
 
 const sendInvitation = createAsyncThunk(
@@ -60,15 +63,21 @@ const featureSlice = createSlice({
       state.error = '';
     },
     [verifyPlate.fulfilled]: (state, action) => {
+      state.visitLoading = false;
       if (action.payload.isValid) {
-        state.visitStatus = 'allowed';
+        state.isPlateValid = true;
       } else {
-        state.visitStatus = 'notRegistered';
+        state.isPlateValid = false;
+        state.plate = action.payload.plate_string;
       }
     },
     [verifyPlate.pending]: (state, action) => {
+      state.isPlateValid = false;
+      state.visitLoading = true;
     },
     [verifyPlate.rejected]: (state, action) => {
+      state.isPlateValid = false;
+      state.visitLoading = false;
     },
 
   },

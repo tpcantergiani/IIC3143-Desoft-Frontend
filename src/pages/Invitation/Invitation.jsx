@@ -1,5 +1,5 @@
 import Page from 'material-ui-shell/lib/containers/Page';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import {
 
 // ! Components
 import InvitationComponent from '../../components/invitation/InvitationComponent';
+import ContactSelectComponent from '../../components/invitation/ContactSelectComponent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +35,7 @@ const Invitation = () => {
   const intl = useIntl();
   const history = useHistory();
   const classes = useStyles();
+  const [contact, setContact] = useState('');
 
   return (
     <Page
@@ -46,8 +48,8 @@ const Invitation = () => {
       }}
     >
       <Paper className={classes.paper} elevation={6}>
-
-        <InvitationComponent />
+        <ContactSelectComponent contactValue={contact} action={setContact} />
+        <InvitationComponent auxName={contact} />
       </Paper>
     </Page>
   );
