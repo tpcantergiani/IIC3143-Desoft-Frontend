@@ -11,3 +11,7 @@ export async function registerVisit(payload) {
 export async function searchVisit(payload) {
   return http.post('/verify_rut_plate', payload);
 }
+
+export async function getUserContacts(id) {
+  return http.get(`/contacts/${id}`);
+}

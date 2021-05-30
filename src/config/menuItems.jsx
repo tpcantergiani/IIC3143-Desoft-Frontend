@@ -150,12 +150,6 @@ const getMenuItems = (props) => {
       },
       { divider: true },
       {
-        value: '/about',
-        visible: true,
-        primaryText: intl.formatMessage({ id: 'about' }),
-        leftIcon: <InfoOutlined />,
-      },
-      {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,
         leftIcon: <SettingsIcon />,
@@ -305,13 +299,13 @@ const getMenuItems = (props) => {
       primaryText: intl.formatMessage({ id: 'home' }),
       leftIcon: <Home />,
     },
-    { divider: true },
     {
-      value: '/about',
-      visible: true,
-      primaryText: intl.formatMessage({ id: 'about' }),
-      leftIcon: <InfoOutlined />,
+      value: '/invitation',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'invitation_info' }),
+      leftIcon: <Email />,
     },
+    { divider: true },
     {
       primaryText: intl.formatMessage({ id: 'settings' }),
       primaryTogglesNestedList: true,

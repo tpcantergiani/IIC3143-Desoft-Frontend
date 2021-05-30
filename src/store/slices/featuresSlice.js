@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { invite, searchVisit } from '../../api/feature';
+import { invite, searchVisit, getUserContacts } from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
   plate: '',
   visitLoading: false,
   isPlateValid: false,
+  contactList: [],
 };
 
 const sendInvitation = createAsyncThunk(
@@ -27,6 +28,14 @@ const verifyPlate = createAsyncThunk(
   'feature/searchVisit',
   async (payload, _thunkAPI) => {
     const response = await searchVisit(payload);
+    return response.data;
+  },
+);
+
+const getContacts = createAsyncThunk(
+  'feature/getContacts',
+  async (id, _thunkAPI) => {
+    const response = await getUserContacts(id);
     return response.data;
   },
 );
@@ -80,6 +89,16 @@ const featureSlice = createSlice({
       state.visitLoading = false;
     },
 
+    [getContacts.fulfilled]: (state, action) => {
+      state.contactList = action.payload.data;
+    },
+    [getContacts.pending]: (state, action) => {
+      state.contactList = [];
+    },
+    [getContacts.rejected]: (state, action) => {
+      state.contactList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+
   },
 });
 
@@ -88,4 +107,5 @@ export const {
 } = featureSlice.actions;
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
+export const getContactsThunk = getContacts;
 export const featureReducer = featureSlice.reducer;

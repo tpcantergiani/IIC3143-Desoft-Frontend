@@ -58,7 +58,8 @@ const messages = defineMessages({
   userExists: 'El usuario que ingresaste ya existe',
   wrongData: 'Revisa los datos ingresados',
   password_set: 'Crea una contraseña',
-  invitation_info: 'Crear Información',
+  invitation_info: 'Crear Invitación',
+  name: 'Nombre',
   last_name: 'Apellido',
   plate: 'Patente',
   invitation_date: 'Fecha Invitación',
@@ -68,6 +69,7 @@ const messages = defineMessages({
   rutError: 'RUT inválido',
   entry: 'Registrar Ingreso',
   supplier: 'Registrar Proveedor',
+  select_contact: 'Seleccionar Contacto',
 });
 
 export default messages;

@@ -1,12 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import {
-  Typography, InputLabel, Select, FormControl,
+  Typography, InputLabel, Select, FormControl, MenuItem,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+  getContactsThunk,
+} from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,11 +58,18 @@ const useStyles = makeStyles((theme) => ({
 const ContactSelectComponent = ({ contactValue, action }) => {
   const classes = useStyles();
   const intl = useIntl();
-  //   const {
-  //     contacts,
-  //   } = useSelector((state) => state.features);
+  const dispatch = useDispatch();
 
-  const contacts = [{ name: 'manu', lastName: 'aguirre' }, { name: 'manu2', lastName: 'aguirre2' }];
+  const { contactList } = useSelector((state) => state.features);
+  const { current } = useSelector((state) => state.user);
+
+  useEffect(async () => {
+    await dispatch(getContactsThunk(current.id));
+  }, []);
+
+  useEffect(async () => {
+    console.log(contactList);
+  }, [contactList]);
 
   const handleChange = (event) => {
     action(event.target.value);
@@ -73,31 +84,29 @@ const ContactSelectComponent = ({ contactValue, action }) => {
         variant="outlined"
         fullWidth
         margin="normal"
-        required
         className={classes.formControl}
       >
-        <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
+        <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'select_contact' })}</InputLabel>
         <Select
           native
           value={contactValue}
           onChange={handleChange}
           fullWidth
-          label="Tipo de usuario "
+          label={intl.formatMessage({ id: 'select_contact' })}
+          displayEmpty
           inputProps={{
             name: 'age',
             id: 'outlined-age-native-simple',
           }}
         >
-          <option value={contacts[0].name}>
-            {contacts[0].name}
-            {' '}
-            {contacts[0].lastName}
+          <option value="">
+            {null}
           </option>
-          <option value={contacts[1].name}>
-            {contacts[1].name}
-            {' '}
-            {contacts[1].lastName}
-          </option>
+          {contactList.map((elem) => (
+            <option value={elem.id}>
+              {elem.name}
+            </option>
+          ))}
         </Select>
       </FormControl>
     </div>

@@ -76,7 +76,7 @@ const NewEntryGuardComponent = () => {
   } = useSelector((state) => state.features);
 
   useEffect(() => {
-    if (rut.length > 0) {
+    if (fileUploaded && rut.length > 0) {
       setIsFulfilled(false);
     } else setIsFulfilled(true);
   }, [fileUploaded, rut]);
@@ -110,6 +110,7 @@ const NewEntryGuardComponent = () => {
         plate_string: fileUrl,
       }));
 
+      console.log(response?.payload);
       if (response?.payload?.isValid) {
         enqueueSnackbar('Usuario registrado correctamente', {
           variant: 'success',

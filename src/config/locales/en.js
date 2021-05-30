@@ -67,6 +67,7 @@ const messages = defineMessages({
   rutError: 'Invalid RUT',
   entry: 'Register Entry',
   supplier: 'Register Supplier',
+  select_contact: 'Select Contact',
 });
 
 export default messages;
