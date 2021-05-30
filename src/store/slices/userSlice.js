@@ -31,6 +31,14 @@ const createUser = createAsyncThunk(
   },
 );
 
+const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (payload, _thunkAPI) => {
+    const response = await register(payload);
+    return response.data;
+  },
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,

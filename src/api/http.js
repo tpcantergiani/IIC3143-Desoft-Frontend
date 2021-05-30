@@ -22,7 +22,7 @@ axios.interceptors.request.use(
 );
 
 export default {
-  get: (url, options = {}) => axios.get(url, { ...defaultOptions, ...options }),
+  get: (url, data, options = {}) => axios.get(url, data, { ...defaultOptions, ...options }),
   post: (url, data, options = {}) => axios.post(url, data, { ...defaultOptions, ...options }),
   patch: (url, data, options = {}) => axios.patch(url, data, { ...defaultOptions, ...options }),
   put: (url, data, options = {}) => axios.put(url, data, { ...defaultOptions, ...options }),

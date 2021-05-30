@@ -53,9 +53,21 @@ const messages = defineMessages({
   save: 'Save',
   user_type: 'User type',
   homeN: 'Home number',
+  rut: 'Rut',
   userExists: 'User already exists',
   wrongData: 'Wrong data. Please, check again',
   password_set: 'Create a password',
+  invitation_info: 'Create Invitation',
+  last_name: 'Last Name',
+  plate: 'License Plate',
+  invitation_date: 'Invitation Date',
+  start_time: 'Start Time',
+  end_time: 'End Time',
+  date_str: 'Invitation Date',
+  rutError: 'Invalid RUT',
+  entry: 'Register Entry',
+  supplier: 'Register Supplier',
+  select_contact: 'Select Contact',
 });
 
 export default messages;
