@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   sendInvitationThunk, setInvitationError, setInvitationLoading, setInvitationErrorMsj,
 } from '../../store/slices/featuresSlice';
@@ -71,39 +70,18 @@ const InvitationComponent = ({
   const [invTimeStart, SetInvTimeStart] = useState('00:00');
   const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    invitationErrorMsj, invitationError, invitationLoading,
-  } = useSelector((state) => state.features);
-
-  const { current } = useSelector((state) => state.user);
+  const { invitationLoading } = useSelector((state) => state.features);
 
   useEffect(() => {
     dispatch(setInvitationError(false));
     dispatch(setInvitationErrorMsj(''));
     dispatch(setInvitationLoading(''));
-
-    if (current.type !== 'Admin') {
-      const _location = history.location;
-      let _route = '/notfound';
-
-      if (_location.state && _location.state.from) {
-        _route = _location.state.from.pathname;
-        history.push(_route);
-      } else {
-        history.push(_route);
-      }
-    }
   }, []);
 
   useEffect(() => {
     setName(auxName);
   }, [auxName]);
-
-  useEffect(() => {
-    console.log('Cambio de día', selectedDate);
-  }, [selectedDate]);
 
   const clearFields = () => {
     setName('');
@@ -124,7 +102,6 @@ const InvitationComponent = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate) {
-      console.log('Es valido y lo mando al back');
       const r = await dispatch(
         sendInvitationThunk({
           name,
@@ -137,9 +114,7 @@ const InvitationComponent = ({
           isInvitation,
         }),
       );
-      console.log(r.payload?.msg);
       if (r.payload?.msg) {
-        console.log('holi');
         clearFields();
         enqueueSnackbar('Invitacion agregada correctamente', {
           variant: 'success',

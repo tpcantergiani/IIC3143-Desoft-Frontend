@@ -66,6 +66,8 @@ const messages = defineMessages({
   end_time: 'Hora Fin',
   date_str: 'Día Invitación',
   rutError: 'RUT inválido',
+  entry: 'Registrar Ingreso',
+  supplier: 'Registrar Proveedor',
 });
 
 export default messages;
