@@ -79,11 +79,13 @@ const InvitationComponent = ({
     dispatch(setInvitationLoading(''));
   }, []);
 
-
   useEffect(() => {
     setName(auxName);
-  }, [auxName]);
-  
+    setLastName(auxLastName);
+    setUserRut(rut);
+    setUserPlate(plate);
+  }, [auxName, auxLastName, rut, plate]);
+
   const clearFields = () => {
     setName('');
     setLastName('');
@@ -166,7 +168,6 @@ const InvitationComponent = ({
           })}
           name="name"
           autoComplete="name"
-          autoFocus
         />
         <TextField
           value={userRut}

@@ -34,8 +34,8 @@ const verifyPlate = createAsyncThunk(
 
 const getContacts = createAsyncThunk(
   'feature/getContacts',
-  async (id, _thunkAPI) => {
-    const response = await getUserContacts(id);
+  async (_thunkAPI) => {
+    const response = await getUserContacts();
     return response.data;
   },
 );
@@ -92,7 +92,7 @@ const featureSlice = createSlice({
     },
 
     [getContacts.fulfilled]: (state, action) => {
-      state.contactList = action.payload.data;
+      state.contactList = action.payload.invitations;
     },
     [getContacts.pending]: (state, action) => {
       state.contactList = [];

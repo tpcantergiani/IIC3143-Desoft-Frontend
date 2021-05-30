@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 import {
   Paper,
@@ -32,30 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    width: 'auto',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
-    [theme.breakpoints.up(620 + theme.spacing(6))]: {
-      width: 400,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
-      3,
-    )}px`,
-  },
-}));
 const Invitation = () => {
   const intl = useIntl();
   const history = useHistory();
   const classes = useStyles();
-  const [contact, setContact] = useState('');
+  const [contactIndex, setContactIndex] = useState(null);
+  const { contactList } = useSelector((state) => state.features);
   return (
     <Page
       pageTitle={intl.formatMessage({
@@ -68,8 +51,13 @@ const Invitation = () => {
     >
       <Paper className={classes.paper} elevation={6}>
 
-        <ContactSelectComponent contactValue={contact} action={setContact} />
-        <InvitationComponent auxName={contact} />
+        <ContactSelectComponent contactValue={contactIndex} action={setContactIndex} />
+        <InvitationComponent
+          auxName={contactIndex ? contactList[contactIndex]?.contact.name : ''}
+          auxLastName={contactIndex ? contactList[contactIndex]?.contact.last_name : ''}
+          rut={contactIndex ? contactList[contactIndex]?.contact.rut : ''}
+          plate={contactIndex ? contactList[contactIndex]?.contact.patent : ''}
+        />
       </Paper>
     </Page>
   );

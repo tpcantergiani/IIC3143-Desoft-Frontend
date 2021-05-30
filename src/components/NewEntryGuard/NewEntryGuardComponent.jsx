@@ -72,7 +72,7 @@ const NewEntryGuardComponent = () => {
   const [rutError, setRutError] = useState(false);
   const dispatch = useDispatch();
   const {
-    visitLoading, isPlateValid,
+    visitLoading, plate,
   } = useSelector((state) => state.features);
 
   useEffect(() => {
@@ -109,8 +109,6 @@ const NewEntryGuardComponent = () => {
         rut,
         plate_string: fileUrl,
       }));
-
-      console.log(response?.payload);
       if (response?.payload?.isValid) {
         enqueueSnackbar('Usuario registrado correctamente', {
           variant: 'success',
@@ -120,6 +118,15 @@ const NewEntryGuardComponent = () => {
           },
         });
       } else {
+        if (response?.payload?.plate_string !== null) {
+          enqueueSnackbar('Patente no reconocida', {
+            variant: 'error',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'center',
+            },
+          });
+        }
         setRegisteredVisit(true);
       }
     } else {
@@ -175,7 +182,7 @@ const NewEntryGuardComponent = () => {
             </form>
           </div>
         )
-        : <InvitationComponent rut={rut} isInvitation />}
+        : <InvitationComponent rut={rut} plate={plate} isInvitation />}
     </Paper>
   );
 };
