@@ -79,10 +79,11 @@ const InvitationComponent = ({
     dispatch(setInvitationLoading(''));
   }, []);
 
+
   useEffect(() => {
     setName(auxName);
   }, [auxName]);
-
+  
   const clearFields = () => {
     setName('');
     setLastName('');

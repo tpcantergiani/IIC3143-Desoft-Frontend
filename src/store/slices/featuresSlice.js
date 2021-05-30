@@ -57,6 +57,7 @@ const featureSlice = createSlice({
   },
   extraReducers: {
     [sendInvitation.fulfilled]: (state, action) => {
+      // console.log(action.payload);
 
     //   state.token = action.payload.access_token;
     //   state.current = action.payload.data;
@@ -64,6 +65,7 @@ const featureSlice = createSlice({
     //   state.loading = false;
     },
     [sendInvitation.rejected]: (state, action) => {
+      // console.log(action.error);
     //   state.error = 'Correo y/o contraseña inválida';
     //   state.loading = false;
     },
