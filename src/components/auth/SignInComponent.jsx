@@ -1,9 +1,8 @@
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
+import {
+  Button, Paper, TextField, Typography, CircularProgress, makeStyles,
+} from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
-import { TextField, Typography, CircularProgress } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from 'base-shell/lib/providers/Auth';
 import { useIntl } from 'react-intl';
 import { useMenu } from 'material-ui-shell/lib/providers/Menu';

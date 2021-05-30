@@ -53,6 +53,8 @@ const messages = defineMessages({
   save: 'Guardar',
   user_type: 'Tipo de usuario',
   homeN: 'Número de casa',
+  rut: 'Rut',
+
   userExists: 'El usuario que ingresaste ya existe',
   wrongData: 'Revisa los datos ingresados',
   password_set: 'Crea una contraseña',
@@ -64,6 +66,10 @@ const messages = defineMessages({
   start_time: 'Hora Inicio',
   end_time: 'Hora Fin',
   date_str: 'Día Invitación',
+  rutError: 'RUT inválido',
+  entry: 'Registrar Ingreso',
+  supplier: 'Registrar Proveedor',
+  select_contact: 'Seleccionar Contacto',
 });
 
 export default messages;

@@ -1,13 +1,14 @@
+/* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { useState, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import {
   sendInvitationThunk, setInvitationError, setInvitationLoading, setInvitationErrorMsj,
 } from '../../store/slices/featuresSlice';
@@ -56,48 +57,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InvitationComponent = () => {
+const InvitationComponent = ({
+  auxName = '', auxLastName = '', rut = '', plate = '', isInvitation = false,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userRut, setUserRut] = useState('');
-  const [userPlate, setUserPlate] = useState('');
+  const [name, setName] = useState(auxName ?? '');
+  const [lastName, setLastName] = useState(auxLastName ?? '');
+  const [userRut, setUserRut] = useState(rut ?? '');
+  const [userPlate, setUserPlate] = useState(plate ?? '');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [invTimeStart, SetInvTimeStart] = useState('00:00');
   const [invTimeEnd, SetInvTimeEnd] = useState('23:59');
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    invitationErrorMsj, invitationError, invitationLoading,
-  } = useSelector((state) => state.features);
-
-  const { current } = useSelector((state) => state.user);
+  const { invitationLoading } = useSelector((state) => state.features);
 
   useEffect(() => {
     dispatch(setInvitationError(false));
     dispatch(setInvitationErrorMsj(''));
     dispatch(setInvitationLoading(''));
-
-    if (current.type !== 'Admin') {
-      const _location = history.location;
-      let _route = '/notfound';
-
-      if (_location.state && _location.state.from) {
-        _route = _location.state.from.pathname;
-        history.push(_route);
-      } else {
-        history.push(_route);
-      }
-    }
   }, []);
 
+
+  useEffect(() => {
+    setName(auxName);
+  }, [auxName]);
+  
   const clearFields = () => {
     setName('');
     setLastName('');
     setUserRut('');
     setUserPlate('');
+    SetInvTimeStart('00:00');
+    SetInvTimeEnd('23:59');
   };
 
   const validate = () => {
@@ -119,6 +112,7 @@ const InvitationComponent = () => {
           date: selectedDate,
           start_time: invTimeStart,
           end_time: invTimeEnd,
+          isInvitation,
         }),
       );
       if (r.payload?.msg) {
@@ -202,9 +196,12 @@ const InvitationComponent = () => {
           name="plate"
           autoComplete="plate"
         />
-        <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-        <TimeComponent strTime="start_time" defaultTime="00:00" setInvTime={SetInvTimeStart} />
-        <TimeComponent strTime="end_time" defaultTime="23:59" setInvTime={SetInvTimeEnd} />
+        <Grid container justify="space-around">
+
+          <DatesComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+          <TimeComponent fullWidth strTime="start_time" defaultTime={invTimeStart} setInvTime={SetInvTimeStart} />
+          <TimeComponent strTime="end_time" defaultTime={invTimeEnd} setInvTime={SetInvTimeEnd} />
+        </Grid>
         {/* {invitationError && (
             <Typography component="h5" className={classes.error}>
               {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}

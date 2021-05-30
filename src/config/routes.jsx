@@ -15,6 +15,7 @@ const FilterDemo = lazy(() => import('../pages/FilterDemo'));
 const ListPageDemo = lazy(() => import('../pages/ListPageDemo'));
 const TabsDemo = lazy(() => import('../pages/TabsDemo'));
 const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'));
+const NewEntryGuard = lazy(() => import('../pages/NewEntryGuard/NewEntryGuard'));
 const CreatePassword = lazy(() => import('../pages/PasswordCreate/PasswordCreate'));
 const Invitation = lazy(() => import('../pages/Invitation/Invitation'));
 
@@ -36,6 +37,7 @@ const routes = [
   <AuthorizedRoute path="/filter_demo" exact component={FilterDemo} />,
   <AuthorizedRoute path="/list_page_demo" exact component={ListPageDemo} />,
   <AuthorizedRoute path="/tabs_demo" exact component={TabsDemo} />,
+  <AuthorizedRoute path="/new_entry_guard" exact component={NewEntryGuard} />,
   <AuthorizedRoute path="/invitation" exact component={Invitation} />,
 
 ];

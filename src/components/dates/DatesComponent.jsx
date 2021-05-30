@@ -21,7 +21,7 @@ const DatesComponent = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
+      <Grid container justify="center">
         <KeyboardDatePicker
           disableToolbar
           variant="inline"

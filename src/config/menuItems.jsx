@@ -15,6 +15,8 @@ import {
   Assessment,
   History,
   Email,
+  DirectionsCar,
+  LocalShipping,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -97,6 +99,12 @@ const getMenuItems = (props) => {
         leftIcon: <Home />,
       },
       {
+        value: '/new_entry_guard',
+        visible: isAuthorised,
+        primaryText: 'Entrada',
+        leftIcon: <Home />,
+      },
+      {
         value: '/invitation',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'invitation_info' }),
@@ -141,12 +149,6 @@ const getMenuItems = (props) => {
         leftIcon: <History />,
       },
       { divider: true },
-      {
-        value: '/about',
-        visible: true,
-        primaryText: intl.formatMessage({ id: 'about' }),
-        leftIcon: <InfoOutlined />,
-      },
       {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,
@@ -208,44 +210,24 @@ const getMenuItems = (props) => {
         leftIcon: <Home />,
       },
       {
-        primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
-        visible: isAuthorised && auth.current.type === ('Guard'),
-        primaryTogglesNestedList: true,
-        leftIcon: <Web />,
-        nestedItems: [
-          {
-            value: '/signup',
-            visible: isAuthorised && auth.current.type === ('Guard'),
-            primaryText: intl.formatMessage({
-              id: 'dialog_demo',
-              defaultMessage: 'Dialog',
-            }),
-            leftIcon: <GroupAdd />,
-          },
-          {
-            value: '/toast_demo',
-            visible: isAuthorised && auth.current.type === ('Guard'),
-            primaryText: intl.formatMessage({
-              id: 'toast_demo',
-              defaultMessage: 'Toast',
-            }),
-            leftIcon: <HomeWork />,
-          },
-        ],
+        value: '/new_entry_guard',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'entry' }),
+        leftIcon: <DirectionsCar />,
       },
       {
-        value: '/home',
+        value: '/invitation',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'supplier' }),
+        leftIcon: <LocalShipping />,
+      },
+      {
+        value: '/filter_demo',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'history' }),
         leftIcon: <History />,
       },
       { divider: true },
-      {
-        value: '/about',
-        visible: true,
-        primaryText: intl.formatMessage({ id: 'about' }),
-        leftIcon: <InfoOutlined />,
-      },
       {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,
@@ -317,13 +299,13 @@ const getMenuItems = (props) => {
       primaryText: intl.formatMessage({ id: 'home' }),
       leftIcon: <Home />,
     },
-    { divider: true },
     {
-      value: '/about',
-      visible: true,
-      primaryText: intl.formatMessage({ id: 'about' }),
-      leftIcon: <InfoOutlined />,
+      value: '/invitation',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'invitation_info' }),
+      leftIcon: <Email />,
     },
+    { divider: true },
     {
       primaryText: intl.formatMessage({ id: 'settings' }),
       primaryTogglesNestedList: true,
