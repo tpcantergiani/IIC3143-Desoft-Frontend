@@ -110,7 +110,7 @@ const NewEntryGuardComponent = () => {
         plate_string: fileUrl,
       }));
       if (response?.payload?.isValid) {
-        enqueueSnackbar('Usuario registrado correctamente', {
+        enqueueSnackbar(intl.formatMessage({ id: 'valid_visit' }), {
           variant: 'success',
           anchorOrigin: {
             vertical: 'top',
@@ -119,7 +119,7 @@ const NewEntryGuardComponent = () => {
         });
       } else {
         if (response?.payload?.plate_string !== null) {
-          enqueueSnackbar('Patente no reconocida', {
+          enqueueSnackbar(intl.formatMessage({ id: 'unrecognized_plate' }), {
             variant: 'error',
             anchorOrigin: {
               vertical: 'top',

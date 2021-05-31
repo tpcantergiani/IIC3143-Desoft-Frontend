@@ -70,6 +70,9 @@ const messages = defineMessages({
   entry: 'Registrar Ingreso',
   supplier: 'Registrar Proveedor',
   select_contact: 'Seleccionar Contacto',
+  valid_visit: 'Invitación válida',
+  unrecognized_plate: 'Patente no reconocida',
+  visit_regist: 'Visita registrada correctamente',
 });
 
 export default messages;

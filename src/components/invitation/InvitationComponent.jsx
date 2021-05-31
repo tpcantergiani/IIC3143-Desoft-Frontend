@@ -119,7 +119,7 @@ const InvitationComponent = ({
       );
       if (r.payload?.msg) {
         clearFields();
-        enqueueSnackbar('Invitacion agregada correctamente', {
+        enqueueSnackbar(intl.formatMessage({ id: 'visit_regist' }), {
           variant: 'success',
           anchorOrigin: {
             vertical: 'top',
