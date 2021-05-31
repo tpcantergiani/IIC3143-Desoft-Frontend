@@ -69,6 +69,9 @@ const messages = defineMessages({
   entry: 'Register Entry',
   supplier: 'Register Supplier',
   select_contact: 'Select Contact',
+  valid_visit: 'Valid invitation.',
+  unrecognized_plate: 'Unrecognized plates',
+  visit_regist: 'visit successfully registered',
 });
 
 export default messages;

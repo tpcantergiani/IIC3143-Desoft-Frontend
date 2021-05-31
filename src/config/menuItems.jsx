@@ -101,8 +101,8 @@ const getMenuItems = (props) => {
       {
         value: '/new_entry_guard',
         visible: isAuthorised,
-        primaryText: 'Entrada',
-        leftIcon: <Home />,
+        primaryText: intl.formatMessage({ id: 'entry' }),
+        leftIcon: <DirectionsCar />,
       },
       {
         value: '/invitation',
@@ -136,12 +136,12 @@ const getMenuItems = (props) => {
           },
         ],
       },
-      {
-        value: '/home',
-        visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'dashboard' }),
-        leftIcon: <Assessment />,
-      },
+      // {
+      //   value: '/home',
+      //   visible: isAuthorised,
+      //   primaryText: intl.formatMessage({ id: 'dashboard' }),
+      //   leftIcon: <Assessment />,
+      // },
       {
         value: '/filter_demo',
         visible: isAuthorised,

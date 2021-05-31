@@ -79,11 +79,13 @@ const InvitationComponent = ({
     dispatch(setInvitationLoading(''));
   }, []);
 
-
   useEffect(() => {
     setName(auxName);
-  }, [auxName]);
-  
+    setLastName(auxLastName);
+    setUserRut(rut);
+    setUserPlate(plate);
+  }, [auxName, auxLastName, rut, plate]);
+
   const clearFields = () => {
     setName('');
     setLastName('');
@@ -117,7 +119,7 @@ const InvitationComponent = ({
       );
       if (r.payload?.msg) {
         clearFields();
-        enqueueSnackbar('Invitacion agregada correctamente', {
+        enqueueSnackbar(intl.formatMessage({ id: 'visit_regist' }), {
           variant: 'success',
           anchorOrigin: {
             vertical: 'top',
@@ -166,7 +168,6 @@ const InvitationComponent = ({
           })}
           name="name"
           autoComplete="name"
-          autoFocus
         />
         <TextField
           value={userRut}

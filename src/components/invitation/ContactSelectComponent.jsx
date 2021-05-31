@@ -3,7 +3,7 @@
 import {
   Typography, InputLabel, Select, FormControl, MenuItem,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
@@ -61,10 +61,9 @@ const ContactSelectComponent = ({ contactValue, action }) => {
   const dispatch = useDispatch();
 
   const { contactList } = useSelector((state) => state.features);
-  const { current } = useSelector((state) => state.user);
 
   useEffect(async () => {
-    await dispatch(getContactsThunk(current.id));
+    await dispatch(getContactsThunk());
   }, []);
 
   useEffect(async () => {
@@ -99,12 +98,14 @@ const ContactSelectComponent = ({ contactValue, action }) => {
             id: 'outlined-age-native-simple',
           }}
         >
-          <option value="">
+          <option value={undefined}>
             {null}
           </option>
-          {contactList.map((elem) => (
-            <option value={elem.id}>
-              {elem.name}
+          {contactList?.map((elem, index) => (
+            <option value={index}>
+              {elem.contact.name}
+              {' '}
+              {elem.contact.last_name}
             </option>
           ))}
         </Select>
