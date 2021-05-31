@@ -52,7 +52,7 @@ const messages = defineMessages({
   admin: 'Administrator',
   save: 'Save',
   user_type: 'User type',
-  homeN: 'Home number',
+  homeN: 'Home Number',
   rut: 'Rut',
   userExists: 'User already exists',
   wrongData: 'Wrong data. Please, check again',
@@ -72,6 +72,7 @@ const messages = defineMessages({
   valid_visit: 'Valid invitation.',
   unrecognized_plate: 'Unrecognized plates',
   visit_regist: 'visit successfully registered',
+  invitation_history: 'Invitation History',
 });
 
 export default messages;

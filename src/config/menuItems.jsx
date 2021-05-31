@@ -143,7 +143,7 @@ const getMenuItems = (props) => {
       //   leftIcon: <Assessment />,
       // },
       {
-        value: '/filter_demo',
+        value: '/visit_history',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'history' }),
         leftIcon: <History />,

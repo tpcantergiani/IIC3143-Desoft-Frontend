@@ -130,4 +130,5 @@ export const {
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
+export const getInvitationsThunk = getInvitations;
 export const featureReducer = featureSlice.reducer;
