@@ -203,11 +203,6 @@ const InvitationComponent = ({
           <TimeComponent fullWidth strTime="start_time" defaultTime={invTimeStart} setInvTime={SetInvTimeStart} />
           <TimeComponent strTime="end_time" defaultTime={invTimeEnd} setInvTime={SetInvTimeEnd} />
         </Grid>
-        {/* {invitationError && (
-            <Typography component="h5" className={classes.error}>
-              {intl.formatMessage({ id: invitationErrorMsj, defaultMessage: ' ' })}
-            </Typography>
-          )} */}
         <Button
           type="submit"
           fullWidth

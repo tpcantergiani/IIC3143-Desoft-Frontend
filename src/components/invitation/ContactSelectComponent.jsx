@@ -66,7 +66,7 @@ const ContactSelectComponent = ({ contactValue, action }) => {
     await dispatch(getContactsThunk());
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log(contactList);
   }, [contactList]);
 
@@ -103,9 +103,9 @@ const ContactSelectComponent = ({ contactValue, action }) => {
           </option>
           {contactList?.map((elem, index) => (
             <option value={index}>
-              {elem.contact.name}
+              {elem.name}
               {' '}
-              {elem.contact.last_name}
+              {elem.last_name}
             </option>
           ))}
         </Select>

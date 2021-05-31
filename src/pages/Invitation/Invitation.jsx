@@ -53,10 +53,10 @@ const Invitation = () => {
 
         <ContactSelectComponent contactValue={contactIndex} action={setContactIndex} />
         <InvitationComponent
-          auxName={contactIndex ? contactList[contactIndex]?.contact.name : ''}
-          auxLastName={contactIndex ? contactList[contactIndex]?.contact.last_name : ''}
-          rut={contactIndex ? contactList[contactIndex]?.contact.rut : ''}
-          plate={contactIndex ? contactList[contactIndex]?.contact.patent : ''}
+          auxName={contactIndex ? contactList[contactIndex]?.name : ''}
+          auxLastName={contactIndex ? contactList[contactIndex]?.last_name : ''}
+          rut={contactIndex ? contactList[contactIndex]?.rut : ''}
+          plate={contactIndex ? contactList[contactIndex]?.patent : ''}
         />
       </Paper>
     </Page>

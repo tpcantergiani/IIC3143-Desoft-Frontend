@@ -2,7 +2,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { invite, searchVisit, getUserContacts } from '../../api/feature';
+import {
+  invite, searchVisit, getUserContacts, getInvitationsRoute,
+} from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   visitLoading: false,
   isPlateValid: false,
   contactList: [],
+  invitationsList: [],
 };
 
 const sendInvitation = createAsyncThunk(
@@ -36,6 +39,14 @@ const getContacts = createAsyncThunk(
   'feature/getContacts',
   async (_thunkAPI) => {
     const response = await getUserContacts();
+    return response.data;
+  },
+);
+
+const getInvitations = createAsyncThunk(
+  'feature/getInvitations',
+  async (_thunkAPI) => {
+    const response = await getInvitationsRoute();
     return response.data;
   },
 );
@@ -92,13 +103,22 @@ const featureSlice = createSlice({
     },
 
     [getContacts.fulfilled]: (state, action) => {
-      state.contactList = action.payload.invitations;
+      state.contactList = action.payload;
     },
     [getContacts.pending]: (state, action) => {
       state.contactList = [];
     },
     [getContacts.rejected]: (state, action) => {
       state.contactList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+    [getInvitations.fulfilled]: (state, action) => {
+      state.invitationsList = action.payload.invitations;
+    },
+    [getInvitations.pending]: (state, action) => {
+      state.invitationsList = [];
+    },
+    [getInvitations.rejected]: (state, action) => {
+      state.invitationsList = [];
     },
 
   },
