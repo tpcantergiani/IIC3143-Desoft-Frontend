@@ -1,24 +1,25 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import AutoSizer from 'react-virtualized-auto-sizer';
-import Divider from '@material-ui/core/Divider';
+import {
+  Divider, IconButton, List, ListItem, ListItemText, Toolbar, Typography,
+} from '@material-ui/core';
 import FilterDrawer from 'material-ui-shell/lib/components/FilterDrawer';
 import FilterList from '@material-ui/icons/FilterList';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Page from 'material-ui-shell/lib/containers/Page';
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import SearchField from 'material-ui-shell/lib/components/SearchField';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { FixedSizeList } from 'react-window';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useFilter } from 'material-ui-shell/lib/providers/Filter';
 import { useIntl } from 'react-intl';
 import { useTheme as useAppTheme } from 'material-ui-shell/lib/providers/Theme';
-import source from './data.json';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  getInvitationsThunk,
+} from '../../store/slices/featuresSlice';
 
 const filterName = 'test_filter';
 
@@ -68,9 +69,20 @@ const CustomScrollbarsVirtualList = React.forwardRef((props, ref) => (
 
 const FilterDemo = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
   const {
     openFilter, getList, getFilter, setSearch,
   } = useFilter();
+  const { invitationsList } = useSelector((state) => state.features);
+  const [source, setSource] = useState([]);
+
+  useEffect(async () => {
+    await dispatch(getInvitationsThunk());
+  }, []);
+
+  useEffect(() => {
+    setSource(invitationsList);
+  }, [invitationsList]);
 
   const { queries = [], search = {} } = getFilter(filterName);
   const { value: searchValue = '' } = search;
@@ -81,34 +93,34 @@ const FilterDemo = () => {
       label: 'Name',
     },
     {
-      name: 'email',
-      label: 'E-Mail',
+      name: 'last_name',
+      label: 'Last Name',
     },
     {
-      name: 'amount',
-      label: 'Amount',
-      type: 'number',
+      name: 'plate',
+      label: 'Plate',
     },
-    {
-      name: 'isActive',
-      label: 'Active',
-      type: 'bool',
-    },
-    {
-      name: 'registered',
-      label: 'Registered',
-      type: 'date',
-    },
-    {
-      name: 'registrationTime',
-      label: 'Registration time',
-      type: 'time',
-    },
+    // {
+    //   name: 'isActive',
+    //   label: 'Active',
+    // },
+    // {
+    //   name: 'registered',
+    //   label: 'Registered',
+    //   type: 'date',
+    // },
+    // {
+    //   name: 'registrationTime',
+    //   label: 'Registration time',
+    //   type: 'time',
+    // },
   ];
 
   const list = getList(filterName, source, fields);
 
   const listRef = React.createRef();
+
+  console.log('LIST', list);
 
   useEffect(() => {
     if (listRef.current) {
@@ -118,8 +130,8 @@ const FilterDemo = () => {
 
   const Row = ({ index, style }) => {
     const {
-      name, amount = '', registered, email,
-    } = list[index];
+      name, last_name, patent,
+    } = list[index].contact;
     return (
       <div key={`${name}_${index}`} style={style}>
         <ListItem alignItems="flex-start">
@@ -132,7 +144,7 @@ const FilterDemo = () => {
                   variant="body2"
                   color="textSecondary"
                 >
-                  {email}
+                  {last_name}
                 </Typography>
                 <br />
                 <Typography
@@ -140,7 +152,7 @@ const FilterDemo = () => {
                   variant="body2"
                   color="textSecondary"
                 >
-                  {`${amount} ${registered}`}
+                  {`${patent}`}
                 </Typography>
               </>
             )}
