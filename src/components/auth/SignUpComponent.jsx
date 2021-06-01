@@ -180,7 +180,6 @@ const SignUpComponent = () => {
           />
           <TextField
             value={userHome}
-            type="number"
             onInput={(e) => setUserHome(e.target.value)}
             variant="outlined"
             margin="normal"
