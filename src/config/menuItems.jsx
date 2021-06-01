@@ -125,15 +125,15 @@ const getMenuItems = (props) => {
             }),
             leftIcon: <GroupAdd />,
           },
-          {
-            value: '/toast_demo',
-            visible: isAuthorised,
-            primaryText: intl.formatMessage({
-              id: 'toast_demo',
-              defaultMessage: 'Toast',
-            }),
-            leftIcon: <HomeWork />,
-          },
+          // {
+          //   value: '/toast_demo',
+          //   visible: isAuthorised,
+          //   primaryText: intl.formatMessage({
+          //     id: 'toast_demo',
+          //     defaultMessage: 'Toast',
+          //   }),
+          //   leftIcon: <HomeWork />,
+          // },
         ],
       },
       // {

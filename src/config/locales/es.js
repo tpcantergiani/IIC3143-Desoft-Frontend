@@ -74,6 +74,7 @@ const messages = defineMessages({
   unrecognized_plate: 'Patente no reconocida',
   visit_regist: 'Visita registrada correctamente',
   invitation_history: 'Historial de ingresos',
+  userlastname: 'Apellido',
 });
 
 export default messages;

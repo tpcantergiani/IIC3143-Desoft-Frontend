@@ -64,6 +64,7 @@ const SignUpComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
   const [username, setUsername] = useState('');
+  const [userlastname, setUserLastname] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('Resident');
   const [userHome, setUserHome] = useState('');
@@ -95,6 +96,7 @@ const SignUpComponent = () => {
 
   const clearFields = () => {
     setUsername('');
+    setUserLastname('');
     setUserEmail('');
     setUserType('Resident');
   };
@@ -113,6 +115,7 @@ const SignUpComponent = () => {
         createUserThunk({
           data: {
             name: username,
+            last_name: userlastname,
             email: userEmail,
             home: userHome,
             type: userType,
@@ -160,6 +163,22 @@ const SignUpComponent = () => {
             })}
             name="username"
             autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            value={username}
+            onInput={(e) => setUserLastname(e.target.value)}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="userlastname"
+            label={intl.formatMessage({
+              id: 'userlastname',
+              defaultMessage: 'userlastname',
+            })}
+            name="userlastname"
+            autoComplete="userlastname"
             autoFocus
           />
           <TextField

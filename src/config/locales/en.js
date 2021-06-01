@@ -73,6 +73,7 @@ const messages = defineMessages({
   unrecognized_plate: 'Unrecognized plates',
   visit_regist: 'visit successfully registered',
   invitation_history: 'Invitation History',
+  userlastname: 'Last name',
 });
 
 export default messages;
