@@ -17,6 +17,7 @@ import {
   Email,
   DirectionsCar,
   LocalShipping,
+  Lock,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -150,6 +151,12 @@ const getMenuItems = (props) => {
       },
       { divider: true },
       {
+        value: '/create_password',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'changePassword' }),
+        leftIcon: <Lock />,
+      },
+      {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,
         leftIcon: <SettingsIcon />,
@@ -229,6 +236,12 @@ const getMenuItems = (props) => {
       },
       { divider: true },
       {
+        value: '/create_password',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'changePassword' }),
+        leftIcon: <Lock />,
+      },
+      {
         primaryText: intl.formatMessage({ id: 'settings' }),
         primaryTogglesNestedList: true,
         leftIcon: <SettingsIcon />,
@@ -306,6 +319,12 @@ const getMenuItems = (props) => {
       leftIcon: <Email />,
     },
     { divider: true },
+    {
+      value: '/create_password',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'changePassword' }),
+      leftIcon: <Lock />,
+    },
     {
       primaryText: intl.formatMessage({ id: 'settings' }),
       primaryTogglesNestedList: true,

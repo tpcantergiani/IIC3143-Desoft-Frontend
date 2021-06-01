@@ -7,3 +7,7 @@ export async function login(payload) {
 export async function register(payload) {
   return http.post('/register-user', payload);
 }
+
+export async function putPassword(payload) {
+  return http.put('/change-password', payload);
+}

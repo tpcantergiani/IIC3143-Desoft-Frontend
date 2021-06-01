@@ -75,6 +75,8 @@ const messages = defineMessages({
   visit_regist: 'Visita registrada correctamente',
   invitation_history: 'Historial de ingresos',
   userlastname: 'Apellido',
+  changePassword: 'Cambiar Contraseña',
+  password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
 });
 
 export default messages;

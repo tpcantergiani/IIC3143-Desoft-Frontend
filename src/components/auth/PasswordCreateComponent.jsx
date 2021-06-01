@@ -1,12 +1,14 @@
 import Button from '@material-ui/core/Button';
-import Page from 'material-ui-shell/lib/containers/Page';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { putUserThunk, setPasswordError, setPasswordLoading } from '../../store/slices/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     height: '100%',
   },
+  error: {
+    color: 'red',
+  },
 }));
 
 const PasswordCreate = () => {
@@ -53,9 +58,39 @@ const PasswordCreate = () => {
   const history = useHistory();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  function handleSubmit(event) {
+  const dispatch = useDispatch();
+
+  const { passwordLoading, passwordError } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(setPasswordError(false));
+    dispatch(setPasswordLoading(false));
+  }, []);
+
+  useEffect(() => {
+    dispatch(setPasswordError(false));
+    dispatch(setPasswordLoading(false));
+  }, [password, confirmPassword]);
+
+  const validate = () => password === confirmPassword;
+
+  async function handleSubmit(event) {
     event.preventDefault();
-    history.replace('/signin');
+    if (validate()) {
+      const r = await dispatch(
+        putUserThunk({
+          data: {
+            password,
+          },
+        }),
+      );
+
+      if (r.payload?.msg) {
+        history.replace('/signin');
+      }
+    } else {
+      dispatch(setPasswordError(true));
+    }
   }
 
   return (
@@ -93,6 +128,11 @@ const PasswordCreate = () => {
             type="password"
             id="create-password"
           />
+          {passwordError && (
+            <Typography component="h5" className={classes.error}>
+              {intl.formatMessage({ id: 'password_error', defaultMessage: ' ' })}
+            </Typography>
+          )}
 
           <Button
             type="submit"
@@ -101,10 +141,12 @@ const PasswordCreate = () => {
             color="primary"
             className={classes.submit}
           >
-            {intl.formatMessage({
-              id: 'password_reset',
-              defaultMessage: 'Reset Password',
-            })}
+            {passwordLoading
+              ? <CircularProgress color="white" />
+              : intl.formatMessage({
+                id: 'password_reset',
+                defaultMessage: 'Reset Password',
+              })}
           </Button>
         </form>
       </div>

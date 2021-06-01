@@ -22,7 +22,6 @@ const InvitationHistory = lazy(() => import('../pages/InvitationsHistory/Invitat
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/home" exact component={SignIn} />,
-  <UnauthorizedRoute path="/create-password" redirectTo="/signin" exact component={CreatePassword} />,
   <UnauthorizedRoute
     path="/password_reset"
     redirectTo="/"
@@ -31,6 +30,7 @@ const routes = [
   />,
   <Route path="/about" exact component={About} />,
   <AuthorizedRoute path="/signup" exact component={SignUp} />,
+  <AuthorizedRoute path="/create_password" exact component={CreatePassword} />,
   <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   <AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
