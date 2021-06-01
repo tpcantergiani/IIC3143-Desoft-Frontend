@@ -92,12 +92,18 @@ const SignUpComponent = () => {
   useEffect(() => {
     dispatch(setCreateError(false));
     dispatch(setCreateLoading(false));
+  }, [username, userlastname, userEmail, userType, userHome]);
+
+  useEffect(() => {
+    dispatch(setCreateError(false));
+    dispatch(setCreateLoading(false));
   }, []);
 
   const clearFields = () => {
     setUsername('');
     setUserLastname('');
     setUserEmail('');
+    setUserHome('');
     setUserType('Resident');
   };
 
@@ -166,7 +172,7 @@ const SignUpComponent = () => {
             autoFocus
           />
           <TextField
-            value={username}
+            value={userlastname}
             onInput={(e) => setUserLastname(e.target.value)}
             variant="outlined"
             margin="normal"

@@ -92,6 +92,8 @@ const userSlice = createSlice({
         state.createErrorMsj = 'wrongData';
       } else if (parseError(action.error?.message) === '409') {
         state.createErrorMsj = 'userExists';
+      } else {
+        state.createErrorMsj = 'wrongData';
       }
       state.createLoading = false;
       state.createError = true;
