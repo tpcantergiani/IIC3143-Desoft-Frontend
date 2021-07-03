@@ -167,9 +167,6 @@ const SignInComponent = () => {
             {intl.formatMessage({ id: 'forgot_password' })}
             ?
           </Link>
-          <Link to="/signup">
-            {intl.formatMessage({ id: 'registration' })}
-          </Link>
         </div>
       </div>
     </Paper>
