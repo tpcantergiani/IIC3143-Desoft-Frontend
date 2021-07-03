@@ -112,30 +112,11 @@ const getMenuItems = (props) => {
         leftIcon: <Email />,
       },
       {
-        primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
+        value: '/signup',
+        primaryText: intl.formatMessage({ id: 'dialog_demo', defaultMessage: 'Demos' }),
         visible: isAuthorised && (auth.current.type === 'Admin'),
         primaryTogglesNestedList: true,
-        leftIcon: <Web />,
-        nestedItems: [
-          {
-            value: '/signup',
-            visible: isAuthorised,
-            primaryText: intl.formatMessage({
-              id: 'dialog_demo',
-              defaultMessage: 'Dialog',
-            }),
-            leftIcon: <GroupAdd />,
-          },
-          // {
-          //   value: '/toast_demo',
-          //   visible: isAuthorised,
-          //   primaryText: intl.formatMessage({
-          //     id: 'toast_demo',
-          //     defaultMessage: 'Toast',
-          //   }),
-          //   leftIcon: <HomeWork />,
-          // },
-        ],
+        leftIcon: <GroupAdd />,
       },
       // {
       //   value: '/home',
