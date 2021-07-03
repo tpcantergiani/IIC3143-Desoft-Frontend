@@ -111,7 +111,7 @@ const InvitationComponent = ({
           lastname: lastName,
           rut: userRut,
           plate: userPlate,
-          date: selectedDate,
+          date: selectedDate.toISOString().replace('-', '-').split('T')[0].replace('-', '-'),
           start_time: invTimeStart,
           end_time: invTimeEnd,
           isInvitation,
