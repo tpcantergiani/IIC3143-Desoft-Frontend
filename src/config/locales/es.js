@@ -14,7 +14,7 @@ const messages = defineMessages({
   settings: 'Configuración',
   theme: 'Theme',
   default: 'Default',
-  red: 'Rojo',
+  pink: 'Rosado',
   green: 'Verde',
   language: 'Languaje',
   en: 'English',
