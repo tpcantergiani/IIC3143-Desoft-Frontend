@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3),
     [theme.breakpoints.up(620 + theme.spacing(6))]: {
       width: '60%',
-      height: '50%',
+      height: '400px',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
