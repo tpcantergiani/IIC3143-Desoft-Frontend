@@ -78,7 +78,7 @@ const messages = defineMessages({
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
   saved_invitation: 'Completa la información de un invitado creado anteriormente',
   information: 'Información',
-  condominium: 'Condominio: ',
+  condominium: 'Condominio',
 });
 
 export default messages;

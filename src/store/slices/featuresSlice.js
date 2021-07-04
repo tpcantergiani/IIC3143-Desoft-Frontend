@@ -20,7 +20,17 @@ const initialState = {
   contactList: [],
   invitationsList: [],
   homeList: [],
-  actualCondominium: '',
+  actualCondominium: {
+    data: [{
+      condominium: '',
+      home: '',
+      user: {
+        email: '',
+        name: '',
+        type: '',
+      },
+    }],
+  },
 };
 
 const sendInvitation = createAsyncThunk(
@@ -58,7 +68,7 @@ const getCondominium = createAsyncThunk(
   'feature/getCondominium',
   async (_thunkAPI) => {
     const response = await getActualCondominium();
-    return response.data.data.name;
+    return response.data;
   },
 );
 
@@ -145,12 +155,31 @@ const featureSlice = createSlice({
       state.actualCondominium = action.payload;
     },
     [getCondominium.pending]: (state, action) => {
-      state.actualCondominium = '';
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
     },
     [getCondominium.rejected]: (state, action) => {
-      state.actualCondominium = '';
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
     },
-
     [getInvitations.fulfilled]: (state, action) => {
       state.invitationsList = action.payload.invitations;
     },

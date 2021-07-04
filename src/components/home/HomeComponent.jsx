@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,10 +28,23 @@ const HomeComponent = () => {
   const { actualCondominium } = useSelector((state) => state.features);
   const dispatch = useDispatch();
   const intl = useIntl();
+  const [nameCondominium, setNameCondominium] = useState('');
+  const [nameUser, setNameUser] = useState('');
+  const [nameHome, setNameHome] = useState('');
+  const [userEmail, seUserEmail] = useState('');
+  const [userType, setUserType] = useState('');
 
   useEffect(async () => {
     await dispatch(getCondominiumThunk());
   }, []);
+
+  useEffect(async () => {
+    setNameCondominium(actualCondominium.data[0].condominium);
+    setNameUser(actualCondominium.data[0].user.name);
+    setNameHome(actualCondominium.data[0].home);
+    seUserEmail(actualCondominium.data[0].user.email);
+    setUserType(actualCondominium.data[0].user.type);
+  }, [actualCondominium.data[0].condominium]);
 
   return (
     <div className={classes.container}>
@@ -42,11 +55,35 @@ const HomeComponent = () => {
         <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
           {intl.formatMessage({ id: 'condominium' })}
         </Typography>
-        <Typography component="h1" variant="caption">
-          {actualCondominium}
+        {`: ${nameCondominium}`}
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+          {intl.formatMessage({ id: 'name' })}
         </Typography>
+        {`: ${nameUser}`}
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+          {intl.formatMessage({ id: 'email' })}
+        </Typography>
+        {`: ${userEmail}`}
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+          {intl.formatMessage({ id: 'homeN' })}
+        </Typography>
+        {`: ${nameHome}`}
+      </div>
+
+      <div className={classes.infoBox}>
+        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+          {intl.formatMessage({ id: 'user_type' })}
+        </Typography>
+        {`: ${userType}`}
       </div>
     </div>
+
   );
 };
 

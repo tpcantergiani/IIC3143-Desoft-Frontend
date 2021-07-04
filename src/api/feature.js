@@ -23,5 +23,5 @@ export async function getPosiblesHomes() {
   return http.get('/get_homes_numbers');
 }
 export async function getActualCondominium() {
-  return http.get('/get_actual_condominium');
+  return http.get('/init_info');
 }
