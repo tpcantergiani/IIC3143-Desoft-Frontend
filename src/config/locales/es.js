@@ -9,7 +9,7 @@ const messages = defineMessages({
   username: 'Nombre',
   password: 'Constraseña',
   about: 'Acerca de',
-  home: 'Inicio',
+  home: 'Información',
   page_not_found: 'Page not found',
   settings: 'Configuración',
   theme: 'Tema',
