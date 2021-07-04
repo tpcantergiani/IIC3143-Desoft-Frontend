@@ -20,5 +20,5 @@ export async function getUserContacts() {
   return http.get('/contacts');
 }
 export async function getPosiblesHomes() {
-  return http.get('/get_homes');
+  return http.get('/get_homes_numbers');
 }

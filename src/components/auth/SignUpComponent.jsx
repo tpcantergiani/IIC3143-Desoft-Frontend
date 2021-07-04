@@ -102,8 +102,6 @@ const SignUpComponent = () => {
 
   useEffect(async () => {
     await dispatch(getHomesThunk());
-    console.log('consulta hecha');
-    console.log(homeList);
   }, []);
 
   useEffect(() => {
@@ -219,20 +217,6 @@ const SignUpComponent = () => {
             name="email"
             autoComplete="email"
           />
-          <TextField
-            value={userHome}
-            onInput={(e) => setUserHome(e.target.value)}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="home"
-            label={intl.formatMessage({
-              id: 'homeN',
-            })}
-            name="home"
-            autoComplete="home"
-          />
           <FormControl
             variant="outlined"
             fullWidth
@@ -240,7 +224,6 @@ const SignUpComponent = () => {
             required
             className={classes.formControl}
           >
-
             <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'homeN' })}</InputLabel>
             <Select
               native
@@ -252,15 +235,14 @@ const SignUpComponent = () => {
                 id: 'outlined-age-native-simple',
               }}
             >
-              <option value="1">
-                {1}
+              <option value={undefined}>
+                {null}
               </option>
-              <option value="2">
-                {2}
-              </option>
-              <option value="3">
-                {3}
-              </option>
+              {homeList.data?.map((elem, index) => (
+                <option value={index}>
+                  {elem}
+                </option>
+              ))}
             </Select>
           </FormControl>
           <FormControl
