@@ -19,3 +19,6 @@ export async function getInvitationsRoute() {
 export async function getUserContacts() {
   return http.get('/contacts');
 }
+export async function getPosiblesHomes(payload) {
+  return http.post('/get_homes', payload);
+}

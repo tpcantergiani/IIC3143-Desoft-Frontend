@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  invite, searchVisit, getUserContacts, getInvitationsRoute,
+  invite, searchVisit, getUserContacts, getInvitationsRoute, getPosiblesHomes,
 } from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
@@ -39,6 +39,13 @@ const getContacts = createAsyncThunk(
   'feature/getContacts',
   async (_thunkAPI) => {
     const response = await getUserContacts();
+    return response.data;
+  },
+);
+const getHomes = createAsyncThunk(
+  'feature/getHomes',
+  async (_thunkAPI) => {
+    const response = await getPosiblesHomes();
     return response.data;
   },
 );
@@ -130,5 +137,6 @@ export const {
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
+export const getHomesThunk = getHomes;
 export const getInvitationsThunk = getInvitations;
 export const featureReducer = featureSlice.reducer;

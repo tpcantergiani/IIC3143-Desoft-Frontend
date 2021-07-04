@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
-
+import { getHomesThunk } from '../../store/slices/featuresSlice';
 import { validateEmail } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,6 +68,7 @@ const SignUpComponent = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('Resident');
   const [userHome, setUserHome] = useState('');
+  const { homeList } = useSelector((state) => state.features);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -97,6 +98,14 @@ const SignUpComponent = () => {
   useEffect(() => {
     dispatch(setCreateError(false));
     dispatch(setCreateLoading(false));
+  }, []);
+
+  useEffect(async () => {
+    await dispatch(getHomesThunk());
+  }, []);
+
+  useEffect(() => {
+    console.log(homeList);
   }, []);
 
   const clearFields = () => {
