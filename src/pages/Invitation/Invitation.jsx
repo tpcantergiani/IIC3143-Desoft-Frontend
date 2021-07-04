@@ -49,7 +49,7 @@ const Invitation = () => {
         history.goBack();
       }}
     >
-      <Paper className={classes.paper} elevation={6}>
+      <Paper className={classes.paper} elevation={2}>
 
         <ContactSelectComponent contactValue={contactIndex} action={setContactIndex} />
         <InvitationComponent

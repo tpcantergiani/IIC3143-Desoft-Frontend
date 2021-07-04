@@ -108,7 +108,7 @@ const SignInComponent = () => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={6}>
+    <Paper className={classes.paper} elevation={2}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
           {intl.formatMessage({ id: 'sign_in' })}
