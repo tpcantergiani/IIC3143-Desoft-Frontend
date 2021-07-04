@@ -33,7 +33,7 @@ const messages = defineMessages({
   toast_demo: 'Crear Viviendas',
   filter_demo: 'Demo filter',
   list_page_demo: 'List Page demo with {count} rows',
-  forgot_password: 'Olvidé mi contraseña',
+  forgot_password: '¿Olvidaste tu contraseña',
   password_reset: 'Crear contraseña',
   password_confirm: 'Confirmar Contraseña',
   registration: 'Registro',

@@ -122,7 +122,7 @@ const SignInComponent = () => {
             required
             fullWidth
             id="username"
-            label={intl.formatMessage({ id: 'username' })}
+            label={intl.formatMessage({ id: 'email' })}
             name="username"
             autoComplete="username"
             autoFocus
