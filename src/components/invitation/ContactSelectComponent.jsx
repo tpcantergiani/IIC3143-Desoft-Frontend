@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     height: '305px',
     width: '100%',
     padding: '30px',
-    background: '#f1f6fc',
+    background: '#f5f5f5',
     borderRadius: 10,
     boxShadow: '0 3px 5px 2px rgba(241, 246, 252, .3)',
   },
