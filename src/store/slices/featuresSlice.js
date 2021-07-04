@@ -17,6 +17,7 @@ const initialState = {
   isPlateValid: false,
   contactList: [],
   invitationsList: [],
+  homeList: [],
 };
 
 const sendInvitation = createAsyncThunk(
@@ -118,6 +119,17 @@ const featureSlice = createSlice({
     [getContacts.rejected]: (state, action) => {
       state.contactList = [{ name: 123, lastName: 123, id: 1 }];
     },
+
+    [getHomes.fulfilled]: (state, action) => {
+      state.homeList = action.payload;
+    },
+    [getHomes.pending]: (state, action) => {
+      state.homeList = [];
+    },
+    [getHomes.rejected]: (state, action) => {
+      state.homeList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+
     [getInvitations.fulfilled]: (state, action) => {
       state.invitationsList = action.payload.invitations;
     },
