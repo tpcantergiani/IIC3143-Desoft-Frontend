@@ -15,8 +15,8 @@ import { useHistory } from 'react-router-dom';
 import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
-import { getHomesThunk } from '../../store/slices/featuresSlice';
 import { validateEmail } from '../../utils/functions';
+// import { getHomesThunk } from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,7 +68,7 @@ const SignUpComponent = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('Resident');
   const [userHome, setUserHome] = useState('');
-  const { homeList } = useSelector((state) => state.features);
+  // const { homeList } = useSelector((state) => state.features);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -100,13 +100,14 @@ const SignUpComponent = () => {
     dispatch(setCreateLoading(false));
   }, []);
 
-  useEffect(async () => {
-    await dispatch(getHomesThunk());
-  }, []);
+  // useEffect(async () => {
+  //   await dispatch(getHomesThunk());
+  // }, []);
 
-  useEffect(() => {
-    console.log(homeList);
-  }, []);
+  // useEffect(() => {
+  //  console.log('casas disponibles:');
+  //  console.log(homeList);
+  // }, []);
 
   const clearFields = () => {
     setUsername('');
