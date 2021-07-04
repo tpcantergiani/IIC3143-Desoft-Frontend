@@ -21,6 +21,7 @@ const initialState = {
   entryError: false,
   entryLoading: false,
   entriesList: [],
+  homeNumber: 0,
 
 };
 
