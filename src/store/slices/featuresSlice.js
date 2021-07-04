@@ -3,7 +3,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  invite, searchVisit, getUserContacts, getInvitationsRoute, getPosiblesHomes,
+  invite, searchVisit, getUserContacts,
+  getInvitationsRoute, getPosiblesHomes,
+  getActualCondominium,
 } from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
@@ -18,6 +20,7 @@ const initialState = {
   contactList: [],
   invitationsList: [],
   homeList: [],
+  actualCondominium: '',
 };
 
 const sendInvitation = createAsyncThunk(
@@ -48,6 +51,14 @@ const getHomes = createAsyncThunk(
   async (_thunkAPI) => {
     const response = await getPosiblesHomes();
     return response.data;
+  },
+);
+
+const getCondominium = createAsyncThunk(
+  'feature/getCondominium',
+  async (_thunkAPI) => {
+    const response = await getActualCondominium();
+    return response.data.data.name;
   },
 );
 
@@ -117,7 +128,7 @@ const featureSlice = createSlice({
       state.contactList = [];
     },
     [getContacts.rejected]: (state, action) => {
-      state.contactList = [{ name: 123, lastName: 123, id: 1 }];
+      state.contactList = [];
     },
 
     [getHomes.fulfilled]: (state, action) => {
@@ -128,6 +139,16 @@ const featureSlice = createSlice({
     },
     [getHomes.rejected]: (state, action) => {
       state.homeList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+
+    [getCondominium.fulfilled]: (state, action) => {
+      state.actualCondominium = action.payload;
+    },
+    [getCondominium.pending]: (state, action) => {
+      state.actualCondominium = '';
+    },
+    [getCondominium.rejected]: (state, action) => {
+      state.actualCondominium = '';
     },
 
     [getInvitations.fulfilled]: (state, action) => {
@@ -150,5 +171,6 @@ export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
 export const getHomesThunk = getHomes;
+export const getCondominiumThunk = getCondominium;
 export const getInvitationsThunk = getInvitations;
 export const featureReducer = featureSlice.reducer;
