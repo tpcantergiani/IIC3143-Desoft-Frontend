@@ -315,8 +315,14 @@ const getMenuItems = (props) => {
       {
         value: '/invitation',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'supplier' }),
-        leftIcon: <LocalShipping />,
+        primaryText: intl.formatMessage({ id: 'invitation_info' }),
+        leftIcon: <Email />,
+      },
+      {
+        value: '/visit_history',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'invitation_history' }),
+        leftIcon: <History />,
       },
       {
         value: '/entry_history',

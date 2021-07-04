@@ -22,7 +22,6 @@ const initialState = {
   entryLoading: false,
   entriesList: [],
   homeNumber: 0,
-
 };
 
 const sendInvitation = createAsyncThunk(
@@ -133,7 +132,7 @@ const featureSlice = createSlice({
       state.contactList = [];
     },
     [getContacts.rejected]: (state, action) => {
-      state.contactList = [{ name: 123, lastName: 123, id: 1 }];
+      state.contactList = [];
     },
     [getInvitations.fulfilled]: (state, action) => {
       state.invitationsList = action.payload.invitations;
@@ -154,87 +153,88 @@ const featureSlice = createSlice({
       state.homeNumber = 0;
     },
     [getEntries.rejected]: (state, action) => {
+      state.entriesList = [];
       state.homeNumber = 1;
-      state.entriesList = [
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'DYLW23',
-          expected: 0,
-          contact: null,
-          home: {
-            id: 2,
-            number: 1,
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'BLSS26',
-          expected: 1,
-          home: {
-            id: 2,
-            number: 1,
-          },
-          contact: {
-            id: 1,
-            name: 'Pedrito',
-            last_name: 'Perez',
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'XP2956',
-          expected: 2,
-          contact: null,
-          home: {
-            id: 2,
-            number: 1,
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'XP2956',
-          expected: 0,
-          contact: null,
-          home: {
-            id: 2,
-            number: 1,
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'XP2956',
-          expected: 1,
-          home: {
-            id: 2,
-            number: 1,
-          },
-          contact: {
-            id: 2,
-            name: 'Juanito',
-            last_name: 'Juarez',
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'XP2956',
-          expected: 2,
-          contact: null,
-          home: {
-            id: 2,
-            number: 1,
-          },
-        },
-        {
-          entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-          patent: 'SC1111',
-          expected: 3,
-          contact: null,
-          home: {
-            id: 2,
-            number: 1,
-          },
-        },
-      ];
+      // state.entriesList = [
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'DYLW23',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'BLSS26',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 1,
+      //       name: 'Pedrito',
+      //       last_name: 'Perez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 2,
+      //       name: 'Juanito',
+      //       last_name: 'Juarez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'SC1111',
+      //     expected: 3,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      // ];
     },
   },
 });
