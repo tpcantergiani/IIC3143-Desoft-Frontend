@@ -54,7 +54,6 @@ const messages = defineMessages({
   user_type: 'Tipo de usuario',
   homeN: 'Número de casa',
   rut: 'Rut',
-
   userExists: 'El usuario que ingresaste ya existe',
   wrongData: 'Revisa los datos ingresados',
   password_set: 'Crea una contraseña',
@@ -77,6 +76,7 @@ const messages = defineMessages({
   userlastname: 'Apellido',
   changePassword: 'Cambiar Contraseña',
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
+  saved_invitation: 'Completa la información de un invitado creado anteriormente',
 });
 
 export default messages;

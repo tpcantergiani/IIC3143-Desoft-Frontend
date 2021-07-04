@@ -51,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     height: '100%',
+    padding: '30px',
   },
   error: {
     color: 'red',

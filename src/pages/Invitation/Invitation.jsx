@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
     [theme.breakpoints.up(620 + theme.spacing(6))]: {
-      width: 400,
+      width: '90%',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
     marginTop: theme.spacing(8),
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: 'row',
+    // alignItems: 'center',
     padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
       3,
     )}px`,
@@ -50,14 +50,13 @@ const Invitation = () => {
       }}
     >
       <Paper className={classes.paper} elevation={2}>
-
-        <ContactSelectComponent contactValue={contactIndex} action={setContactIndex} />
         <InvitationComponent
           auxName={contactIndex ? contactList[contactIndex]?.name : ''}
           auxLastName={contactIndex ? contactList[contactIndex]?.last_name : ''}
           rut={contactIndex ? contactList[contactIndex]?.rut : ''}
           plate={contactIndex ? contactList[contactIndex]?.patent : ''}
         />
+        <ContactSelectComponent contactValue={contactIndex} action={setContactIndex} />
       </Paper>
     </Page>
   );

@@ -76,6 +76,8 @@ const messages = defineMessages({
   userlastname: 'Last name',
   changePassword: 'Change Password',
   password_error: 'Error updating your password. Try again',
+  saved_invitation: 'Fill in the information of a previously created guest',
+
 });
 
 export default messages;
