@@ -150,8 +150,10 @@ const featureSlice = createSlice({
     },
     [getEntries.pending]: (state, action) => {
       state.entriesList = [];
+      state.homeNumber = 0;
     },
     [getEntries.rejected]: (state, action) => {
+      state.homeNumber = 1;
       state.entriesList = [
         {
           entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
