@@ -160,6 +160,10 @@ const SignUpComponent = () => {
     setUserType(event.target.value);
   };
 
+  const handleNumberChange = (event) => {
+    setUserHome(event.target.value);
+  };
+
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.container}>
@@ -236,7 +240,38 @@ const SignUpComponent = () => {
             required
             className={classes.formControl}
           >
+
+            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'homeN' })}</InputLabel>
+            <Select
+              native
+              value={userHome}
+              onChange={handleNumberChange}
+              label="Número de casa "
+              inputProps={{
+                name: 'age',
+                id: 'outlined-age-native-simple',
+              }}
+            >
+              <option value="1">
+                {1}
+              </option>
+              <option value="2">
+                {2}
+              </option>
+              <option value="3">
+                {3}
+              </option>
+            </Select>
+          </FormControl>
+          <FormControl
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            required
+            className={classes.formControl}
+          >
             <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
+
             <Select
               native
               value={userType}
