@@ -104,11 +104,6 @@ const SignUpComponent = () => {
     await dispatch(getHomesThunk());
   }, []);
 
-  useEffect(() => {
-    console.log('casas disponibles:');
-    console.log(homeList);
-  }, [homeList]);
-
   const clearFields = () => {
     setUsername('');
     setUserLastname('');

@@ -66,10 +66,6 @@ const ContactSelectComponent = ({ contactValue, action }) => {
     await dispatch(getContactsThunk());
   }, []);
 
-  useEffect(() => {
-    console.log(contactList);
-  }, [contactList]);
-
   const handleChange = (event) => {
     action(event.target.value);
   };
