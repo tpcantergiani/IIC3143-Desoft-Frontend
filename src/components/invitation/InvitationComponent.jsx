@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,6 +15,7 @@ import {
 } from '../../store/slices/featuresSlice';
 import DatesComponent from '../dates/DatesComponent';
 import TimeComponent from '../dates/TimeComponent';
+import { validateRut } from '../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -96,7 +98,7 @@ const InvitationComponent = ({
   };
 
   const validate = () => {
-    if (userRut.length > 0 && name.length > 0 && lastName.length > 0) {
+    if (validateRut(userRut) && name.length > 0 && lastName.length > 0) {
       return true;
     }
     return false;
@@ -104,7 +106,8 @@ const InvitationComponent = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate) {
+    if (validate()) {
+      console.log('entre acaa si que si');
       const r = await dispatch(
         sendInvitationThunk({
           name,
