@@ -64,8 +64,9 @@ const HistoryTableComponent = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const { entriesList } = useSelector((state) => state.features);
+  const { homeNumber } = useSelector((state) => state.features);
   const [source, setSource] = useState(entriesList);
-  const [homeNumber, setHomeNumber] = useState(entriesList);
+  const [homeN, setHomeNumber] = useState(homeNumber);
 
   useEffect(async () => {
     await dispatch(getEntriesThunk());
@@ -103,10 +104,10 @@ const HistoryTableComponent = () => {
   }, [entriesList]);
 
   useEffect(async () => {
-    // const number = await entriesList[0].home.number;
-    const number = 1;
+    const number = await entriesList[0].home.number;
+    // const number = 1;
     setHomeNumber(number);
-  }, [entriesList]);
+  }, [homeNumber]);
 
   return (
     <div>
@@ -115,7 +116,7 @@ const HistoryTableComponent = () => {
         {' '}
         {intl.formatMessage({ id: 'house' })}
         {' '}
-        {homeNumber}
+        {homeN}
       </Typography>
       {
         source.map((row) => (

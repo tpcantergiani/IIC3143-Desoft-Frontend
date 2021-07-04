@@ -146,6 +146,7 @@ const featureSlice = createSlice({
 
     [getEntries.fulfilled]: (state, action) => {
       state.entriesList = action.payload.entries;
+      state.homeNumber = action.payload.entries[0].home.number;
     },
     [getEntries.pending]: (state, action) => {
       state.entriesList = [];
