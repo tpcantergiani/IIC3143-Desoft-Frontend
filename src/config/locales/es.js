@@ -72,7 +72,7 @@ const messages = defineMessages({
   valid_visit: 'Invitación válida',
   unrecognized_plate: 'Patente no reconocida',
   visit_regist: 'Visita registrada correctamente',
-  invitation_history: 'Historial de ingresos',
+  invitation_history: 'Historial Invitaciones',
   userlastname: 'Apellido',
   changePassword: 'Cambiar Contraseña',
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',

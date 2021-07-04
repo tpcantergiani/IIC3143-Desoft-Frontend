@@ -127,7 +127,7 @@ const getMenuItems = (props) => {
       {
         value: '/visit_history',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'history' }),
+        primaryText: intl.formatMessage({ id: 'invitation_history' }),
         leftIcon: <History />,
       },
       { divider: true },
