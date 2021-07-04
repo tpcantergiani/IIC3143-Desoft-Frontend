@@ -104,7 +104,7 @@ const HistoryTableComponent = () => {
   }, [entriesList]);
 
   useEffect(async () => {
-    const number = await entriesList[0].home.number;
+    const number = await homeNumber;
     // const number = 1;
     setHomeNumber(number);
   }, [homeNumber]);
