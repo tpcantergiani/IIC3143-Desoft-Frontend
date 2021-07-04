@@ -14,18 +14,12 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(3),
     [theme.breakpoints.up(620 + theme.spacing(6))]: {
-      width: '95%',
-      height: '70%',
+      width: '60%',
+      height: '40%',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
     marginTop: theme.spacing(8),
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: ,
-    // padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme.spacing(
-    //  3,
-    // )}px`,
   },
 }));
 const HomePage = () => {
