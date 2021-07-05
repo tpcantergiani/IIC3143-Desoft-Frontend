@@ -20,6 +20,7 @@ const CreatePassword = lazy(() => import('../pages/PasswordCreate/PasswordCreate
 const Invitation = lazy(() => import('../pages/Invitation/Invitation'));
 const InvitationHistory = lazy(() => import('../pages/InvitationsHistory/InvitationsHistory'));
 const EntryHistory = lazy(() => import('../pages/EntryHistory/EntryHistory'));
+const HomePlates = lazy(() => import('../pages/HomePlates/HomePlates'));
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/home" exact component={SignIn} />,
@@ -43,6 +44,7 @@ const routes = [
   <AuthorizedRoute path="/invitation" exact component={Invitation} />,
   <AuthorizedRoute path="/visit_history" exact component={InvitationHistory} />,
   <AuthorizedRoute path="/entry_history" exact component={EntryHistory} />,
+  <AuthorizedRoute path="/home_plates" exact component={HomePlates} />,
 
 ];
 
