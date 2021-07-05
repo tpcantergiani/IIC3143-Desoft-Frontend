@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '30px',
+    marginTop: '15px',
 
     // alignItems: 'center',
     justifyContent: 'center',
@@ -76,9 +76,11 @@ const HomeComponent = () => {
       </div>
 
       <div className={classes.infoBox}>
-        <Typography component="paragraph">
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
           {intl.formatMessage({ id: 'condominium' })}
           {': '}
+        </Typography>
+        <Typography component="paragraph">
           {nameCondominium}
         </Typography>
       </div>

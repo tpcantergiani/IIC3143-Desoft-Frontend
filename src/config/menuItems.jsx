@@ -103,7 +103,7 @@ const getMenuItems = (props) => {
         value: '/home',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <Home />,
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/new_entry_guard',
@@ -200,7 +200,7 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
+        primaryText: intl.formatMessage({ id: 'my_account' }),
         leftIcon: <Home />,
       },
       {
@@ -296,8 +296,8 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <Home />,
+        primaryText: intl.formatMessage({ id: 'my_account' }),
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/invitation',
