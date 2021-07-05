@@ -85,7 +85,7 @@ const SignInComponent = () => {
     if (token && token?.length > 0) {
       authenticate({
         current,
-        displayName: current.name,
+        displayName: `${current.name} ${current.last_name}`,
         email: current.email,
       });
     }

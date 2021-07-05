@@ -86,9 +86,12 @@ const getMenuItems = (props) => {
         onClick: isAuthorised
           ? () => {
             setAuth({ isAuthenticated: false });
+            dispatch(
+              logoutUser(),
+            );
           }
           : () => { },
-        visible: true,
+        visible: isAuthorised,
         primaryText: isAuthorised
           ? intl.formatMessage({ id: 'sign_out' })
           : intl.formatMessage({ id: 'sign_in' }),

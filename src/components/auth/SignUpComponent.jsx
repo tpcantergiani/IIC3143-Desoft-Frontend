@@ -5,9 +5,7 @@ import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useAuth } from 'base-shell/lib/providers/Auth';
 import { useIntl } from 'react-intl';
-import { useMenu } from 'material-ui-shell/lib/providers/Menu';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -77,8 +75,6 @@ const SignUpComponent = () => {
   const {
     current, createError, createErrorMsj, createLoading,
   } = useSelector((state) => state.user);
-  const { toggleThis } = useMenu();
-  const { setAuth } = useAuth();
 
   useEffect(() => {
     if (current.type !== 'Admin') {
@@ -122,20 +118,6 @@ const SignUpComponent = () => {
     }
     return false;
   };
-  const authenticate = (user) => {
-    setAuth({ isAuthenticated: true, ...user });
-    toggleThis('isAuthMenuOpen', false);
-
-    const _location = history.location;
-    let _route = '/home';
-
-    if (_location.state && _location.state.from) {
-      _route = _location.state.from.pathname;
-      history.push(_route);
-    } else {
-      history.push(_route);
-    }
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -154,10 +136,6 @@ const SignUpComponent = () => {
 
       if (r.payload?.data) {
         clearFields();
-        authenticate({
-          displayName: 'User',
-          email: username,
-        });
         enqueueSnackbar('Usuario agregado correctamente', {
           variant: 'success',
           anchorOrigin: {
