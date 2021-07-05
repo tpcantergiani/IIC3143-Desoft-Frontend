@@ -70,6 +70,7 @@ const getMenuItems = (props) => {
     leftIcon: <StyleIcon style={{ color: t.color }} />,
   }));
 
+  // esto pasa cuando se aprieta el mono del menu
   if (isAuthMenuOpen || !isAuthorised) {
     return [
       {
@@ -96,8 +97,8 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <Home />,
+        primaryText: intl.formatMessage({ id: 'my_account' }),
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/new_entry_guard',
@@ -194,8 +195,8 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <Home />,
+        primaryText: intl.formatMessage({ id: 'my_account' }),
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/new_entry_guard',
@@ -290,8 +291,8 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
-        leftIcon: <Home />,
+        primaryText: intl.formatMessage({ id: 'my_account' }),
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/invitation',

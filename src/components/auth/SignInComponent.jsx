@@ -70,7 +70,7 @@ const SignInComponent = () => {
     toggleThis('isAuthMenuOpen', false);
 
     const _location = history.location;
-    let _route = '/invitation';
+    let _route = '/home';
 
     if (_location.state && _location.state.from) {
       _route = _location.state.from.pathname;
@@ -83,13 +83,21 @@ const SignInComponent = () => {
   useEffect(() => {
     dispatch(setLoading(false));
     if (token && token?.length > 0) {
-      authenticate({ current });
+      authenticate({
+        current,
+        displayName: `${current.name} ${current.last_name}`,
+        email: current.email,
+      });
     }
   }, []);
 
   useEffect(() => {
     if (token && token?.length > 0) {
-      authenticate({ current });
+      authenticate({
+        current,
+        displayName: `${current.name} ${current.last_name}`,
+        email: current.email,
+      });
     }
   }, [token]);
 

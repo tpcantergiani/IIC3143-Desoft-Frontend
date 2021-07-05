@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '30px',
+    marginTop: '10px',
+
+    // alignItems: 'center',
+    justifyContent: 'center',
+    // height: '100%',
   },
 }));
 
@@ -48,39 +52,55 @@ const HomeComponent = () => {
 
   return (
     <div className={classes.container}>
-      <Typography component="h1" variant="h5" style={{ fontWeight: 600 }}>
-        {intl.formatMessage({ id: 'information' })}
-      </Typography>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'condominium' })}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          marginTop: 18,
+          marginBottom: 18,
+        }}
+      >
+        <Typography
+          variant="h6"
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          {nameUser}
+
         </Typography>
-        {`: ${nameCondominium}`}
-      </div>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'name' })}
-        </Typography>
-        {`: ${nameUser}`}
-      </div>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'email' })}
-        </Typography>
-        {`: ${userEmail}`}
-      </div>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'homeN' })}
-        </Typography>
-        {`: ${nameHome}`}
+        <Typography variant="h6">{userEmail}</Typography>
       </div>
 
       <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'user_type' })}
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
+          {intl.formatMessage({ id: 'condominium' })}
+          {': '}
         </Typography>
-        {`: ${userType}`}
+        <Typography component="paragraph">
+          {nameCondominium}
+        </Typography>
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
+          {intl.formatMessage({ id: 'homeN' })}
+          {': '}
+        </Typography>
+        <Typography component="paragraph">
+          {nameHome}
+        </Typography>
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
+          {intl.formatMessage({ id: 'user_type' })}
+          {': '}
+        </Typography>
+        <Typography component="paragraph">
+          {userType}
+        </Typography>
       </div>
     </div>
 

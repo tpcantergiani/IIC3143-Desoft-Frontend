@@ -25,6 +25,9 @@ const MyAccount = () => {
     displayName: currentDisplayName = '',
     email = '',
   } = auth || {};
+  // const {
+
+  // }
   const [displayName, setDisplayName] = useState(currentDisplayName);
   const [photoURL, setPhotoURL] = useState(currentPhoroURL);
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
@@ -89,7 +92,7 @@ const MyAccount = () => {
             alignItems: 'center',
           }}
         >
-          <Fab
+          {/* <Fab
             size="medium"
             style={{ position: 'absolute', bottom: 40, right: -16 }}
             onClick={openDeleteDialog}
@@ -97,9 +100,9 @@ const MyAccount = () => {
             aria-label="delete"
           >
             <Delete />
-          </Fab>
+          </Fab> */}
 
-          <Fab
+          {/* <Fab
             onClick={() => setImageDialogOpen(true)}
             style={{
               position: 'absolute',
@@ -112,7 +115,7 @@ const MyAccount = () => {
             size="small"
           >
             <Camera />
-          </Fab>
+          </Fab> */}
 
           {photoURL && (
             <Avatar

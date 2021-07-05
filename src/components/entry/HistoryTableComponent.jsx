@@ -93,7 +93,7 @@ const HistoryTableComponent = () => {
     function makeTitle(elem) {
       let title;
       if (elem.expected === 2) {
-        title = `${intl.formatMessage({ id: dict[elem.expected] })} ${intl.formatMessage({ id: 'house' })}  ${elem.home.number}`;
+        title = `${intl.formatMessage({ id: dict[elem.expected] })} ${intl.formatMessage({ id: 'house' })} ${elem.home.number}`;
       } else if (elem.expected === 1) {
         title = `${intl.formatMessage({ id: dict[elem.expected] })}: ${elem.contact.name} ${elem.contact.last_name}`;
       } else {
