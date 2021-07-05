@@ -131,7 +131,7 @@ const HistoryTableComponent = () => {
       </Typography>
       {
         source.map((row) => (
-          <Paper className={classes.paper} elevation={6}>
+          <Paper className={classes.paper} elevation={2}>
             <div className={classes.container}>
 
               <Typography component="h5" variant="h5">
