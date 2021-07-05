@@ -4,7 +4,7 @@ import Scrollbar from 'material-ui-shell/lib/components/Scrollbar/Scrollbar';
 import { useIntl } from 'react-intl';
 import TableauReport from 'tableau-react';
 
-const HomePage = () => {
+const Kpis = () => {
   const intl = useIntl();
 
   return (
@@ -14,9 +14,11 @@ const HomePage = () => {
           height: '100%', width: '100%', display: 'flex', flex: 1,
         }}
       >
+        <TableauReport url="https://public.tableau.com/views/modulodeestadstica/Cantidaddeinvitacionesatravsdeltiempo?:language=es-ES&:display_count=n&:origin=viz_share_link" />
+        <TableauReport url="https://public.tableau.com/views/Entries_16253514255320/Entradasesperadasvsnoesperadasatravsdeltiempo?:language=es-ES&:display_count=n&:origin=viz_share_link" />
         {intl.formatMessage({ id: 'home' })}
       </Scrollbar>
     </Page>
   );
 };
-export default HomePage;
+export default Kpis;

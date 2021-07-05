@@ -3,9 +3,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  invite, searchVisit, getUserContacts, getInvitationsRoute,
+  invite, searchVisit, getUserContacts, getInvitationsRoute, getUsersList, deleteUsers,
 } from '../../api/feature';
-import { parseError } from '../../utils/functions';
 
 const initialState = {
   invitationErrorMsj: '',
@@ -17,6 +16,9 @@ const initialState = {
   isPlateValid: false,
   contactList: [],
   invitationsList: [],
+  usersList: [],
+  deleteError: false,
+  deleteLoading: false,
 };
 
 const sendInvitation = createAsyncThunk(
@@ -47,6 +49,22 @@ const getInvitations = createAsyncThunk(
   'feature/getInvitations',
   async (_thunkAPI) => {
     const response = await getInvitationsRoute();
+    return response.data;
+  },
+);
+
+const getUsers = createAsyncThunk(
+  'feature/getUsers',
+  async (_thunkAPI) => {
+    const response = await getUsersList();
+    return response.data;
+  },
+);
+
+const deleteUser = createAsyncThunk(
+  'feature/deleteUsers',
+  async (payload, _thunkAPI) => {
+    const response = await deleteUsers(payload);
     return response.data;
   },
 );
@@ -120,6 +138,27 @@ const featureSlice = createSlice({
     [getInvitations.rejected]: (state, action) => {
       state.invitationsList = [];
     },
+    [getUsers.fulfilled]: (state, action) => {
+      state.usersList = action.payload.data;
+    },
+    [getUsers.pending]: (state, action) => {
+      state.usersList = [];
+    },
+    [getUsers.rejected]: (state, action) => {
+      state.usersList = [];
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      state.deleteError = false;
+      state.deleteLoading = false;
+    },
+    [deleteUser.pending]: (state, action) => {
+      state.deleteError = false;
+      state.deleteLoading = true;
+    },
+    [deleteUser.rejected]: (state, action) => {
+      state.deleteError = true;
+      state.deleteLoading = false;
+    },
 
   },
 });
@@ -131,4 +170,6 @@ export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
 export const getInvitationsThunk = getInvitations;
+export const getUsersThunk = getUsers;
+export const deleteUsersThunk = deleteUser;
 export const featureReducer = featureSlice.reducer;

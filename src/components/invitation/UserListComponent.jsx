@@ -5,14 +5,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Delete } from '@material-ui/icons';
 import {
-  getInvitationsThunk,
+  getUsersThunk, deleteUsersThunk,
 } from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,30 +62,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HistoryTableComponent = () => {
+const UserListComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { invitationsList } = useSelector((state) => state.features);
-  const [source, setSource] = useState(invitationsList);
+  const { usersList } = useSelector((state) => state.features);
+  const [source, setSource] = useState(usersList);
+
+  const handleClick = async (email) => {
+    const payload = {
+      data: {
+        email,
+      },
+    };
+    const r = await dispatch(deleteUsersThunk(payload));
+    return r;
+  };
 
   useEffect(async () => {
-    await dispatch(getInvitationsThunk());
+    await dispatch(getUsersThunk());
   }, []);
 
   useEffect(async () => {
-    const info = await invitationsList.map((elem) => ({
-      id: elem.contact.id,
-      home: elem.home,
-      name: elem.contact.name,
-      lastName: elem.contact.last_name,
-      patent: elem.contact.patent,
-      start: elem.start_time,
-      end: elem.end_time,
-      rut: elem.contact.rut,
+    console.log(usersList);
+    const info = await usersList.map((elem) => ({
+      id: elem.id,
+      email: elem.email,
+      home: elem.home.number,
+      name: elem.name,
+      lastName: elem.last_name,
+      patent: elem.patent,
     }));
     setSource(info);
-  }, [invitationsList]);
+  }, [usersList]);
 
   return (
     <TableContainer component={Paper}>
@@ -91,12 +102,10 @@ const HistoryTableComponent = () => {
         <TableHead>
           <TableRow>
             <TableCell align="left">{intl.formatMessage({ id: 'homeN' })}</TableCell>
+            <TableCell align="left">{intl.formatMessage({ id: 'email' })}</TableCell>
             <TableCell align="left">{intl.formatMessage({ id: 'name' })}</TableCell>
             <TableCell align="left">{intl.formatMessage({ id: 'last_name' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'plate' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'start_time' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'end_time' })}</TableCell>
-            <TableCell align="left">Rut</TableCell>
+            <TableCell align="left">{intl.formatMessage({ id: 'action' })}</TableCell>
 
           </TableRow>
         </TableHead>
@@ -106,12 +115,10 @@ const HistoryTableComponent = () => {
               <TableCell component="th" scope="row">
                 {row.home}
               </TableCell>
+              <TableCell align="left">{row.email}</TableCell>
               <TableCell align="left">{row.name}</TableCell>
               <TableCell align="left">{row.lastName}</TableCell>
-              <TableCell align="left">{row.patent}</TableCell>
-              <TableCell align="left">{row.start}</TableCell>
-              <TableCell align="left">{row.end}</TableCell>
-              <TableCell align="left">{row.rut}</TableCell>
+              <TableCell align="left"><Button onClick={() => handleClick(row.email)}><Delete /></Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -120,4 +127,4 @@ const HistoryTableComponent = () => {
   );
 };
 
-export default HistoryTableComponent;
+export default UserListComponent;

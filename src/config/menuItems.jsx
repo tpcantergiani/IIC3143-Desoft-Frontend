@@ -18,6 +18,8 @@ import {
   DirectionsCar,
   LocalShipping,
   Lock,
+  FormatListNumbered,
+  TrendingUp,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -100,6 +102,12 @@ const getMenuItems = (props) => {
         leftIcon: <Home />,
       },
       {
+        value: '/kpis',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'stats', defaultMessage: 'Estadísticas' }),
+        leftIcon: <TrendingUp />,
+      },
+      {
         value: '/new_entry_guard',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'entry' }),
@@ -125,6 +133,15 @@ const getMenuItems = (props) => {
               defaultMessage: 'Dialog',
             }),
             leftIcon: <GroupAdd />,
+          },
+          {
+            value: '/users_list',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'userList',
+              defaultMessage: 'Listado de usuarios',
+            }),
+            leftIcon: <FormatListNumbered />,
           },
           // {
           //   value: '/toast_demo',
