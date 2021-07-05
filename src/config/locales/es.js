@@ -77,6 +77,7 @@ const messages = defineMessages({
   userlastname: 'Apellido',
   changePassword: 'Cambiar Contraseña',
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
+  action: 'Acciones',
 });
 
 export default messages;

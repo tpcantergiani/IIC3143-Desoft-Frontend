@@ -97,6 +97,8 @@ const HistoryTableComponent = () => {
             <TableCell align="left">{intl.formatMessage({ id: 'start_time' })}</TableCell>
             <TableCell align="left">{intl.formatMessage({ id: 'end_time' })}</TableCell>
             <TableCell align="left">Rut</TableCell>
+            <TableCell align="left">{intl.formatMessage({ id: 'action' })}</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -111,6 +113,7 @@ const HistoryTableComponent = () => {
               <TableCell align="left">{row.start}</TableCell>
               <TableCell align="left">{row.end}</TableCell>
               <TableCell align="left">{row.rut}</TableCell>
+              <TableCell align="left"><a href="/">Holi</a></TableCell>
             </TableRow>
           ))}
         </TableBody>

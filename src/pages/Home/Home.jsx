@@ -2,6 +2,7 @@ import Page from 'material-ui-shell/lib/containers/Page';
 import React from 'react';
 import Scrollbar from 'material-ui-shell/lib/components/Scrollbar/Scrollbar';
 import { useIntl } from 'react-intl';
+import TableauReport from 'tableau-react';
 
 const HomePage = () => {
   const intl = useIntl();
@@ -13,6 +14,8 @@ const HomePage = () => {
           height: '100%', width: '100%', display: 'flex', flex: 1,
         }}
       >
+        <TableauReport url="https://public.tableau.com/views/modulodeestadstica/Cantidaddeinvitacionesatravsdeltiempo?:language=es-ES&:display_count=n&:origin=viz_share_link" />
+
         {intl.formatMessage({ id: 'home' })}
       </Scrollbar>
     </Page>
