@@ -73,9 +73,16 @@ const messages = defineMessages({
   unrecognized_plate: 'Unrecognized plates',
   visit_regist: 'visit successfully registered',
   invitation_history: 'Invitation History',
+  entry_history: 'Entry History',
   userlastname: 'Last name',
   changePassword: 'Change Password',
   password_error: 'Error updating your password. Try again',
+  entry_time: 'Entry time',
+  visit: 'Visit',
+  unexpected_visit: 'Unexpected Visit',
+  type: 'Type',
+  house: 'Home',
+  provider: 'Service Provider',
 });
 
 export default messages;
