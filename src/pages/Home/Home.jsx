@@ -26,7 +26,7 @@ const HomePage = () => {
   const intl = useIntl();
   const classes = useStyles();
   return (
-    <Page pageTitle={intl.formatMessage({ id: 'home' })}>
+    <Page pageTitle={intl.formatMessage({ id: 'my_account' })}>
       <Paper className={classes.paper} elevation={2}>
         <HomeComponent />
       </Paper>

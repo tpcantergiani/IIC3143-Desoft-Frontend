@@ -48,20 +48,34 @@ const HomeComponent = () => {
 
   return (
     <div className={classes.container}>
-      <Typography component="h1" variant="h5" style={{ fontWeight: 600 }}>
-        {intl.formatMessage({ id: 'information' })}
-      </Typography>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          marginTop: 18,
+          marginBottom: 18,
+        }}
+      >
+        <Typography
+          variant="h6"
+          style={{
+            fontSize: 26,
+            fontWeight: 'bold',
+            textAlign: 'center',
+          }}
+        >
+          {nameUser}
+
+        </Typography>
+        <Typography variant="h6">{userEmail}</Typography>
+      </div>
+
       <div className={classes.infoBox}>
         <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
           {intl.formatMessage({ id: 'condominium' })}
         </Typography>
         {`: ${nameCondominium}`}
-      </div>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'name' })}
-        </Typography>
-        {`: ${nameUser}`}
       </div>
       <div className={classes.infoBox}>
         <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>

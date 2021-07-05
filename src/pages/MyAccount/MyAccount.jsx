@@ -92,7 +92,7 @@ const MyAccount = () => {
             alignItems: 'center',
           }}
         >
-          <Fab
+          {/* <Fab
             size="medium"
             style={{ position: 'absolute', bottom: 40, right: -16 }}
             onClick={openDeleteDialog}
@@ -100,7 +100,7 @@ const MyAccount = () => {
             aria-label="delete"
           >
             <Delete />
-          </Fab>
+          </Fab> */}
 
           {/* <Fab
             onClick={() => setImageDialogOpen(true)}
