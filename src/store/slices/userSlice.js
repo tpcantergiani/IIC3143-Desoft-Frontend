@@ -85,6 +85,8 @@ const userSlice = createSlice({
       state.current = action.payload.data;
       state.error = '';
       state.loading = false;
+      state.email = action.payload.data.email;
+      state.displayName = action.payload.data.name;
     },
     [fetchUser.rejected]: (state, action) => {
       state.error = 'Correo y/o contraseña inválida';

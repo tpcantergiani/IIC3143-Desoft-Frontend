@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   infoBox: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: '15px',
+    marginTop: '10px',
 
     // alignItems: 'center',
     justifyContent: 'center',
@@ -85,32 +85,22 @@ const HomeComponent = () => {
         </Typography>
       </div>
       <div className={classes.infoBox}>
-        <Typography component="paragraph">
-          {intl.formatMessage({ id: 'condominium' })}
-          {': '}
-          {nameCondominium}
-        </Typography>
-      </div>
-
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'condominium' })}
-        </Typography>
-        {`: ${nameCondominium}`}
-      </div>
-
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
           {intl.formatMessage({ id: 'homeN' })}
+          {': '}
         </Typography>
-        {`: ${nameHome}`}
+        <Typography component="paragraph">
+          {nameHome}
+        </Typography>
       </div>
-
       <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
+        <Typography component="paragraph" style={{ fontWeight: 'bold' }}>
           {intl.formatMessage({ id: 'user_type' })}
+          {': '}
         </Typography>
-        {`: ${userType}`}
+        <Typography component="paragraph">
+          {userType}
+        </Typography>
       </div>
     </div>
 
