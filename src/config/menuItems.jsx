@@ -83,7 +83,7 @@ const getMenuItems = (props) => {
             );
           }
           : () => { },
-        visible: isAuthorised,
+        visible: true,
         primaryText: isAuthorised
           ? intl.formatMessage({ id: 'sign_out' })
           : intl.formatMessage({ id: 'sign_in' }),
