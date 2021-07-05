@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   invite, searchVisit, getUserContacts,
   getInvitationsRoute, getPosiblesHomes,
-  getActualCondominium,
+  getActualCondominium, getEntriesRoute,
 } from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
@@ -31,6 +31,11 @@ const initialState = {
       },
     }],
   },
+  entryErrorMsj: '',
+  entryError: false,
+  entryLoading: false,
+  entriesList: [],
+  homeNumber: 0,
 };
 
 const sendInvitation = createAsyncThunk(
@@ -80,6 +85,14 @@ const getInvitations = createAsyncThunk(
   },
 );
 
+const getEntries = createAsyncThunk(
+  'feature/getEntries',
+  async (_thunkAPI) => {
+    const response = await getEntriesRoute();
+    return response.data;
+  },
+);
+
 const featureSlice = createSlice({
   name: 'features',
   initialState,
@@ -94,20 +107,30 @@ const featureSlice = createSlice({
       state.invitationLoading = action.payload;
     },
 
+    setEntryErrorMsj: (state, action) => {
+      state.entryErrorMsj = action.payload;
+    },
+    setEntryError: (state, action) => {
+      state.entryError = true;
+    },
+    setEntryLoading: (state, action) => {
+      state.entryLoading = action.payload;
+    },
+
   },
   extraReducers: {
     [sendInvitation.fulfilled]: (state, action) => {
       // console.log(action.payload);
 
-    //   state.token = action.payload.access_token;
-    //   state.current = action.payload.data;
-    //   state.error = '';
-    //   state.loading = false;
+      //   state.token = action.payload.access_token;
+      //   state.current = action.payload.data;
+      //   state.error = '';
+      //   state.loading = false;
     },
     [sendInvitation.rejected]: (state, action) => {
       // console.log(action.error);
-    //   state.error = 'Correo y/o contraseña inválida';
-    //   state.loading = false;
+      //   state.error = 'Correo y/o contraseña inválida';
+      //   state.loading = false;
     },
     [sendInvitation.pending]: (state, action) => {
       state.loading = true;
@@ -190,11 +213,106 @@ const featureSlice = createSlice({
       state.invitationsList = [];
     },
 
+    [getEntries.fulfilled]: (state, action) => {
+      state.entriesList = action.payload.entries;
+      state.homeNumber = action.payload.entries[0].home.number;
+    },
+    [getEntries.pending]: (state, action) => {
+      state.entriesList = [];
+      state.homeNumber = 0;
+    },
+    [getEntries.rejected]: (state, action) => {
+      state.entriesList = [];
+      state.homeNumber = 1;
+      // state.entriesList = [
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'DYLW23',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'BLSS26',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 1,
+      //       name: 'Pedrito',
+      //       last_name: 'Perez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 2,
+      //       name: 'Juanito',
+      //       last_name: 'Juarez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'SC1111',
+      //     expected: 3,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      // ];
+    },
   },
 });
 
 export const {
   setInvitationError, setInvitationLoading, setInvitationErrorMsj,
+} = featureSlice.actions;
+export const {
+  setEntryError, setEntryLoading, setEntryErrorMsj,
 } = featureSlice.actions;
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
@@ -202,4 +320,5 @@ export const getContactsThunk = getContacts;
 export const getHomesThunk = getHomes;
 export const getCondominiumThunk = getCondominium;
 export const getInvitationsThunk = getInvitations;
+export const getEntriesThunk = getEntries;
 export const featureReducer = featureSlice.reducer;
