@@ -38,8 +38,8 @@ const UsersList = () => {
   return (
     <Page
       pageTitle={intl.formatMessage({
-        id: 'invitation_history',
-        defaultMessage: 'Invitation',
+        id: 'usersList',
+        defaultMessage: 'Users',
       })}
       onBackClick={() => {
         history.goBack();

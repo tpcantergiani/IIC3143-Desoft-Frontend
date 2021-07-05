@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 // ! Components
 import SignUpComponent from '../../components/auth/SignUpComponent';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const intl = useIntl();
   const history = useHistory();
 

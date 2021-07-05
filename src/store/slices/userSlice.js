@@ -2,7 +2,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { login, register, putPassword } from '../../api/user';
+import {
+  login, register, putPassword, updateUser,
+} from '../../api/user';
 import { parseError } from '../../utils/functions';
 
 const initialState = {
@@ -29,6 +31,14 @@ const createUser = createAsyncThunk(
   'user/createUser',
   async (payload, _thunkAPI) => {
     const response = await register(payload);
+    return response.data;
+  },
+);
+
+const updateUsers = createAsyncThunk(
+  'user/createUser',
+  async (payload, _thunkAPI) => {
+    const response = await updateUser(payload);
     return response.data;
   },
 );
@@ -114,6 +124,25 @@ const userSlice = createSlice({
       state.createLoading = false;
       state.createError = true;
     },
+    [updateUsers.fulfilled]: (state, _action) => {
+      state.createLoading = false;
+      state.createErrorMsj = '';
+    },
+    [updateUsers.pending]: (state, _action) => {
+      state.createLoading = true;
+      state.createErrorMsj = 'NoError';
+    },
+    [updateUsers.rejected]: (state, action) => {
+      if (parseError(action.error?.message) === '406') {
+        state.createErrorMsj = 'wrongData';
+      } else if (parseError(action.error?.message) === '409') {
+        state.createErrorMsj = 'userExists';
+      } else {
+        state.createErrorMsj = 'wrongData';
+      }
+      state.createLoading = false;
+      state.createError = true;
+    },
     [updatePassword.fulfilled]: (state, _action) => {
       state.passwordLoading = false;
       state.passwordError = false;
@@ -142,4 +171,5 @@ export const {
 export const fetchUserThunk = fetchUser;
 export const createUserThunk = createUser;
 export const putUserThunk = updatePassword;
+export const updateUserThunk = updateUsers;
 export const userReducer = userSlice.reducer;

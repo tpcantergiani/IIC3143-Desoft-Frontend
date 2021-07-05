@@ -89,6 +89,7 @@ const messages = defineMessages({
   type: 'Tipo',
   house: 'Casa',
   provider: 'Proveedor de servicios',
+  usersList: 'Listado de Usuarios',
 });
 
 export default messages;

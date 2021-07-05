@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 
 import React, { useState, useEffect } from 'react';
@@ -12,10 +13,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Delete } from '@material-ui/icons';
+import { Delete, Edit } from '@material-ui/icons';
 import {
   getUsersThunk, deleteUsersThunk,
 } from '../../store/slices/featuresSlice';
+
+// ! Components
+import SignUpComponent from '../auth/SignUpComponent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,6 +72,9 @@ const UserListComponent = () => {
   const dispatch = useDispatch();
   const { usersList } = useSelector((state) => state.features);
   const [source, setSource] = useState(usersList);
+  const [reload, setReload] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [aux, setAux] = useState(undefined);
 
   const handleClick = async (email) => {
     const payload = {
@@ -76,15 +83,20 @@ const UserListComponent = () => {
       },
     };
     const r = await dispatch(deleteUsersThunk(payload));
+    setReload(!reload);
     return r;
+  };
+
+  const handleEdit = (data) => {
+    setEdit(true);
+    setAux(data);
   };
 
   useEffect(async () => {
     await dispatch(getUsersThunk());
-  }, []);
+  }, [reload, edit]);
 
   useEffect(async () => {
-    console.log(usersList);
     const info = await usersList.map((elem) => ({
       id: elem.id,
       email: elem.email,
@@ -97,33 +109,50 @@ const UserListComponent = () => {
   }, [usersList]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="medium" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">{intl.formatMessage({ id: 'homeN' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'email' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'name' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'last_name' })}</TableCell>
-            <TableCell align="left">{intl.formatMessage({ id: 'action' })}</TableCell>
+    <div>
+      { !edit
+        ? (
+          <TableContainer component={Paper}>
+            <Table className={classes.table} size="medium" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">{intl.formatMessage({ id: 'homeN' })}</TableCell>
+                  <TableCell align="left">{intl.formatMessage({ id: 'email' })}</TableCell>
+                  <TableCell align="left">{intl.formatMessage({ id: 'name' })}</TableCell>
+                  <TableCell align="left">{intl.formatMessage({ id: 'last_name' })}</TableCell>
+                  <TableCell align="left">{intl.formatMessage({ id: 'action' })}</TableCell>
 
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {source.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.home}
-              </TableCell>
-              <TableCell align="left">{row.email}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.lastName}</TableCell>
-              <TableCell align="left"><Button onClick={() => handleClick(row.email)}><Delete /></Button></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {source.map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.home}
+                    </TableCell>
+                    <TableCell align="left">{row.email}</TableCell>
+                    <TableCell align="left">{row.name}</TableCell>
+                    <TableCell align="left">{row.lastName}</TableCell>
+                    <TableCell align="left">
+                      <Button onClick={() => handleClick(row.email)}><Delete /></Button>
+                      <Button onClick={() => handleEdit({
+                        // eslint-disable-next-line max-len
+                        firstName: row.name, lastName: row.lastName, email: row.email, home: row.home,
+                      })}
+                      >
+                        <Edit />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )
+        : (
+          <SignUpComponent firstName={aux.firstName} lastName={aux.lastName} email={aux.email} home={aux.home} seter={() => setEdit(false)} />
+        )}
+    </div>
   );
 };
 
