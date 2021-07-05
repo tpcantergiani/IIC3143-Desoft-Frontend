@@ -67,7 +67,7 @@ const SignInComponent = () => {
 
   const authenticate = (user) => {
     setAuth({ isAuthenticated: true, ...user });
-    toggleThis('isAuthMenuOpen', true);
+    toggleThis('isAuthMenuOpen', false);
 
     const _location = history.location;
     let _route = '/invitation';
@@ -95,7 +95,7 @@ const SignInComponent = () => {
     if (token && token?.length > 0) {
       authenticate({
         current,
-        displayName: current.name,
+        displayName: `${current.name} ${current.last_name}`,
         email: current.email,
       });
     }

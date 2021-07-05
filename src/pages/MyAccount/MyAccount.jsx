@@ -157,7 +157,7 @@ const MyAccount = () => {
                 },
               }}
             />
-            <Typography variant="h6">{auth.current.email}</Typography>
+            <Typography variant="h6">{email}</Typography>
           </div>
 
           <Zoom in={hasChange}>
