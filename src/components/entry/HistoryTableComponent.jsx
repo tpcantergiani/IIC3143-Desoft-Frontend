@@ -68,6 +68,16 @@ const HistoryTableComponent = () => {
   const [source, setSource] = useState(entriesList);
   const [homeN, setHomeNumber] = useState(homeNumber);
 
+  function prettyDate(timeString) {
+    const time = new Date(timeString);
+    const h = time.getHours();
+    const min = time.getMinutes();
+    const day = time.getDay();
+    const month = time.getMonth();
+    const year = time.getFullYear();
+    return `${h}:${min}\n(${day}-${month}-${year})`;
+  }
+
   useEffect(async () => {
     await dispatch(getEntriesThunk());
   }, []);
@@ -94,6 +104,7 @@ const HistoryTableComponent = () => {
 
     const info = await entriesList.map((elem) => ({
       entry_time: elem.entry_time,
+      pretty_date: prettyDate(elem.entry_time),
       patent: elem.patent,
       type_string: intl.formatMessage({ id: dict[elem.expected] }),
       home: elem.home.number,
@@ -136,7 +147,7 @@ const HistoryTableComponent = () => {
               <Typography component="paragraph">
                 {intl.formatMessage({ id: 'entry_time' })}
                 {': '}
-                {row.entry_time}
+                {row.pretty_date}
               </Typography>
 
             </div>
