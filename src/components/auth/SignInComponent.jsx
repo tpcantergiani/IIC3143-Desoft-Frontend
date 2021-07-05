@@ -67,7 +67,7 @@ const SignInComponent = () => {
 
   const authenticate = (user) => {
     setAuth({ isAuthenticated: true, ...user });
-    toggleThis('isAuthMenuOpen', false);
+    toggleThis('isAuthMenuOpen', true);
 
     const _location = history.location;
     let _route = '/invitation';
@@ -83,13 +83,21 @@ const SignInComponent = () => {
   useEffect(() => {
     dispatch(setLoading(false));
     if (token && token?.length > 0) {
-      authenticate({ current });
+      authenticate({
+        current,
+        displayName: current.name,
+        email: current.email,
+      });
     }
   }, []);
 
   useEffect(() => {
     if (token && token?.length > 0) {
-      authenticate({ current });
+      authenticate({
+        current,
+        displayName: current.name,
+        email: current.email,
+      });
     }
   }, [token]);
 
