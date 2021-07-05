@@ -32,7 +32,7 @@ const routes = [
   <Route path="/about" exact component={About} />,
   <AuthorizedRoute path="/signup" exact component={SignUp} />,
   <AuthorizedRoute path="/create_password" exact component={CreatePassword} />,
-  <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
+  // <AuthorizedRoute path="/my_account" exact component={MyAccount} />,
   <AuthorizedRoute path="/home" exact component={Home} />,
   <AuthorizedRoute path="/dialog_demo" exact component={DialogDemo} />,
   <AuthorizedRoute path="/toast_demo" exact component={ToastDemo} />,

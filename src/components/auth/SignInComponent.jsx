@@ -70,7 +70,7 @@ const SignInComponent = () => {
     toggleThis('isAuthMenuOpen', false);
 
     const _location = history.location;
-    let _route = '/invitation';
+    let _route = '/home';
 
     if (_location.state && _location.state.from) {
       _route = _location.state.from.pathname;

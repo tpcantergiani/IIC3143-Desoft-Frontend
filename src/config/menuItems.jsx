@@ -74,14 +74,6 @@ const getMenuItems = (props) => {
   if (isAuthMenuOpen || !isAuthorised) {
     return [
       {
-        value: '/my_account',
-        primaryText: intl.formatMessage({
-          id: 'my_account',
-          defaultMessage: 'My Account',
-        }),
-        leftIcon: <AccountBoxIcon />,
-      },
-      {
         value: '/signin',
         onClick: isAuthorised
           ? () => {
@@ -105,7 +97,7 @@ const getMenuItems = (props) => {
       {
         value: '/home',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'home' }),
+        primaryText: intl.formatMessage({ id: 'my_account' }),
         leftIcon: <AccountBoxIcon />,
       },
       {
@@ -204,7 +196,7 @@ const getMenuItems = (props) => {
         value: '/home',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'my_account' }),
-        leftIcon: <Home />,
+        leftIcon: <AccountBoxIcon />,
       },
       {
         value: '/new_entry_guard',
