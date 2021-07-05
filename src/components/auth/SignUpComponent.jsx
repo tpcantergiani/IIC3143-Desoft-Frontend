@@ -15,8 +15,8 @@ import { useHistory } from 'react-router-dom';
 import {
   createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
 } from '../../store/slices/userSlice';
-
 import { validateEmail } from '../../utils/functions';
+import { getHomesThunk } from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,6 +68,7 @@ const SignUpComponent = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userType, setUserType] = useState('Resident');
   const [userHome, setUserHome] = useState('');
+  const { homeList } = useSelector((state) => state.features);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -97,6 +98,10 @@ const SignUpComponent = () => {
   useEffect(() => {
     dispatch(setCreateError(false));
     dispatch(setCreateLoading(false));
+  }, []);
+
+  useEffect(async () => {
+    await dispatch(getHomesThunk());
   }, []);
 
   const clearFields = () => {
@@ -148,8 +153,12 @@ const SignUpComponent = () => {
     setUserType(event.target.value);
   };
 
+  const handleNumberChange = (event) => {
+    setUserHome(event.target.value);
+  };
+
   return (
-    <Paper className={classes.paper} elevation={6}>
+    <Paper className={classes.paper} elevation={2}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
           {intl.formatMessage({ id: 'registration' })}
@@ -203,20 +212,34 @@ const SignUpComponent = () => {
             name="email"
             autoComplete="email"
           />
-          <TextField
-            value={userHome}
-            onInput={(e) => setUserHome(e.target.value)}
+          <FormControl
             variant="outlined"
+            fullWidth
             margin="normal"
             required
-            fullWidth
-            id="home"
-            label={intl.formatMessage({
-              id: 'homeN',
-            })}
-            name="home"
-            autoComplete="home"
-          />
+            className={classes.formControl}
+          >
+            <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'homeN' })}</InputLabel>
+            <Select
+              native
+              value={userHome}
+              onChange={handleNumberChange}
+              label="Número de casa "
+              inputProps={{
+                name: 'age',
+                id: 'outlined-age-native-simple',
+              }}
+            >
+              <option value={undefined}>
+                {null}
+              </option>
+              {homeList.data?.map((elem, index) => (
+                <option value={index}>
+                  {elem}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
           <FormControl
             variant="outlined"
             fullWidth
@@ -225,6 +248,7 @@ const SignUpComponent = () => {
             className={classes.formControl}
           >
             <InputLabel htmlFor="outlined-age-native-simple">{intl.formatMessage({ id: 'user_type' })}</InputLabel>
+
             <Select
               native
               value={userType}

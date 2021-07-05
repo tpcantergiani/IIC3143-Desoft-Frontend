@@ -120,8 +120,6 @@ const FilterDemo = () => {
 
   const listRef = React.createRef();
 
-  console.log('LIST', list);
-
   useEffect(() => {
     if (listRef.current) {
       listRef.current.scrollToItem(1500, 'center');

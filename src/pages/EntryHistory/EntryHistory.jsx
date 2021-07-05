@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 // ! Components
-import HistoryTableComponent from '../../components/invitation/HistoryTableComponent';
+import HistoryTableComponent from '../../components/entry/HistoryTableComponent';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,25 +32,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InvitationsHistory = () => {
+const EntryHistory = () => {
   const intl = useIntl();
   const history = useHistory();
   const classes = useStyles();
   return (
     <Page
       pageTitle={intl.formatMessage({
-        id: 'invitation_history',
-        defaultMessage: 'Invitation',
+        id: 'entry_history',
+        defaultMessage: 'Entries',
       })}
       onBackClick={() => {
         history.goBack();
       }}
     >
-      <Paper className={classes.paper} elevation={2}>
-        <HistoryTableComponent />
-      </Paper>
+      <HistoryTableComponent />
+
     </Page>
   );
 };
 
-export default InvitationsHistory;
+export default EntryHistory;
