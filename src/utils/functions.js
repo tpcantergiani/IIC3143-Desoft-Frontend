@@ -6,7 +6,6 @@ export const validateEmail = (email) => {
 };
 
 export const validateRut = (rut) => {
-  console.log(rut);
   const rutFormat = /^([1-9][0-9]?)([0-9]{3})([0-9]{3})-([0-9|k|K]{1})$/;
   if (!rut.match(rutFormat)) return true;
 

@@ -70,7 +70,7 @@ const SignInComponent = () => {
     toggleThis('isAuthMenuOpen', false);
 
     const _location = history.location;
-    let _route = '/home';
+    let _route = '/invitation';
 
     if (_location.state && _location.state.from) {
       _route = _location.state.from.pathname;
@@ -108,7 +108,7 @@ const SignInComponent = () => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={6}>
+    <Paper className={classes.paper} elevation={2}>
       <div className={classes.container}>
         <Typography component="h1" variant="h5">
           {intl.formatMessage({ id: 'sign_in' })}
@@ -122,7 +122,7 @@ const SignInComponent = () => {
             required
             fullWidth
             id="username"
-            label={intl.formatMessage({ id: 'username' })}
+            label={intl.formatMessage({ id: 'email' })}
             name="username"
             autoComplete="username"
             autoFocus
@@ -166,9 +166,6 @@ const SignInComponent = () => {
           <Link to="/password_reset">
             {intl.formatMessage({ id: 'forgot_password' })}
             ?
-          </Link>
-          <Link to="/signup">
-            {intl.formatMessage({ id: 'registration' })}
           </Link>
         </div>
       </div>

@@ -3,7 +3,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  invite, searchVisit, getUserContacts, getInvitationsRoute, getEntriesRoute,
+  invite, searchVisit, getUserContacts,
+  getInvitationsRoute, getPosiblesHomes,
+  getActualCondominium, getEntriesRoute,
 } from '../../api/feature';
 import { parseError } from '../../utils/functions';
 
@@ -17,6 +19,18 @@ const initialState = {
   isPlateValid: false,
   contactList: [],
   invitationsList: [],
+  homeList: [],
+  actualCondominium: {
+    data: [{
+      condominium: '',
+      home: '',
+      user: {
+        email: '',
+        name: '',
+        type: '',
+      },
+    }],
+  },
   entryErrorMsj: '',
   entryError: false,
   entryLoading: false,
@@ -44,6 +58,21 @@ const getContacts = createAsyncThunk(
   'feature/getContacts',
   async (_thunkAPI) => {
     const response = await getUserContacts();
+    return response.data;
+  },
+);
+const getHomes = createAsyncThunk(
+  'feature/getHomes',
+  async (_thunkAPI) => {
+    const response = await getPosiblesHomes();
+    return response.data;
+  },
+);
+
+const getCondominium = createAsyncThunk(
+  'feature/getCondominium',
+  async (_thunkAPI) => {
+    const response = await getActualCondominium();
     return response.data;
   },
 );
@@ -133,6 +162,46 @@ const featureSlice = createSlice({
     },
     [getContacts.rejected]: (state, action) => {
       state.contactList = [];
+    },
+
+    [getHomes.fulfilled]: (state, action) => {
+      state.homeList = action.payload;
+    },
+    [getHomes.pending]: (state, action) => {
+      state.homeList = [];
+    },
+    [getHomes.rejected]: (state, action) => {
+      state.homeList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+
+    [getCondominium.fulfilled]: (state, action) => {
+      state.actualCondominium = action.payload;
+    },
+    [getCondominium.pending]: (state, action) => {
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
+    },
+    [getCondominium.rejected]: (state, action) => {
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
     },
     [getInvitations.fulfilled]: (state, action) => {
       state.invitationsList = action.payload.invitations;
@@ -248,6 +317,8 @@ export const {
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
+export const getHomesThunk = getHomes;
+export const getCondominiumThunk = getCondominium;
 export const getInvitationsThunk = getInvitations;
 export const getEntriesThunk = getEntries;
 export const featureReducer = featureSlice.reducer;

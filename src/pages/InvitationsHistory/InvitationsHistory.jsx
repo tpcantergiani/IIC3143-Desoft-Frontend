@@ -46,7 +46,7 @@ const InvitationsHistory = () => {
         history.goBack();
       }}
     >
-      <Paper className={classes.paper} elevation={6}>
+      <Paper className={classes.paper} elevation={2}>
         <HistoryTableComponent />
       </Paper>
     </Page>

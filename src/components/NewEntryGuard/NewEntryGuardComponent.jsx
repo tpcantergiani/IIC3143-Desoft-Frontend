@@ -135,7 +135,7 @@ const NewEntryGuardComponent = () => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={6}>
+    <Paper className={classes.paper} elevation={2}>
       {!registeredVisit
         ? (
           <div className={classes.container}>
