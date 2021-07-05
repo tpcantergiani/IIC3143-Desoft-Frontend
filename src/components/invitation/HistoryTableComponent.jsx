@@ -67,6 +67,15 @@ const HistoryTableComponent = () => {
   const { invitationsList } = useSelector((state) => state.features);
   const [source, setSource] = useState(invitationsList);
 
+  function prettyDate(timeString) {
+    const time = new Date(timeString);
+    const h = time.getHours();
+    const min = time.getMinutes();
+    const day = time.getDay();
+    const month = time.getMonth();
+    const year = time.getFullYear();
+    return `${h}:${min}\n(${day}-${month}-${year})`;
+  }
   useEffect(async () => {
     await dispatch(getInvitationsThunk());
   }, []);
@@ -84,7 +93,6 @@ const HistoryTableComponent = () => {
     }));
     setSource(info);
   }, [invitationsList]);
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size="medium" aria-label="a dense table">
@@ -109,8 +117,8 @@ const HistoryTableComponent = () => {
               <TableCell align="left">{row.name}</TableCell>
               <TableCell align="left">{row.lastName}</TableCell>
               <TableCell align="left">{row.patent}</TableCell>
-              <TableCell align="left">{row.start}</TableCell>
-              <TableCell align="left">{row.end}</TableCell>
+              <TableCell align="left">{prettyDate(row.start)}</TableCell>
+              <TableCell align="left">{prettyDate(row.end)}</TableCell>
               <TableCell align="left">{row.rut}</TableCell>
             </TableRow>
           ))}

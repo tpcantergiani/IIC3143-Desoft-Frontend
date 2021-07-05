@@ -1,18 +1,14 @@
 import React from 'react';
 import {
-  AccountBox as AccountBoxIcon,
   ExitToApp as ExitToAppIcon,
   GetApp,
-  InfoOutlined,
   Language as LanguageIcon,
   Lock as LockIcon,
   SettingsApplications as SettingsIcon,
   Style as StyleIcon,
   Web,
   GroupAdd,
-  HomeWork,
   Home,
-  Assessment,
   History,
   Email,
   DirectionsCar,
@@ -83,7 +79,7 @@ const getMenuItems = (props) => {
               logoutUser(),
             );
           }
-          : () => {},
+          : () => { },
         visible: true,
         primaryText: isAuthorised
           ? intl.formatMessage({ id: 'sign_out' })
@@ -120,7 +116,8 @@ const getMenuItems = (props) => {
         leftIcon: <Email />,
       },
       {
-        primaryText: intl.formatMessage({ id: 'cruds', defaultMessage: 'Demos' }),
+        value: '/signup',
+        primaryText: intl.formatMessage({ id: 'dialog_demo', defaultMessage: 'Demos' }),
         visible: isAuthorised && (auth.current.type === 'Admin'),
         primaryTogglesNestedList: true,
         leftIcon: <Web />,
@@ -163,7 +160,7 @@ const getMenuItems = (props) => {
       {
         value: '/visit_history',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'history' }),
+        primaryText: intl.formatMessage({ id: 'invitation_history' }),
         leftIcon: <History />,
       },
       { divider: true },
@@ -203,7 +200,7 @@ const getMenuItems = (props) => {
               logoutUser(),
             );
           }
-          : () => {},
+          : () => { },
         visible: isAuthorised,
         primaryText: isAuthorised
           ? intl.formatMessage({ id: 'sign_out' })
@@ -300,7 +297,103 @@ const getMenuItems = (props) => {
               logoutUser(),
             );
           }
-          : () => {},
+          : () => { },
+        visible: isAuthorised,
+        primaryText: isAuthorised
+          ? intl.formatMessage({ id: 'sign_out' })
+          : intl.formatMessage({ id: 'sign_in' }),
+        leftIcon: isAuthorised ? <ExitToAppIcon /> : <LockIcon />,
+      },
+      {
+        value: null,
+        visible: isAppInstallable && !isAppInstalled,
+        onClick: () => {
+          deferredPrompt.prompt();
+        },
+        primaryText: intl.formatMessage({
+          id: 'install',
+          defaultMessage: 'Install',
+        }),
+        leftIcon: <GetApp />,
+      },
+    ];
+  }
+  if (auth.current?.type === ('Resident')) {
+    return [
+      {
+        value: '/home',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'home' }),
+        leftIcon: <Home />,
+      },
+      {
+        value: '/invitation',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'invitation_info' }),
+        leftIcon: <Email />,
+      },
+      {
+        value: '/visit_history',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'invitation_history' }),
+        leftIcon: <History />,
+      },
+      {
+        value: '/entry_history',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'entry_history' }),
+        leftIcon: <History />,
+      },
+      { divider: true },
+      {
+        value: '/create_password',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'changePassword' }),
+        leftIcon: <Lock />,
+      },
+      {
+        primaryText: intl.formatMessage({ id: 'settings' }),
+        primaryTogglesNestedList: true,
+        leftIcon: <SettingsIcon />,
+        nestedItems: [
+          {
+            primaryText: intl.formatMessage({ id: 'theme' }),
+            secondaryText: intl.formatMessage({ id: themeID }),
+            primaryTogglesNestedList: true,
+            leftIcon: <StyleIcon />,
+            nestedItems: themeItems,
+          },
+          {
+            primaryText: intl.formatMessage({ id: 'language' }),
+            secondaryText: intl.formatMessage({ id: locale }),
+            primaryTogglesNestedList: true,
+            leftIcon: <LanguageIcon />,
+            nestedItems: localeItems,
+          },
+        ],
+      },
+      {
+        value: null,
+        visible: isAppInstallable && !isAppInstalled,
+        onClick: () => {
+          deferredPrompt.prompt();
+        },
+        primaryText: intl.formatMessage({
+          id: 'install',
+          defaultMessage: 'Install',
+        }),
+        leftIcon: <GetApp />,
+      },
+      {
+        value: '/signin',
+        onClick: isAuthorised
+          ? () => {
+            setAuth({ isAuthenticated: false });
+            dispatch(
+              logoutUser(),
+            );
+          }
+          : () => { },
         visible: isAuthorised,
         primaryText: isAuthorised
           ? intl.formatMessage({ id: 'sign_out' })
@@ -384,7 +477,7 @@ const getMenuItems = (props) => {
             logoutUser(),
           );
         }
-        : () => {},
+        : () => { },
       visible: isAuthorised,
       primaryText: isAuthorised
         ? intl.formatMessage({ id: 'sign_out' })

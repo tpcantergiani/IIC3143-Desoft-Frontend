@@ -16,6 +16,10 @@ export async function getInvitationsRoute() {
   return http.get('get_invitations');
 }
 
+export async function getEntriesRoute() {
+  return http.get('/get_entries');
+}
+
 export async function getUserContacts() {
   return http.get('/contacts');
 }
@@ -26,4 +30,11 @@ export async function getUsersList() {
 
 export async function deleteUsers(payload) {
   return http.post('/delete-user', payload);
+}
+
+export async function getPosiblesHomes() {
+  return http.get('/get_homes_numbers');
+}
+export async function getActualCondominium() {
+  return http.get('/init_info');
 }

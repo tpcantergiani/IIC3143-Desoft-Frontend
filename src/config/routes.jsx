@@ -21,6 +21,7 @@ const Invitation = lazy(() => import('../pages/Invitation/Invitation'));
 const InvitationHistory = lazy(() => import('../pages/InvitationsHistory/InvitationsHistory'));
 const UsersList = lazy(() => import('../pages/UsersList/UsersList'));
 const Kpis = lazy(() => import('../pages/Kpis/Kpis'));
+const EntryHistory = lazy(() => import('../pages/EntryHistory/EntryHistory'));
 
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/home" exact component={SignIn} />,
@@ -45,6 +46,7 @@ const routes = [
   <AuthorizedRoute path="/visit_history" exact component={InvitationHistory} />,
   <AuthorizedRoute path="/users_list" exact component={UsersList} />,
   <AuthorizedRoute path="/kpis" exact component={Kpis} />,
+  <AuthorizedRoute path="/entry_history" exact component={EntryHistory} />,
 
 ];
 

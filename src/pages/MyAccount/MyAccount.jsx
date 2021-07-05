@@ -79,7 +79,7 @@ const MyAccount = () => {
         }}
       >
         <Paper
-          elevation={3}
+          elevation={2}
           style={{
             position: 'relative',
             borderRadius: 18,

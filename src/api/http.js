@@ -1,10 +1,13 @@
+/* eslint-disable no-return-await */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
+import publicIp from 'public-ip';
 
 const defaultOptions = {
   headers: {
     'Content-Type': 'application/json',
     type: 'application/json',
+    address: '',
   },
 };
 
@@ -16,6 +19,7 @@ axios.interceptors.request.use(
     const persistRoot = await localStorage.getItem('persist:root');
     const { token } = JSON.parse(JSON.parse(persistRoot).user);
     if (token) config.headers.Authorization = `Bearer ${token}`;
+    config.headers.address = await publicIp.v4();
     return config;
   },
   (error) => Promise.reject(error),

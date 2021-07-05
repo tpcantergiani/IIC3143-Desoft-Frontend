@@ -3,7 +3,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  invite, searchVisit, getUserContacts, getInvitationsRoute, getUsersList, deleteUsers,
+  getUsersList, deleteUsers,
+  invite, searchVisit, getUserContacts,
+  getInvitationsRoute, getPosiblesHomes,
+  getActualCondominium, getEntriesRoute,
 } from '../../api/feature';
 
 const initialState = {
@@ -19,6 +22,23 @@ const initialState = {
   usersList: [],
   deleteError: false,
   deleteLoading: false,
+  homeList: [],
+  actualCondominium: {
+    data: [{
+      condominium: '',
+      home: '',
+      user: {
+        email: '',
+        name: '',
+        type: '',
+      },
+    }],
+  },
+  entryErrorMsj: '',
+  entryError: false,
+  entryLoading: false,
+  entriesList: [],
+  homeNumber: 0,
 };
 
 const sendInvitation = createAsyncThunk(
@@ -44,6 +64,21 @@ const getContacts = createAsyncThunk(
     return response.data;
   },
 );
+const getHomes = createAsyncThunk(
+  'feature/getHomes',
+  async (_thunkAPI) => {
+    const response = await getPosiblesHomes();
+    return response.data;
+  },
+);
+
+const getCondominium = createAsyncThunk(
+  'feature/getCondominium',
+  async (_thunkAPI) => {
+    const response = await getActualCondominium();
+    return response.data;
+  },
+);
 
 const getInvitations = createAsyncThunk(
   'feature/getInvitations',
@@ -65,6 +100,13 @@ const deleteUser = createAsyncThunk(
   'feature/deleteUsers',
   async (payload, _thunkAPI) => {
     const response = await deleteUsers(payload);
+  },
+);
+
+const getEntries = createAsyncThunk(
+  'feature/getEntries',
+  async (_thunkAPI) => {
+    const response = await getEntriesRoute();
     return response.data;
   },
 );
@@ -83,20 +125,30 @@ const featureSlice = createSlice({
       state.invitationLoading = action.payload;
     },
 
+    setEntryErrorMsj: (state, action) => {
+      state.entryErrorMsj = action.payload;
+    },
+    setEntryError: (state, action) => {
+      state.entryError = true;
+    },
+    setEntryLoading: (state, action) => {
+      state.entryLoading = action.payload;
+    },
+
   },
   extraReducers: {
     [sendInvitation.fulfilled]: (state, action) => {
       // console.log(action.payload);
 
-    //   state.token = action.payload.access_token;
-    //   state.current = action.payload.data;
-    //   state.error = '';
-    //   state.loading = false;
+      //   state.token = action.payload.access_token;
+      //   state.current = action.payload.data;
+      //   state.error = '';
+      //   state.loading = false;
     },
     [sendInvitation.rejected]: (state, action) => {
       // console.log(action.error);
-    //   state.error = 'Correo y/o contraseña inválida';
-    //   state.loading = false;
+      //   state.error = 'Correo y/o contraseña inválida';
+      //   state.loading = false;
     },
     [sendInvitation.pending]: (state, action) => {
       state.loading = true;
@@ -127,7 +179,47 @@ const featureSlice = createSlice({
       state.contactList = [];
     },
     [getContacts.rejected]: (state, action) => {
-      state.contactList = [{ name: 123, lastName: 123, id: 1 }];
+      state.contactList = [];
+    },
+
+    [getHomes.fulfilled]: (state, action) => {
+      state.homeList = action.payload;
+    },
+    [getHomes.pending]: (state, action) => {
+      state.homeList = [];
+    },
+    [getHomes.rejected]: (state, action) => {
+      state.homeList = [{ name: 123, lastName: 123, id: 1 }];
+    },
+
+    [getCondominium.fulfilled]: (state, action) => {
+      state.actualCondominium = action.payload;
+    },
+    [getCondominium.pending]: (state, action) => {
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
+    },
+    [getCondominium.rejected]: (state, action) => {
+      state.actualCondominium = {
+        data: [{
+          condominium: '',
+          home: '',
+          user: {
+            email: '',
+            name: '',
+            type: '',
+          },
+        }],
+      };
     },
     [getInvitations.fulfilled]: (state, action) => {
       state.invitationsList = action.payload.invitations;
@@ -160,16 +252,114 @@ const featureSlice = createSlice({
       state.deleteLoading = false;
     },
 
+    [getEntries.fulfilled]: (state, action) => {
+      state.entriesList = action.payload.entries;
+      state.homeNumber = action.payload.entries[0].home.number;
+    },
+    [getEntries.pending]: (state, action) => {
+      state.entriesList = [];
+      state.homeNumber = 0;
+    },
+    [getEntries.rejected]: (state, action) => {
+      state.entriesList = [];
+      state.homeNumber = 1;
+      // state.entriesList = [
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'DYLW23',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'BLSS26',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 1,
+      //       name: 'Pedrito',
+      //       last_name: 'Perez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 0,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 1,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //     contact: {
+      //       id: 2,
+      //       name: 'Juanito',
+      //       last_name: 'Juarez',
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'XP2956',
+      //     expected: 2,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      //   {
+      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
+      //     patent: 'SC1111',
+      //     expected: 3,
+      //     contact: null,
+      //     home: {
+      //       id: 2,
+      //       number: 1,
+      //     },
+      //   },
+      // ];
+    },
   },
 });
 
 export const {
   setInvitationError, setInvitationLoading, setInvitationErrorMsj,
 } = featureSlice.actions;
+export const {
+  setEntryError, setEntryLoading, setEntryErrorMsj,
+} = featureSlice.actions;
 export const sendInvitationThunk = sendInvitation;
 export const verifyPlateThunk = verifyPlate;
 export const getContactsThunk = getContacts;
+export const getHomesThunk = getHomes;
+export const getCondominiumThunk = getCondominium;
 export const getInvitationsThunk = getInvitations;
 export const getUsersThunk = getUsers;
 export const deleteUsersThunk = deleteUser;
+export const getEntriesThunk = getEntries;
 export const featureReducer = featureSlice.reducer;
