@@ -7,7 +7,7 @@ const defaultOptions = {
   headers: {
     'Content-Type': 'application/json',
     type: 'application/json',
-    'ip-address': async () => await publicIp.v4(),
+    address: '',
   },
 };
 
@@ -19,6 +19,7 @@ axios.interceptors.request.use(
     const persistRoot = await localStorage.getItem('persist:root');
     const { token } = JSON.parse(JSON.parse(persistRoot).user);
     if (token) config.headers.Authorization = `Bearer ${token}`;
+    config.headers.address = await publicIp.v4();
     return config;
   },
   (error) => Promise.reject(error),
