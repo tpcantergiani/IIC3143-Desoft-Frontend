@@ -1,10 +1,13 @@
+/* eslint-disable no-return-await */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
+import publicIp from 'public-ip';
 
 const defaultOptions = {
   headers: {
     'Content-Type': 'application/json',
     type: 'application/json',
+    'ip-address': async () => await publicIp.v4(),
   },
 };
 

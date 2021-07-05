@@ -23,6 +23,7 @@
     "material-ui-shell": "1.x",
     "moment": "^2.29.1",
     "notistack": "1.x",
+    "public-ip": "^4.0.4",
     "react": "17.x",
     "react-custom-scrollbars": "4.x",
     "react-dom": "17.x",
