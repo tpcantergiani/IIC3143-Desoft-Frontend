@@ -5,7 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { useAuth } from 'base-shell/lib/providers/Auth';
 import {
   getEntriesThunk,
@@ -67,83 +71,32 @@ const HomePlatesComponent = () => {
   const dispatch = useDispatch();
   const { entriesList } = useSelector((state) => state.features);
   const { homeNumber } = useSelector((state) => state.features);
-  const [source, setSource] = useState(entriesList);
-  const [homeN, setHomeNumber] = useState(homeNumber);
-
-  function prettyDate(timeString) {
-    const time = new Date(timeString);
-    const h = time.getHours();
-    const min = time.getMinutes();
-    const day = time.getDay();
-    const month = time.getMonth();
-    const year = time.getFullYear();
-    return `${h}:${min}\n(${day}-${month}-${year})`;
-  }
 
   useEffect(async () => {
     await dispatch(getEntriesThunk());
   }, []);
 
-  useEffect(async () => {
-    const dict = {
-      0: 'unexpected_visit',
-      1: 'visit',
-      2: 'resident',
-      3: 'provider',
-    };
-
-    function makeTitle(elem) {
-      let title;
-      if (elem.expected === 2) {
-        title = `${intl.formatMessage({ id: dict[elem.expected] })} ${intl.formatMessage({ id: 'house' })}  ${elem.home.number}`;
-      } else if (elem.expected === 1) {
-        title = `${intl.formatMessage({ id: dict[elem.expected] })}: ${elem.contact.name} ${elem.contact.last_name}`;
-      } else {
-        title = `${intl.formatMessage({ id: dict[elem.expected] })}`;
-      }
-      return title;
-    }
-
-    const info = await entriesList.map((elem) => ({
-      entry_time: elem.entry_time,
-      pretty_date: prettyDate(elem.entry_time),
-      patent: elem.patent,
-      type_string: intl.formatMessage({ id: dict[elem.expected] }),
-      home: elem.home.number,
-      title: makeTitle(elem),
-    }));
-    info.sort((first, second) => new Date(second.entry_time) - new Date(first.entry_time));
-    setSource(info);
-  }, [entriesList]);
-
-  useEffect(async () => {
-    const number = await homeNumber;
-    // const number = 1;
-    setHomeNumber(number);
-  }, [homeNumber]);
-
   return (
     <div>
-      <Typography component="h1" variant="h5" className={classes.title}>
-        {intl.formatMessage({ id: 'entry_history' })}
-        {' '}
-        {intl.formatMessage({ id: 'house' })}
-        {' '}
-        {homeN}
-      </Typography>
-      {
-        auth.current.home.patents.map((row) => (
-          <div className={classes.container}>
 
-            <Typography component="paragraph">
-              {intl.formatMessage({ id: 'plate' })}
-              {': '}
-              {row.patent}
-            </Typography>
-
-          </div>
-        ))
-      }
+      <Table className={classes.table} size="medium" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">{intl.formatMessage({ id: 'plate' })}</TableCell>
+            <TableCell align="left">Delete</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {auth.current.home.patents.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell component="th" scope="row">
+                {row.patent}
+              </TableCell>
+              <TableCell align="left">{row.id}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
 
   );
