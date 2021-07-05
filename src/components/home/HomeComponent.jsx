@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     marginTop: '30px',
+
+    // alignItems: 'center',
+    justifyContent: 'center',
+    // height: '100%',
   },
 }));
 
@@ -72,17 +76,27 @@ const HomeComponent = () => {
       </div>
 
       <div className={classes.infoBox}>
+        <Typography component="paragraph">
+          {intl.formatMessage({ id: 'condominium' })}
+          {': '}
+          {nameCondominium}
+        </Typography>
+      </div>
+      <div className={classes.infoBox}>
+        <Typography component="paragraph">
+          {intl.formatMessage({ id: 'condominium' })}
+          {': '}
+          {nameCondominium}
+        </Typography>
+      </div>
+
+      <div className={classes.infoBox}>
         <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
           {intl.formatMessage({ id: 'condominium' })}
         </Typography>
         {`: ${nameCondominium}`}
       </div>
-      <div className={classes.infoBox}>
-        <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
-          {intl.formatMessage({ id: 'email' })}
-        </Typography>
-        {`: ${userEmail}`}
-      </div>
+
       <div className={classes.infoBox}>
         <Typography component="h1" variant="caption" style={{ fontWeight: 600 }}>
           {intl.formatMessage({ id: 'homeN' })}
