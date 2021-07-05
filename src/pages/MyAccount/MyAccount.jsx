@@ -25,6 +25,9 @@ const MyAccount = () => {
     displayName: currentDisplayName = '',
     email = '',
   } = auth || {};
+  // const {
+
+  // }
   const [displayName, setDisplayName] = useState(currentDisplayName);
   const [photoURL, setPhotoURL] = useState(currentPhoroURL);
   const [isImageDialogOpen, setImageDialogOpen] = useState(false);
@@ -99,7 +102,7 @@ const MyAccount = () => {
             <Delete />
           </Fab>
 
-          <Fab
+          {/* <Fab
             onClick={() => setImageDialogOpen(true)}
             style={{
               position: 'absolute',
@@ -112,7 +115,7 @@ const MyAccount = () => {
             size="small"
           >
             <Camera />
-          </Fab>
+          </Fab> */}
 
           {photoURL && (
             <Avatar
@@ -154,7 +157,7 @@ const MyAccount = () => {
                 },
               }}
             />
-            <Typography variant="h6">{email}</Typography>
+            <Typography variant="h6">{auth.current.email}</Typography>
           </div>
 
           <Zoom in={hasChange}>

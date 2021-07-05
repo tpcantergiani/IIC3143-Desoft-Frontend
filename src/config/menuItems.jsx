@@ -70,16 +70,22 @@ const getMenuItems = (props) => {
     leftIcon: <StyleIcon style={{ color: t.color }} />,
   }));
 
+  // esto pasa cuando se aprieta el mono del menu
   if (isAuthMenuOpen || !isAuthorised) {
     return [
+      {
+        value: '/my_account',
+        primaryText: intl.formatMessage({
+          id: 'my_account',
+          defaultMessage: 'My Account',
+        }),
+        leftIcon: <AccountBoxIcon />,
+      },
       {
         value: '/signin',
         onClick: isAuthorised
           ? () => {
             setAuth({ isAuthenticated: false });
-            dispatch(
-              logoutUser(),
-            );
           }
           : () => { },
         visible: true,
