@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 const SignUpComponent = ({
   firstName = '', lastName = '', email = '', home = '', type = 'Resident', update = false, seter = () => null,
 }) => {
+  const [auxUpdate, setUpdate] = useState(update ?? false);
   const classes = useStyles();
   const intl = useIntl();
   const [username, setUsername] = useState(firstName ?? '');
@@ -125,7 +126,7 @@ const SignUpComponent = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate) {
-      if (update) {
+      if (!auxUpdate) {
         const r = await dispatch(
           createUserThunk({
             data: {
@@ -148,7 +149,7 @@ const SignUpComponent = ({
             },
           });
         }
-      } else {
+      } else if (auxUpdate) {
         const r = await dispatch(
           updateUserThunk({
             data: {
@@ -179,11 +180,11 @@ const SignUpComponent = ({
   };
 
   const handleChange = (event) => {
-    setUserType(event.target.value);
+    setUserType(event);
   };
 
   const handleNumberChange = (event) => {
-    setUserHome(event.target.value);
+    setUserHome(event);
   };
 
   return (
@@ -252,7 +253,7 @@ const SignUpComponent = ({
             <Select
               native
               value={userHome}
-              onChange={handleNumberChange}
+              onChange={(event) => handleNumberChange(event.target.value)}
               label={userHome ?? 'Número de casa'}
               inputProps={{
                 name: 'age',
@@ -263,7 +264,7 @@ const SignUpComponent = ({
                 {null}
               </option>
               {homeList.data?.map((elem, index) => (
-                <option value={index}>
+                <option value={elem}>
                   {elem}
                 </option>
               ))}

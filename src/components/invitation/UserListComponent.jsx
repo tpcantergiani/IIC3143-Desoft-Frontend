@@ -150,7 +150,7 @@ const UserListComponent = () => {
           </TableContainer>
         )
         : (
-          <SignUpComponent firstName={aux.firstName} lastName={aux.lastName} email={aux.email} home={aux.home} seter={() => setEdit(false)} />
+          <SignUpComponent firstName={aux.firstName} lastName={aux.lastName} email={aux.email} home={aux.home} seter={() => setEdit(false)} update />
         )}
     </div>
   );

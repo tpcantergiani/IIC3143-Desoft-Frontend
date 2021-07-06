@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 // ! Components
 import SignUpComponent from '../../components/auth/SignUpComponent';
 
-const SignUp = (props) => {
+const SignUp = () => {
   const intl = useIntl();
   const history = useHistory();
 
@@ -20,7 +20,7 @@ const SignUp = (props) => {
         history.goBack();
       }}
     >
-      <SignUpComponent />
+      <SignUpComponent update={false} />
     </Page>
   );
 };
