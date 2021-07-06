@@ -11,11 +11,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Fab from '@material-ui/core/Fab';
+
 import Delete from '@material-ui/icons/Delete';
 import { useQuestions } from 'material-ui-shell/lib/providers/Dialogs/Question';
 import { useHistory } from 'react-router-dom';
 
 import { useAuth } from 'base-shell/lib/providers/Auth';
+import AddPlateComponent from './AddPlateComponent';
 import {
   deletePlateThunk, getHomePlatesThunk,
 } from '../../store/slices/featuresSlice';
@@ -93,7 +95,10 @@ const HomePlatesComponent = () => {
     const r = await dispatch(
       deletePlateThunk({
         data: {
-          plate,
+
+          data: {
+            plate,
+          },
         },
       }),
     );
@@ -103,7 +108,7 @@ const HomePlatesComponent = () => {
 
   return (
     <div>
-
+      <AddPlateComponent reload={reload} action={() => setReload()} />
       <Table className={classes.table} size="medium" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -112,7 +117,7 @@ const HomePlatesComponent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {source.map((row) => (
+          {source?.map((row) => (
             <TableRow>
               <TableCell component="th" scope="row">
                 {row}

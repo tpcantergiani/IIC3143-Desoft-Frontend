@@ -7,7 +7,7 @@ import {
   invite, searchVisit, getUserContacts,
   getInvitationsRoute, getPosiblesHomes,
   getActualCondominium, getEntriesRoute,
-  getPlates, delPlate,
+  getPlates, delPlate, addPlateRoute,
 } from '../../api/feature';
 
 const initialState = {
@@ -125,6 +125,14 @@ const getHomePlates = createAsyncThunk(
   'user/deletePlate',
   async (payload, _thunkAPI) => {
     const response = await getPlates(payload);
+    return response.data;
+  },
+);
+
+const createPlate = createAsyncThunk(
+  'feature/createPlate',
+  async (payload, _thunkAPI) => {
+    const response = await addPlateRoute(payload);
     return response.data;
   },
 );
@@ -283,7 +291,7 @@ const featureSlice = createSlice({
       state.homeNumber = 1;
     },
     [getHomePlates.fulfilled]: (state, action) => {
-      state.plateList = action.payload.data.plates;
+      state.plateList = action.payload?.data?.plates;
     },
     [getHomePlates.pending]: (state, action) => {
       state.plateList = [];
@@ -311,4 +319,5 @@ export const deleteUsersThunk = deleteUser;
 export const getEntriesThunk = getEntries;
 export const deletePlateThunk = deletePlate;
 export const getHomePlatesThunk = getHomePlates;
+export const addPlatesThunk = createPlate;
 export const featureReducer = featureSlice.reducer;

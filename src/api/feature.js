@@ -46,3 +46,7 @@ export async function delPlate(payload) {
 export async function getPlates(payload) {
   return http.get('/get_home_plates', payload);
 }
+
+export async function addPlateRoute(payload) {
+  return http.post('/new_plate', payload);
+}

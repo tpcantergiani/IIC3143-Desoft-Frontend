@@ -17,6 +17,7 @@ import {
   FormatListNumbered,
   TrendingUp,
   AddLocationRounded,
+  DriveEta,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -353,6 +354,12 @@ const getMenuItems = (props) => {
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'entry_history' }),
         leftIcon: <History />,
+      },
+      {
+        value: '/home_plates',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'invitation_history' }),
+        leftIcon: <DriveEta />,
       },
       { divider: true },
       {
