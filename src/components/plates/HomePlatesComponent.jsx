@@ -88,32 +88,31 @@ const HomePlatesComponent = () => {
   //   handleClose();
   // };
 
-  const handleDelete = async (plate, handleClose) => {
-    const r = await dispatch(
-      deletePlateThunk({
-        data: {
-          plate,
-        },
-      }),
-    );
-    handleClose();
+  const handleDelete = async (plate) => {
+    const payload = {
+      data: {
+        plate,
+      },
+    };
+    const r = await dispatch(deletePlateThunk(payload));
+    return r;
   };
 
-  const openDeleteDialog = (plate) => {
-    // setPlate(plate);
-    openDialog({
-      title: intl.formatMessage({
-        id: 'delete_plate_dialog_title',
-      }),
-      message: intl.formatMessage({
-        id: 'delete_plate_dialog_message',
-      }),
-      action: intl.formatMessage({
-        id: 'delete_plate_dialog_action',
-      }),
-      handleAction: handleDelete(plate),
-    });
-  };
+  // const openDeleteDialog = (plate) => {
+  //   // setPlate(plate);
+  //   openDialog({
+  //     title: intl.formatMessage({
+  //       id: 'delete_plate_dialog_title',
+  //     }),
+  //     message: intl.formatMessage({
+  //       id: 'delete_plate_dialog_message',
+  //     }),
+  //     action: intl.formatMessage({
+  //       id: 'delete_plate_dialog_action',
+  //     }),
+  //     handleAction: handleDelete(plate),
+  //   });
+  // };
 
   return (
     <div>
@@ -134,7 +133,7 @@ const HomePlatesComponent = () => {
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  onClick={openDeleteDialog(row.patent)}
+                  onClick={handleDelete(row.patent)}
                   color="secondary"
                   aria-label="delete"
                 >
