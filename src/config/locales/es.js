@@ -86,6 +86,9 @@ const messages = defineMessages({
   type: 'Tipo',
   house: 'Casa',
   provider: 'Proveedor de servicios',
+  delete_plate_dialog_title: 'Eliminar patente?',
+  delete_plate_dialog_message: 'Esta patente se eliminará permanentemente. Quieres proceder con la eliminación?',
+  delete_plate_dialog_action: 'ELIMINAR PATENTE',
 });
 
 export default messages;

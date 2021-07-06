@@ -10,10 +10,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Fab from '@material-ui/core/Fab';
+import Delete from '@material-ui/icons/Delete';
+import { useQuestions } from 'material-ui-shell/lib/providers/Dialogs/Question';
+import { useHistory } from 'react-router-dom';
+
 import { useAuth } from 'base-shell/lib/providers/Auth';
 import {
-  getEntriesThunk,
-} from '../../store/slices/featuresSlice';
+  deletePlateThunk,
+} from '../../store/slices/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,12 +74,46 @@ const HomePlatesComponent = () => {
   const classes = useStyles();
   const intl = useIntl();
   const dispatch = useDispatch();
-  const { entriesList } = useSelector((state) => state.features);
-  const { homeNumber } = useSelector((state) => state.features);
+  const { openDialog } = useQuestions();
+  const history = useHistory();
 
-  useEffect(async () => {
-    await dispatch(getEntriesThunk());
-  }, []);
+  // useEffect(async () => {
+  //   await dispatch(getEntriesThunk());
+  // }, []);
+
+  // const handleDelete = async (handleClose) => {
+  //   setAuth({ isAuthenticated: false });
+  //   handleClose();
+  // };
+  async function handleDelete(event) {
+    event.preventDefault();
+    const r = await dispatch(
+      deletePlateThunk({
+        data: {
+          plate: 'JFHT76',
+        },
+      }),
+    );
+
+    if (r.payload?.msg) {
+      history.replace('/signin');
+    }
+  }
+
+  const openDeleteDialog = () => {
+    openDialog({
+      title: intl.formatMessage({
+        id: 'delete_plate_dialog_title',
+      }),
+      message: intl.formatMessage({
+        id: 'delete_plate_dialog_message',
+      }),
+      action: intl.formatMessage({
+        id: 'delete_plate_dialog_action',
+      }),
+      handleAction: handleDelete,
+    });
+  };
 
   return (
     <div>
@@ -92,7 +131,18 @@ const HomePlatesComponent = () => {
               <TableCell component="th" scope="row">
                 {row.patent}
               </TableCell>
-              <TableCell align="left">{row.id}</TableCell>
+              <TableCell align="left">
+                <Fab
+                  size="medium"
+                  style={{ position: 'absolute', bottom: 40, right: -16 }}
+                  onClick={openDeleteDialog}
+                  color="secondary"
+                  aria-label="delete"
+                >
+                  <Delete />
+                </Fab>
+
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
