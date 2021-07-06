@@ -76,7 +76,8 @@ const HomePlatesComponent = () => {
   const dispatch = useDispatch();
   const { openDialog } = useQuestions();
   const history = useHistory();
-  const [plate, setPlate] = useState(null);
+  // const [reload, setReload] = useState(false);
+  // const [plate, setPlate] = useState(null);
 
   // useEffect(async () => {
   //   await dispatch(getEntriesThunk());
@@ -87,7 +88,7 @@ const HomePlatesComponent = () => {
   //   handleClose();
   // };
 
-  const handleDelete = async (handleClose) => {
+  const handleDelete = async (plate, handleClose) => {
     const r = await dispatch(
       deletePlateThunk({
         data: {
@@ -95,14 +96,11 @@ const HomePlatesComponent = () => {
         },
       }),
     );
-    if (r.payload?.msg) {
-      history.replace('/signin');
-    }
     handleClose();
   };
 
-  const openDeleteDialog = (e) => {
-    setPlate(e.target.value);
+  const openDeleteDialog = (plate) => {
+    // setPlate(plate);
     openDialog({
       title: intl.formatMessage({
         id: 'delete_plate_dialog_title',
@@ -113,7 +111,7 @@ const HomePlatesComponent = () => {
       action: intl.formatMessage({
         id: 'delete_plate_dialog_action',
       }),
-      handleAction: handleDelete,
+      handleAction: handleDelete(plate),
     });
   };
 
@@ -136,8 +134,7 @@ const HomePlatesComponent = () => {
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  value={row.patent}
-                  onClick={openDeleteDialog}
+                  onClick={openDeleteDialog(row.patent)}
                   color="secondary"
                   aria-label="delete"
                 >
