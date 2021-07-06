@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  login, register, putPassword, updateUser, registerHome, delPlate
+  login, register, putPassword, updateUser, registerHome, delPlate,
 } from '../../api/user';
 import { parseError } from '../../utils/functions';
 
