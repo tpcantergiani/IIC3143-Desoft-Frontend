@@ -77,6 +77,9 @@ const messages = defineMessages({
   userlastname: 'Last name',
   changePassword: 'Change Password',
   password_error: 'Error updating your password. Try again',
+  action: 'Action',
+  stats: 'Stats',
+  userList: 'Users List',
   saved_invitation: 'Fill in the information of a previously created guest',
   information: 'Information',
   condominium: 'Condominium',
@@ -89,6 +92,8 @@ const messages = defineMessages({
   delete_plate_dialog_title: 'Delete Plate?',
   delete_plate_dialog_message: 'This plate will be deleted permanently. Do you want to proceed with the deletion?',
   delete_plate_dialog_action: 'DELETE PLATE',
+  usersList: 'Users List',
+  addHomes: 'Add Home',
 });
 
 export default messages;

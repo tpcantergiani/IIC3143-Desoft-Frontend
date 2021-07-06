@@ -76,6 +76,9 @@ const messages = defineMessages({
   userlastname: 'Apellido',
   changePassword: 'Cambiar Contraseña',
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
+  action: 'Acciones',
+  stats: 'Estadísticas',
+  userList: 'Listado de Usuarios',
   saved_invitation: 'Completa la información de un invitado creado anteriormente',
   information: 'Información',
   condominium: 'Condominio',
@@ -89,6 +92,8 @@ const messages = defineMessages({
   delete_plate_dialog_title: 'Eliminar patente?',
   delete_plate_dialog_message: 'Esta patente se eliminará permanentemente. Quieres proceder con la eliminación?',
   delete_plate_dialog_action: 'ELIMINAR PATENTE',
+  usersList: 'Listado de Usuarios',
+  addHomes: 'Agregar Hogar',
 });
 
 export default messages;

@@ -12,6 +12,15 @@ export async function putPassword(payload) {
   return http.put('/change-password', payload);
 }
 
+
 export async function delPlate(payload) {
   return http.delete('/remove_plate', payload);
+}
+
+export async function updateUser(payload) {
+  return http.put('/edit-user', payload);
+}
+
+export async function registerHome(payload) {
+  return http.post('/register_home', payload);
 }

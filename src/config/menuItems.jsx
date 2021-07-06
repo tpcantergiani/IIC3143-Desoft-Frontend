@@ -1,23 +1,22 @@
 import React from 'react';
 import {
-  AccountBox as AccountBoxIcon,
   ExitToApp as ExitToAppIcon,
   GetApp,
-  InfoOutlined,
   Language as LanguageIcon,
   Lock as LockIcon,
   SettingsApplications as SettingsIcon,
   Style as StyleIcon,
   Web,
   GroupAdd,
-  HomeWork,
   Home,
-  Assessment,
   History,
   Email,
   DirectionsCar,
   LocalShipping,
   Lock,
+  FormatListNumbered,
+  TrendingUp,
+  AddLocationRounded,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -100,6 +99,12 @@ const getMenuItems = (props) => {
         leftIcon: <Home />,
       },
       {
+        value: '/kpis',
+        visible: isAuthorised,
+        primaryText: intl.formatMessage({ id: 'stats', defaultMessage: 'Estadísticas' }),
+        leftIcon: <TrendingUp />,
+      },
+      {
         value: '/new_entry_guard',
         visible: isAuthorised,
         primaryText: intl.formatMessage({ id: 'entry' }),
@@ -116,7 +121,45 @@ const getMenuItems = (props) => {
         primaryText: intl.formatMessage({ id: 'dialog_demo', defaultMessage: 'Demos' }),
         visible: isAuthorised && (auth.current.type === 'Admin'),
         primaryTogglesNestedList: true,
-        leftIcon: <GroupAdd />,
+        leftIcon: <Web />,
+        nestedItems: [
+          {
+            value: '/signup',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'dialog_demo',
+              defaultMessage: 'Dialog',
+            }),
+            leftIcon: <GroupAdd />,
+          },
+          {
+            value: '/add_home',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'addHomes',
+              defaultMessage: 'Agregar hogar',
+            }),
+            leftIcon: <AddLocationRounded />,
+          },
+          {
+            value: '/users_list',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'userList',
+              defaultMessage: 'Listado de usuarios',
+            }),
+            leftIcon: <FormatListNumbered />,
+          },
+          // {
+          //   value: '/toast_demo',
+          //   visible: isAuthorised,
+          //   primaryText: intl.formatMessage({
+          //     id: 'toast_demo',
+          //     defaultMessage: 'Toast',
+          //   }),
+          //   leftIcon: <HomeWork />,
+          // },
+        ],
       },
       // {
       //   value: '/home',

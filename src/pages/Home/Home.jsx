@@ -1,6 +1,5 @@
 import Page from 'material-ui-shell/lib/containers/Page';
 import React from 'react';
-import Scrollbar from 'material-ui-shell/lib/components/Scrollbar/Scrollbar';
 import { useIntl } from 'react-intl';
 import { makeStyles } from '@material-ui/core/styles';
 import {
