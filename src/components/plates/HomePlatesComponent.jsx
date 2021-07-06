@@ -133,7 +133,7 @@ const HomePlatesComponent = () => {
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  onClick={handleDelete(row.patent)}
+                  onClick={() => handleDelete(row.patent)}
                   color="secondary"
                   aria-label="delete"
                 >
