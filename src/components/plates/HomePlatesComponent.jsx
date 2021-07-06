@@ -89,14 +89,28 @@ const HomePlatesComponent = () => {
   // };
 
   const handleDelete = async (plate) => {
-    const payload = {
-      data: {
-        plate,
-      },
-    };
-    const r = await dispatch(deletePlateThunk(payload));
+    // const payload = {
+    //   data: {
+    //     plate,
+    //   },
+    // };
+    const r = await dispatch(
+      deletePlateThunk({
+        data: {
+          plate,
+        },
+      }),
+    );
     return r;
   };
+
+  // const r = await dispatch(
+  //   putUserThunk({
+  //     data: {
+  //       password,
+  //     },
+  //   }),
+  // );
 
   // const openDeleteDialog = (plate) => {
   //   // setPlate(plate);
