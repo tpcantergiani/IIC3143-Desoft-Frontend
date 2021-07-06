@@ -40,6 +40,7 @@ const initialState = {
   entryLoading: false,
   entriesList: [],
   homeNumber: 0,
+  plateList: [],
 };
 
 const sendInvitation = createAsyncThunk(
