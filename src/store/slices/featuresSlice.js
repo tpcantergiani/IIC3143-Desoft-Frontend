@@ -283,7 +283,7 @@ const featureSlice = createSlice({
       state.homeNumber = 1;
     },
     [getHomePlates.fulfilled]: (state, action) => {
-      state.plateList = action.payload.data;
+      state.plateList = action.payload.data.plates;
     },
     [getHomePlates.pending]: (state, action) => {
       state.plateList = [];
