@@ -13,5 +13,5 @@ export async function putPassword(payload) {
 }
 
 export async function delPlate(payload) {
-  return http.delete('/change-password', payload);
+  return http.delete('/remove_plate', payload);
 }

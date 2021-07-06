@@ -134,7 +134,7 @@ const HomePlatesComponent = () => {
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  style={{ position: 'absolute', bottom: 40, right: -16 }}
+                  // style={{ position: 'absolute', bottom: 40, right: -16 }}
                   onClick={openDeleteDialog}
                   color="secondary"
                   aria-label="delete"
