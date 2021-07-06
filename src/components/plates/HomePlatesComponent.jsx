@@ -76,6 +76,7 @@ const HomePlatesComponent = () => {
   const dispatch = useDispatch();
   const { openDialog } = useQuestions();
   const history = useHistory();
+  const [plate, setPlate] = useState(null);
 
   // useEffect(async () => {
   //   await dispatch(getEntriesThunk());
@@ -90,7 +91,7 @@ const HomePlatesComponent = () => {
     const r = await dispatch(
       deletePlateThunk({
         data: {
-          plate: 'JFHT76',
+          plate,
         },
       }),
     );
@@ -100,7 +101,8 @@ const HomePlatesComponent = () => {
     handleClose();
   };
 
-  const openDeleteDialog = () => {
+  const openDeleteDialog = (e) => {
+    setPlate(e.target.value);
     openDialog({
       title: intl.formatMessage({
         id: 'delete_plate_dialog_title',
@@ -134,7 +136,7 @@ const HomePlatesComponent = () => {
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  // style={{ position: 'absolute', bottom: 40, right: -16 }}
+                  value={row.patent}
                   onClick={openDeleteDialog}
                   color="secondary"
                   aria-label="delete"
