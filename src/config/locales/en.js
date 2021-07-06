@@ -94,6 +94,7 @@ const messages = defineMessages({
   delete_plate_dialog_action: 'DELETE PLATE',
   usersList: 'Users List',
   addHomes: 'Add Home',
+  managePlates: 'Manage Plates',
 });
 
 export default messages;

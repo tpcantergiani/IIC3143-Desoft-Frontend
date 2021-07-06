@@ -94,6 +94,7 @@ const messages = defineMessages({
   delete_plate_dialog_action: 'ELIMINAR PATENTE',
   usersList: 'Listado de Usuarios',
   addHomes: 'Agregar Hogar',
+  managePlates: 'Administrar Patentes',
 });
 
 export default messages;

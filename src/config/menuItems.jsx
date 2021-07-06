@@ -358,7 +358,7 @@ const getMenuItems = (props) => {
       {
         value: '/home_plates',
         visible: isAuthorised,
-        primaryText: intl.formatMessage({ id: 'invitation_history' }),
+        primaryText: intl.formatMessage({ id: 'managePlates' }),
         leftIcon: <DriveEta />,
       },
       { divider: true },
