@@ -85,8 +85,8 @@ const HomePlatesComponent = () => {
   //   setAuth({ isAuthenticated: false });
   //   handleClose();
   // };
-  async function handleDelete(event) {
-    event.preventDefault();
+
+  const handleDelete = async (handleClose) => {
     const r = await dispatch(
       deletePlateThunk({
         data: {
@@ -94,11 +94,11 @@ const HomePlatesComponent = () => {
         },
       }),
     );
-
     if (r.payload?.msg) {
       history.replace('/signin');
     }
-  }
+    handleClose();
+  };
 
   const openDeleteDialog = () => {
     openDialog({
