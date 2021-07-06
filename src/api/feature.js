@@ -23,6 +23,15 @@ export async function getEntriesRoute() {
 export async function getUserContacts() {
   return http.get('/contacts');
 }
+
+export async function getUsersList() {
+  return http.get('/get_users');
+}
+
+export async function deleteUsers(payload) {
+  return http.post('/delete-user', payload);
+}
+
 export async function getPosiblesHomes() {
   return http.get('/get_homes_numbers');
 }

@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 
 // ! Components
-import SignUpComponent from '../../components/auth/SignUpComponent';
+import AddHomeComponent from '../../components/auth/AddHomeComponent';
 
-const SignUp = (props) => {
+const AddHome = (props) => {
   const intl = useIntl();
   const history = useHistory();
 
@@ -20,9 +20,9 @@ const SignUp = (props) => {
         history.goBack();
       }}
     >
-      <SignUpComponent />
+      <AddHomeComponent />
     </Page>
   );
 };
 
-export default SignUp;
+export default AddHome;

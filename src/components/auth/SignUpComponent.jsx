@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,7 +14,7 @@ import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
-  createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj,
+  createUserThunk, setCreateLoading, setCreateError, setCreateErrorMsj, updateUserThunk,
 } from '../../store/slices/userSlice';
 import { validateEmail } from '../../utils/functions';
 import { getHomesThunk } from '../../store/slices/featuresSlice';
@@ -60,14 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpComponent = () => {
+const SignUpComponent = ({
+  firstName = '', lastName = '', email = '', home = '', type = 'Resident', update = false, seter = () => null,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [username, setUsername] = useState('');
-  const [userlastname, setUserLastname] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userType, setUserType] = useState('Resident');
-  const [userHome, setUserHome] = useState('');
+  const [username, setUsername] = useState(firstName ?? '');
+  const [userlastname, setUserLastname] = useState(lastName ?? '');
+  const [userEmail, setUserEmail] = useState(email ?? '');
+  const [userType, setUserType] = useState(type ?? '');
+  const [userHome, setUserHome] = useState(home ?? '');
   const { homeList } = useSelector((state) => state.features);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
@@ -122,27 +125,53 @@ const SignUpComponent = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate) {
-      const r = await dispatch(
-        createUserThunk({
-          data: {
-            name: username,
-            last_name: userlastname,
-            email: userEmail,
-            home: userHome,
-            type: userType,
-          },
-        }),
-      );
+      if (update) {
+        const r = await dispatch(
+          createUserThunk({
+            data: {
+              name: username,
+              last_name: userlastname,
+              email: userEmail,
+              home: userHome,
+              type: userType,
+            },
+          }),
+        );
 
-      if (r.payload?.data) {
-        clearFields();
-        enqueueSnackbar('Usuario agregado correctamente', {
-          variant: 'success',
-          anchorOrigin: {
-            vertical: 'top',
-            horizontal: 'center',
-          },
-        });
+        if (r.payload?.data) {
+          clearFields();
+          enqueueSnackbar('Usuario agregado correctamente', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'center',
+            },
+          });
+        }
+      } else {
+        const r = await dispatch(
+          updateUserThunk({
+            data: {
+              name: username,
+              last_name: userlastname,
+              email: userEmail,
+              home: userHome,
+              type: userType,
+            },
+          }),
+        );
+
+        if (r.payload?.data) {
+          seter(false);
+          clearFields();
+          enqueueSnackbar('Usuario editado correctamente', {
+            variant: 'success',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'center',
+            },
+          });
+        }
       }
     } else {
       dispatch(setCreateErrorMsj('wrongData'));
@@ -224,7 +253,7 @@ const SignUpComponent = () => {
               native
               value={userHome}
               onChange={handleNumberChange}
-              label="Número de casa "
+              label={userHome ?? 'Número de casa'}
               inputProps={{
                 name: 'age',
                 id: 'outlined-age-native-simple',

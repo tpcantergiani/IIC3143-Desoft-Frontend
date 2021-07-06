@@ -105,6 +105,7 @@ const HistoryTableComponent = () => {
             <TableCell align="left">{intl.formatMessage({ id: 'start_time' })}</TableCell>
             <TableCell align="left">{intl.formatMessage({ id: 'end_time' })}</TableCell>
             <TableCell align="left">Rut</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>

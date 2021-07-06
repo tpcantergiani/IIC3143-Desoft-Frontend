@@ -76,6 +76,9 @@ const messages = defineMessages({
   userlastname: 'Apellido',
   changePassword: 'Cambiar Contraseña',
   password_error: 'Error al cambiar la contraseña. Intenta de nuevo',
+  action: 'Acciones',
+  stats: 'Estadísticas',
+  userList: 'Listado de Usuarios',
   saved_invitation: 'Completa la información de un invitado creado anteriormente',
   information: 'Información',
   condominium: 'Condominio',
@@ -86,6 +89,8 @@ const messages = defineMessages({
   type: 'Tipo',
   house: 'Casa',
   provider: 'Proveedor de servicios',
+  usersList: 'Listado de Usuarios',
+  addHomes: 'Agregar Hogar',
 });
 
 export default messages;
