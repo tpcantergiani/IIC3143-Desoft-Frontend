@@ -38,3 +38,15 @@ export async function getPosiblesHomes() {
 export async function getActualCondominium() {
   return http.get('/init_info');
 }
+
+export async function delPlate(payload) {
+  return http.delete('/remove_plate', payload);
+}
+
+export async function getPlates(payload) {
+  return http.get('/get_home_plates', payload);
+}
+
+export async function addPlateRoute(payload) {
+  return http.post('/new_plate', payload);
+}

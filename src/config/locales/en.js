@@ -89,6 +89,9 @@ const messages = defineMessages({
   type: 'Type',
   house: 'Home',
   provider: 'Service Provider',
+  delete_plate_dialog_title: 'Delete Plate?',
+  delete_plate_dialog_message: 'This plate will be deleted permanently. Do you want to proceed with the deletion?',
+  delete_plate_dialog_action: 'DELETE PLATE',
   usersList: 'Users List',
   addHomes: 'Add Home',
 });

@@ -30,5 +30,5 @@ export default {
   post: (url, data, options = {}) => axios.post(url, data, { ...defaultOptions, ...options }),
   patch: (url, data, options = {}) => axios.patch(url, data, { ...defaultOptions, ...options }),
   put: (url, data, options = {}) => axios.put(url, data, { ...defaultOptions, ...options }),
-  delete: (url, options = {}) => axios.delete(url, { ...defaultOptions, ...options }),
+  delete: (url, data, options = {}) => axios.delete(url, data, { ...defaultOptions, ...options }),
 };

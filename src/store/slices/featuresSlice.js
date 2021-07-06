@@ -7,6 +7,7 @@ import {
   invite, searchVisit, getUserContacts,
   getInvitationsRoute, getPosiblesHomes,
   getActualCondominium, getEntriesRoute,
+  getPlates, delPlate, addPlateRoute,
 } from '../../api/feature';
 
 const initialState = {
@@ -39,6 +40,7 @@ const initialState = {
   entryLoading: false,
   entriesList: [],
   homeNumber: 0,
+  plateList: [],
 };
 
 const sendInvitation = createAsyncThunk(
@@ -107,6 +109,30 @@ const getEntries = createAsyncThunk(
   'feature/getEntries',
   async (_thunkAPI) => {
     const response = await getEntriesRoute();
+    return response.data;
+  },
+);
+
+const deletePlate = createAsyncThunk(
+  'user/deletePlate',
+  async (payload, _thunkAPI) => {
+    const response = await delPlate(payload);
+    return response.data;
+  },
+);
+
+const getHomePlates = createAsyncThunk(
+  'user/deletePlate',
+  async (payload, _thunkAPI) => {
+    const response = await getPlates(payload);
+    return response.data;
+  },
+);
+
+const createPlate = createAsyncThunk(
+  'feature/createPlate',
+  async (payload, _thunkAPI) => {
+    const response = await addPlateRoute(payload);
     return response.data;
   },
 );
@@ -263,86 +289,15 @@ const featureSlice = createSlice({
     [getEntries.rejected]: (state, action) => {
       state.entriesList = [];
       state.homeNumber = 1;
-      // state.entriesList = [
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'DYLW23',
-      //     expected: 0,
-      //     contact: null,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'BLSS26',
-      //     expected: 1,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //     contact: {
-      //       id: 1,
-      //       name: 'Pedrito',
-      //       last_name: 'Perez',
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'XP2956',
-      //     expected: 2,
-      //     contact: null,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'XP2956',
-      //     expected: 0,
-      //     contact: null,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'XP2956',
-      //     expected: 1,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //     contact: {
-      //       id: 2,
-      //       name: 'Juanito',
-      //       last_name: 'Juarez',
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'XP2956',
-      //     expected: 2,
-      //     contact: null,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //   },
-      //   {
-      //     entry_time: 'Fri, 01 Jan 2021 00:00:00 GMT',
-      //     patent: 'SC1111',
-      //     expected: 3,
-      //     contact: null,
-      //     home: {
-      //       id: 2,
-      //       number: 1,
-      //     },
-      //   },
-      // ];
+    },
+    [getHomePlates.fulfilled]: (state, action) => {
+      state.plateList = action.payload?.data?.plates;
+    },
+    [getHomePlates.pending]: (state, action) => {
+      state.plateList = [];
+    },
+    [getHomePlates.rejected]: (state, action) => {
+      state.plateList = [];
     },
   },
 });
@@ -362,4 +317,7 @@ export const getInvitationsThunk = getInvitations;
 export const getUsersThunk = getUsers;
 export const deleteUsersThunk = deleteUser;
 export const getEntriesThunk = getEntries;
+export const deletePlateThunk = deletePlate;
+export const getHomePlatesThunk = getHomePlates;
+export const addPlatesThunk = createPlate;
 export const featureReducer = featureSlice.reducer;
