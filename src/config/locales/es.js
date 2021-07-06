@@ -90,6 +90,7 @@ const messages = defineMessages({
   house: 'Casa',
   provider: 'Proveedor de servicios',
   usersList: 'Listado de Usuarios',
+  addHomes: 'Agregar Hogar',
 });
 
 export default messages;

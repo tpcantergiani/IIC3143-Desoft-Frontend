@@ -16,6 +16,7 @@ import {
   Lock,
   FormatListNumbered,
   TrendingUp,
+  AddLocationRounded,
 } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../store/slices/userSlice';
@@ -130,6 +131,15 @@ const getMenuItems = (props) => {
               defaultMessage: 'Dialog',
             }),
             leftIcon: <GroupAdd />,
+          },
+          {
+            value: '/add_home',
+            visible: isAuthorised,
+            primaryText: intl.formatMessage({
+              id: 'addHomes',
+              defaultMessage: 'Agregar hogar',
+            }),
+            leftIcon: <AddLocationRounded />,
           },
           {
             value: '/users_list',

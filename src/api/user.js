@@ -15,3 +15,7 @@ export async function putPassword(payload) {
 export async function updateUser(payload) {
   return http.put('/edit-user', payload);
 }
+
+export async function registerHome(payload) {
+  return http.post('/register_home', payload);
+}
