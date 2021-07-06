@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  login, register, putPassword, updateUser, registerHome, delPlate,
+  login, register, putPassword, updateUser, registerHome,
 } from '../../api/user';
 import { parseError } from '../../utils/functions';
 
@@ -63,14 +63,6 @@ const updatePassword = createAsyncThunk(
   'user/updatePassword',
   async (payload, _thunkAPI) => {
     const response = await putPassword(payload);
-    return response.data;
-  },
-);
-
-const deletePlate = createAsyncThunk(
-  'user/deletePlate',
-  async (payload, _thunkAPI) => {
-    const response = await delPlate(payload);
     return response.data;
   },
 );
@@ -206,7 +198,6 @@ export const {
 export const fetchUserThunk = fetchUser;
 export const createUserThunk = createUser;
 export const putUserThunk = updatePassword;
-export const deletePlateThunk = deletePlate;
 export const updateUserThunk = updateUsers;
 export const registerHomeThunk = createHome;
 export const userReducer = userSlice.reducer;

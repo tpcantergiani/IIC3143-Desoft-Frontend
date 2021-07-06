@@ -17,8 +17,8 @@ import { useHistory } from 'react-router-dom';
 
 import { useAuth } from 'base-shell/lib/providers/Auth';
 import {
-  deletePlateThunk,
-} from '../../store/slices/userSlice';
+  deletePlateThunk, getHomePlatesThunk,
+} from '../../store/slices/featuresSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,24 +76,20 @@ const HomePlatesComponent = () => {
   const dispatch = useDispatch();
   const { openDialog } = useQuestions();
   const history = useHistory();
-  // const [reload, setReload] = useState(false);
-  // const [plate, setPlate] = useState(null);
+  const [reload, setReload] = useState(false);
+  const { plateList } = useSelector((state) => state.features);
+  const [source, setSource] = useState(plateList);
 
-  // useEffect(async () => {
-  //   await dispatch(getEntriesThunk());
-  // }, []);
+  useEffect(async () => {
+    await dispatch(getHomePlatesThunk());
+  }, [reload]);
 
-  // const handleDelete = async (handleClose) => {
-  //   setAuth({ isAuthenticated: false });
-  //   handleClose();
-  // };
+  useEffect(async () => {
+    const info = await plateList;
+    setSource(info);
+  }, [plateList]);
 
   const handleDelete = async (plate) => {
-    // const payload = {
-    //   data: {
-    //     plate,
-    //   },
-    // };
     const r = await dispatch(
       deletePlateThunk({
         data: {
@@ -101,32 +97,9 @@ const HomePlatesComponent = () => {
         },
       }),
     );
+    setReload(!reload);
     return r;
   };
-
-  // const r = await dispatch(
-  //   putUserThunk({
-  //     data: {
-  //       password,
-  //     },
-  //   }),
-  // );
-
-  // const openDeleteDialog = (plate) => {
-  //   // setPlate(plate);
-  //   openDialog({
-  //     title: intl.formatMessage({
-  //       id: 'delete_plate_dialog_title',
-  //     }),
-  //     message: intl.formatMessage({
-  //       id: 'delete_plate_dialog_message',
-  //     }),
-  //     action: intl.formatMessage({
-  //       id: 'delete_plate_dialog_action',
-  //     }),
-  //     handleAction: handleDelete(plate),
-  //   });
-  // };
 
   return (
     <div>
@@ -139,15 +112,15 @@ const HomePlatesComponent = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {auth.current.home.patents.map((row) => (
-            <TableRow key={row.id}>
+          {source.map((row) => (
+            <TableRow>
               <TableCell component="th" scope="row">
-                {row.patent}
+                {row}
               </TableCell>
               <TableCell align="left">
                 <Fab
                   size="medium"
-                  onClick={() => handleDelete(row.patent)}
+                  onClick={() => handleDelete(row)}
                   color="secondary"
                   aria-label="delete"
                 >
